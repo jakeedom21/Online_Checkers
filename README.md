@@ -7,7 +7,7 @@ An online Checkers game system built in Java 8 and Spark, a web micro-framework.
 
 - Joel Margolis
 - Brandon Dossantos
-- MEMBER3
+- Jake Edom
 - MEMBER4
 
 
