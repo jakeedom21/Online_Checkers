@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+<<<<<<< HEAD
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -80,3 +81,10 @@ public class  PostSignInRoute implements TemplateViewRoute {
     }
 
 }
+=======
+/**
+ * Created by Sameen Luo <xxl2398@rit.edu> on 2/28/2018.
+ */
+public class PostSignInRoute {
+}
+>>>>>>> start_game

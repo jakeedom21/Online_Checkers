@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+<<<<<<< HEAD
 public class Player {
     private String playerName;
 
@@ -31,4 +32,10 @@ public class Player {
         return playerName.hashCode();
     }
 
+=======
+/**
+ * Created by Sameen Luo <xxl2398@rit.edu> on 2/28/2018.
+ */
+public class Player {
+>>>>>>> start_game
 }
