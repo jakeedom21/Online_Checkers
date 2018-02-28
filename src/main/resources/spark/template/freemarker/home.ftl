@@ -17,6 +17,7 @@
     
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
+      <p>Online: ${numUsers}</p>
     </div>
     
   </div>
