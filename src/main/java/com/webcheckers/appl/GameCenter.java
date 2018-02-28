@@ -10,5 +10,5 @@ import java.util.HashMap;
 public class GameCenter {
 
     HashMap<Integer, Game> game = new HashMap<>();
-    
+
 }

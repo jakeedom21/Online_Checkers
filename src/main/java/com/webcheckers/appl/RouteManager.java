@@ -25,6 +25,4 @@ public class RouteManager {
         Spark.get(SPECFIC_GAMES_ROUTE, gameController::renderGamePage);
     }
 
-
-
 }
