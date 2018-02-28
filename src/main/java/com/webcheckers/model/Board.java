@@ -54,7 +54,7 @@ public class Board {
     }
 
     public String toString() {
-        String returnString = "";
+        String returnString = "\n------------------------\n";
         for(int i = 0; i < MAX_DIM; i++) {
             for (int j = 0; j < MAX_DIM; j++) {
                 returnString += board[i][j];
