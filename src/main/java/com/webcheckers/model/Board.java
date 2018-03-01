@@ -1,11 +1,12 @@
 package com.webcheckers.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 /**
  * Created by qadirhaqq on 2/27/18.
  */
-public class Board {
+public class Board implements Serializable{
 //    private int redPieces = 12;
 //    private int whitePieces = 12;
     private static final int MAX_DIM = 8;

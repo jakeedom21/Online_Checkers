@@ -4,6 +4,7 @@ package com.webcheckers.ui;
  * Created by Sameen Luo <xxl2398@rit.edu> on 2/28/2018.
  */
 
+import com.webcheckers.storage.GameStorage;
 import spark.Request;
 import spark.Response;
 import spark.Spark.*;
@@ -18,7 +19,7 @@ public class GetGameRoute {
 
     public static final String GAME = "/game";
     public static final String GAME_ID = GAME + "/:id";
-
+    private GameStorage gs;
 
     public String renderGamePage(Request request, Response response) {
         UserManager userManager = new UserManager(null, userDao, sessionDao, request);
@@ -35,7 +36,7 @@ public class GetGameRoute {
 
         // Make sure a valid game ID was passed
         final Integer gameId = Integer.parseInt(request.params(":id"));
-        final Optional<Game> game = gameDao.find(gameId);
+        final Optional<Game> game = gs.find(gameId);
         if (!game.isPresent()) {
             // Invalid game
             ViewUtil.setFlashMessage(request, new FlashMessage(FlashMessageType.WARNING, INVALID_GAME));
