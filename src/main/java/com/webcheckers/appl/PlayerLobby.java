@@ -14,13 +14,13 @@ import com.webcheckers.model.Player;
 public class PlayerLobby {
     private static final Logger LOG = Logger.getLogger(PlayerLobby.class.getName());
 // Constants
-    public final static String PLAYER = "player";
+//    public final static String PLAYER = "player";
     private Map<String, Player> players = new HashMap<>();
     private List<String> users = new ArrayList<>();
 
-    public void addPlayer(Session session, String playerName){
-            session.attribute(PLAYER, new Player(playerName));
-            players.put(playerName, session.attribute(PLAYER));
+    public void addPlayer(String playerName){
+            Player playerObject = new Player(playerName);
+            players.put(playerName, playerObject);
             users.add(playerName);
     }
     public boolean hasPlayer(String playerName){

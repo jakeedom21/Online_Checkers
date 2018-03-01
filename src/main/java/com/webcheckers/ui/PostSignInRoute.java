@@ -61,8 +61,7 @@ public class  PostSignInRoute implements TemplateViewRoute {
 //        System.out.println(playerName.chars().a);
         if(isAlpha(playerName)){
             if(!(playerLobby.hasPlayer(playerName))) {
-                playerLobby.addPlayer(request.session(), playerName);
-                request.session().attribute(PLAYER, playerName);
+                playerLobby.addPlayer(playerName);
                 vm.put(PLAYER, playerName);
                 LOG.log(Level.INFO,"POST /signin: " + request.session().id() + playerName);
                 response.redirect("/");
