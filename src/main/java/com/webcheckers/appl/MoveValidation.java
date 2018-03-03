@@ -75,7 +75,7 @@ public class MoveValidation {
         return basicMoves;
     }
 
-    public ArrayList<Space> findPath(Piece movingPiece, )
+    // public ArrayList<Space> findPath(Piece movingPiece, )
 
     public boolean validMove(Piece movingPiece, Space finalSpace, Board gameBoard){
         //if both col and row are even or odd is an invalid move
@@ -99,6 +99,6 @@ public class MoveValidation {
         }
         //finalSpace is a valid place for a pieces to be
         //will need to no check if it can jump over pieces to finalSpace
-
+        return false;
     }
 }

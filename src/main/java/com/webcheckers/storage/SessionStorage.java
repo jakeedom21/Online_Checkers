@@ -33,5 +33,10 @@ public class SessionStorage {
         return playerLobby.getPlayerByUsername(playerName);
     }
 
+    public void debugPrint(){
+        System.out.println("SessionsByPlayer: " + sessionsByPlayer);
+        System.out.println("PlayersBySession" + playersBySession);
+    }
+
 
 }

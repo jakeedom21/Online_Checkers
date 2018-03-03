@@ -77,7 +77,7 @@ public class  PostSignInRoute implements TemplateViewRoute {
             vm.put(MESSAGE_ATTR, "Not a valid name.");
         }
 
-        response.redirect("/game");
+
         return null;
 //        return new ModelAndView(vm , "signin.ftl");
 //        return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
