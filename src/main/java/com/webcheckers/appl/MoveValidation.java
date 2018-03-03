@@ -12,21 +12,15 @@ import java.util.ArrayList;
  * Will get all possible single space moves from a piece does
  * only validation it does is that it doesn't go out of bounds
  *
- * Will probably use this to help pathfind to the final space
  *
- * For validation
- *
- * Current problems:
- * Finding the path in such a way it could be used for Player Help
- * Determining path when there are multiple valid ways to a space
- * Best way may be when it detects multiple valid paths to have the player do it one jump at a time
- *
- * Pathfinder 
  */
 public class MoveValidation {
     private final static int MAX_DIM = 8;
 
     /**
+     *
+     * WILL BE NEEDED LATER ON
+     *
      * Get the basic moves for all pieces
      * this means the all moves from the single space/piece one space away
      * will see if it is a valid move later
@@ -75,9 +69,18 @@ public class MoveValidation {
         return basicMoves;
     }
 
-    public ArrayList<Space> findPath(Piece movingPiece, )
-
-    public boolean validMove(Piece movingPiece, Space finalSpace, Board gameBoard){
+    /**
+     * Checks to see if finalSpace is a valid place for a piece to be
+     * @param finalSpace
+     * @param gameBoard
+     * @return true on empty space that a checkers piece should be able to access at some point,
+     *         false on full spaces or any space a checkers piece shouldn't be able to access
+     */
+    public boolean validPlacement(Space finalSpace, Board gameBoard){
+        //validates the gameBoard
+        if(gameBoard == null){
+            return false;
+        }
         //if both col and row are even or odd is an invalid move
         if(finalSpace.getCol()%2 == 0 && finalSpace.getRow()%2 == 0){
             return false;
@@ -97,8 +100,9 @@ public class MoveValidation {
         else if(finalSpace.getCol() >= MAX_DIM || finalSpace.getRow() >= MAX_DIM){
             return false;
         }
-        //finalSpace is a valid place for a pieces to be
-        //will need to no check if it can jump over pieces to finalSpace
+        else{
+            return true;
+        }
 
     }
 }
