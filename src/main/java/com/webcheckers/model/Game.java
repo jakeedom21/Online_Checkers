@@ -9,9 +9,8 @@ public class Game {
     private Board board;
     private Player playerTurn;
     private boolean forfeit = false;
-    private int id = 0;
-    public Game(Player p1, Player p2, int id) {
-        this.id = id;
+
+    public Game(Integer id, Player p1, Player p2) {
         this.p1 = p1;
         this.p2 = p2;
         this.board = new Board();

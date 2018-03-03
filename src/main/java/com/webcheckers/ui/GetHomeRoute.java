@@ -3,15 +3,14 @@ package com.webcheckers.ui;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import spark.*;
+
+import static com.webcheckers.ui.PostSignInRoute.PLAYER_NAME_ATTR;
 
 /**
  * The UI Controller to GET the Home page.
@@ -22,6 +21,9 @@ public class  GetHomeRoute implements Route {
 
   static final String TITLE_ATTR = "title";
   static final String TITLE = "Welcome!";
+  static final String NUM_USER_ATTR = "numUsers";
+  static final String SIGNED_IN_ATTR = "signedInPlayer";
+  static final String FREE_PLAYERS_ATTR = "freePlayers";
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
   private final PlayerLobby playerLobby;
@@ -61,7 +63,12 @@ public class  GetHomeRoute implements Route {
     //
     Map<String, Object> vm = new HashMap<>();
     vm.put(TITLE_ATTR, TITLE);
-    vm.put("numUsers", playerLobby.getPlayers().size());
+    vm.put(NUM_USER_ATTR, playerLobby.getPlayers().size());
+
+    final Session currentSession = request.session();
+    String thisPlayerName = currentSession.attribute(PLAYER_NAME_ATTR);
+    vm.put(SIGNED_IN_ATTR, playerLobby.isActiveUser(thisPlayerName));
+    vm.put(FREE_PLAYERS_ATTR, playerLobby.getFreePlayerNames(thisPlayerName));
     System.out.println(vm);
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));
   }

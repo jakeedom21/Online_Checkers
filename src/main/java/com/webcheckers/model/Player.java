@@ -1,8 +1,16 @@
 package com.webcheckers.model;
 
 public class Player {
+
+    private enum PieceColor{
+        RED, WHITE
+    }
+
     private String playerName;
     private Game g;
+    private boolean inGame;
+    private PieceColor pieceColor;
+    private Game currentGame;
 
     /**
      * Constructor for Player
@@ -11,10 +19,15 @@ public class Player {
      */
     public Player(String playerName){
         this.playerName = playerName;
+        this.inGame = false;
+        this.pieceColor = null;
+        this.currentGame = null;
     }
+
     public String getPlayerName(){
         return playerName;
     }
+
 
     public void setGame(Game g){
         this.g = g;
@@ -24,6 +37,21 @@ public class Player {
         return this.g;
     }
 
+    public boolean isInGame() {
+        return inGame;
+    }
+
+    public void setInGame(boolean inGame) {
+        this.inGame = inGame;
+    }
+
+    public PieceColor getPieceColor() {
+        return pieceColor;
+    }
+
+    public void setPieceColor(PieceColor pieceColor) {
+        this.pieceColor = pieceColor;
+    }
 
     @Override
     public boolean equals(Object playerObject){
@@ -36,6 +64,7 @@ public class Player {
         }
         return false;
     }
+
     @Override
     public int hashCode(){
         return playerName.hashCode();
