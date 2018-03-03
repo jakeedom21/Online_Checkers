@@ -16,6 +16,19 @@ public class Game {
         this.board = new Board();
     }
 
+    /**
+     * Start a new Game when a signed-in player click on an opponent
+     * Called by handle method in GetGameRoute class
+     * @param id for a game
+     * @param player1 player who picked opponent, assign RED PieceColor
+     * @param player2 player who got picked, assign WHITE PieceColor
+     */
+    public void startNewGame(int id, Player player1, Player player2){
+        Game newGame = new Game(id, player1, player2);
+        player1.assignGame(Player.PieceColor.RED, newGame);
+        player2.assignGame(Player.PieceColor.WHITE, newGame);
+    }
+
     public Player[] getPlayers() {
         Player[] players = new Player[2];
         players[0] = p1;
