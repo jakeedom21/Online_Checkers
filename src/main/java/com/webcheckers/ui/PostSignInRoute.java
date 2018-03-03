@@ -22,6 +22,7 @@ public class  PostSignInRoute implements TemplateViewRoute {
     // Constants
     static final String PLAYER = "player";
     static final String MESSAGE_ATTR = "message";
+    static final String PLAYER_NAME_ATTR = "playerName";
 
     private final PlayerLobby playerLobby;
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
@@ -59,11 +60,13 @@ public class  PostSignInRoute implements TemplateViewRoute {
 //        vm.put("title", "Welcome!");
         LOG.finer("PostSignInRoute is invoked.");
         final String playerName = request.queryParams("name");
+        final Session currentSession = request.session();
 //        System.out.println(playerName.chars().a);
         if(isAlpha(playerName)){
-            if(!(playerLobby.hasPlayer(playerName))) {
+            if(!(playerLobby.hasUserName(playerName))) {
                 playerLobby.addPlayer(playerName);
                 vm.put(PLAYER, playerName);
+                currentSession.attribute(PLAYER_NAME_ATTR, playerName);
                 LOG.log(Level.INFO,"POST /signin: " + request.session().id() + playerName);
                 response.redirect("/");
 
