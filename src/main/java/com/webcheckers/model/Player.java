@@ -2,7 +2,7 @@ package com.webcheckers.model;
 
 public class Player {
 
-    private enum PieceColor{
+    enum PieceColor{
         RED, WHITE
     }
 
@@ -48,8 +48,25 @@ public class Player {
         return pieceColor;
     }
 
-    public void setPieceColor(PieceColor pieceColor) {
+    /**
+     * Assign PieceColor and Game to this player who is getting put into a game
+     * Called by Game.startGame
+     * @param pieceColor assigned to this player, RED(1) and WHITE(2) for the playee
+     * @param gameToPlay the Game object for this player and his/her opponent
+     */
+    public void assignGame(PieceColor pieceColor, Game gameToPlay) {
+        this.inGame = true;
         this.pieceColor = pieceColor;
+        this.currentGame = gameToPlay;
+    }
+
+    /**
+     * Called when a game is finished to set the correct fields for this player
+     */
+    public void finishGame(){
+        this.inGame = false;
+        this.pieceColor = null;
+        this.currentGame = null;
     }
 
     @Override
