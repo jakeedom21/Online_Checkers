@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 public class Player {
     private String playerName;
+    private Game g;
 
     /**
      * Constructor for Player
@@ -14,6 +15,15 @@ public class Player {
     public String getPlayerName(){
         return playerName;
     }
+
+    public void setGame(Game g){
+        this.g = g;
+    }
+
+    public Game getGame() {
+        return this.g;
+    }
+
 
     @Override
     public boolean equals(Object playerObject){

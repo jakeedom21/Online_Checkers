@@ -1,18 +1,17 @@
 package com.webcheckers.ui;
 
 
+import com.webcheckers.appl.PlayerLobby;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+import spark.TemplateViewRoute;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Player;
-import spark.*;
-
-import static spark.Spark.halt;
 
 /**
  * The UI Controller to POST the sign in page.
@@ -62,7 +61,7 @@ public class  PostSignInRoute implements TemplateViewRoute {
 //        System.out.println(playerName.chars().a);
         if(isAlpha(playerName)){
             if(!(playerLobby.hasPlayer(playerName))) {
-                playerLobby.addPlayer(playerName);
+                playerLobby.addPlayer(playerName, request.session());
                 vm.put(PLAYER, playerName);
                 LOG.log(Level.INFO,"POST /signin: " + request.session().id() + playerName);
                 response.redirect("/");
