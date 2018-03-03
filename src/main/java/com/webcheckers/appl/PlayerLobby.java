@@ -1,22 +1,9 @@
 package com.webcheckers.appl;
 
 
-import java.util.*;
-import java.util.logging.Logger;
-
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Session;
-import spark.Route;
-import spark.TemplateEngine;
 import com.webcheckers.model.Player;
-import spark.Session;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 
@@ -28,6 +15,7 @@ public class PlayerLobby {
     //    public final static String PLAYER = "player";
     private Map<String, Player> signedInPlayers = new HashMap<>();
     private Set<String> allUserNames = new HashSet<>();
+
 
 
     public void addPlayer(String playerName) {
@@ -46,6 +34,10 @@ public class PlayerLobby {
 
     public Set<String> getPlayers() {
         return signedInPlayers.keySet();
+    }
+
+    public Player getPlayerByUsername(String playerName) {
+        return signedInPlayers.get(playerName);
     }
 
     public Set<String> getFreePlayerNames(String currentPlayerName) {

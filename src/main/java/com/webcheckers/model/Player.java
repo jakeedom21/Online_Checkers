@@ -7,7 +7,6 @@ public class Player {
     }
 
     private String playerName;
-    private Game g;
     private boolean inGame;
     private PieceColor pieceColor;
     private Game currentGame;
@@ -29,12 +28,12 @@ public class Player {
     }
 
 
-    public void setGame(Game g){
-        this.g = g;
+    public void setGame(Game game){
+        this.currentGame = game;
     }
 
     public Game getGame() {
-        return this.g;
+        return this.currentGame;
     }
 
     public boolean isInGame() {

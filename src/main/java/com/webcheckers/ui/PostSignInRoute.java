@@ -2,10 +2,8 @@ package com.webcheckers.ui;
 
 
 import com.webcheckers.appl.PlayerLobby;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.TemplateViewRoute;
+import com.webcheckers.storage.SessionStorage;
+import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +22,7 @@ public class  PostSignInRoute implements TemplateViewRoute {
     static final String PLAYER_NAME_ATTR = "playerName";
 
     private final PlayerLobby playerLobby;
+    private final SessionStorage sessionStorage;
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
     /**
@@ -33,11 +32,12 @@ public class  PostSignInRoute implements TemplateViewRoute {
      * @param playerLobby
      *   the playerLobby used by the application users
      */
-    public PostSignInRoute (final PlayerLobby playerLobby) {
+    public PostSignInRoute (final PlayerLobby playerLobby, SessionStorage sessionStorage) {
         // validation
         Objects.requireNonNull(playerLobby, "gameCenter must not be null");
         //
         this.playerLobby = playerLobby;
+        this.sessionStorage = sessionStorage;
     }
     public boolean isAlpha(String name) {
         return name.matches("[a-zA-Z]+");
@@ -64,6 +64,7 @@ public class  PostSignInRoute implements TemplateViewRoute {
         if(isAlpha(playerName)){
             if(!(playerLobby.hasUserName(playerName))) {
                 playerLobby.addPlayer(playerName);
+                sessionStorage.addSession(playerName, currentSession);
                 vm.put(PLAYER, playerName);
                 currentSession.attribute(PLAYER_NAME_ATTR, playerName);
                 LOG.log(Level.INFO,"POST /signin: " + request.session().id() + playerName);

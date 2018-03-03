@@ -5,6 +5,7 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.RouteManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.storage.SessionStorage;
 import spark.Request;
 import spark.Response;
 
@@ -18,21 +19,24 @@ public class GameController {
 
     private static final String GAME_FTL = "game.ftl";
     PlayerLobby playerLobby;
-    public GameController(PlayerLobby playerLobby) {
+    SessionStorage sessionStorage;
+    private static int gameId = 0;
+    public GameController(PlayerLobby playerLobby, SessionStorage sessionStorage) {
         this.playerLobby = playerLobby;
+        this.sessionStorage = sessionStorage;
     }
 
     public String createNewGame(Request request, Response response) {
         // initialize new game
-        Player p1 = playerLobby.getPlayerBySession(request.session().id());
+        Player p1 = sessionStorage.getPlayerBySession(request.session().id());
         if (p1 == null){
             // redirect
         }
         final String opponentName = request.queryParams("opponentName");
-        Player p2 = playerLobby.getPlayer(opponentName);
+        Player p2 = playerLobby.getPlayerByUsername(opponentName);
 
         // createNewGame
-        Game g = new Game(p1, p2);
+        Game g = new Game(gameId++, p1, p2);
 
         p1.setGame(g);
         p2.setGame(g);
@@ -47,9 +51,9 @@ public class GameController {
         // talk to FTL
 
         String sess = request.session().id();
-        Player p1 = playerLobby.getPlayerBySession(sess);
+        Player p1 = sessionStorage.getPlayerBySession(sess);
         String opponentName = request.queryParams("opponentName");
-        Player p2 = playerLobby.getPlayer(opponentName);
+        Player p2 = playerLobby.getPlayerByUsername(opponentName);
 
         Game p1_game = p1.getGame();
         Game p2_game = p2.getGame();
