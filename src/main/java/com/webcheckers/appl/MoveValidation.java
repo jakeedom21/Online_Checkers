@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * Determining path when there are multiple valid ways to a space
  * Best way may be when it detects multiple valid paths to have the player do it one jump at a time
  *
- * Pathfinder 
+ * Pathfinder
  */
 public class MoveValidation {
     private final static int MAX_DIM = 8;

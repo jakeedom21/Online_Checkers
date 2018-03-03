@@ -23,10 +23,6 @@ public class RouteManager {
     }
 
     public void init() {
-
-
-
-        // Start Game
         Spark.post(GAMES_ROUTE, gameController::createNewGame);
         Spark.get(SPECFIC_GAMES_ROUTE, gameController::renderGamePage);
     }

@@ -14,25 +14,20 @@ public class Game {
     private Player p1;
     private Player p2;
 
-
+    /**
+     * Start a new Game when a signed-in player click on an opponent
+     * Called by GameController when request receive
+     * @param id for a game
+     * @param p1 player who picked opponent, assign RED PieceColor
+     * @param p2 player who got picked, assign WHITE PieceColor
+     */
     public Game(Integer id, Player p1, Player p2) {
         this.id = id;
         this.p1 = p1;
         this.p2 = p2;
         this.board = new Board();
-    }
-
-    /**
-     * Start a new Game when a signed-in player click on an opponent
-     * Called by handle method in GetGameRoute class
-     * @param id for a game
-     * @param player1 player who picked opponent, assign RED PieceColor
-     * @param player2 player who got picked, assign WHITE PieceColor
-     */
-    public static void startNewGame(int id, Player player1, Player player2){
-        Game newGame = new Game(id, player1, player2);
-        player1.assignGame(Player.PieceColor.RED, newGame);
-        player2.assignGame(Player.PieceColor.WHITE, newGame);
+        p1.assignGame(Player.PieceColor.RED, this);
+        p2.assignGame(Player.PieceColor.WHITE, this);
     }
 
     public Player[] getPlayers() {

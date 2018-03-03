@@ -36,7 +36,7 @@ public class GameController {
         Player p2 = playerLobby.getPlayerByUsername(opponentName);
 
         // createNewGame
-        Game.startNewGame(gameId, p1, p2);
+        //Game.startNewGame(gameId, p1, p2);
         response.redirect(RouteManager.GAMES_ROUTE);
         return null;
     }
@@ -48,6 +48,7 @@ public class GameController {
         Player p1 = sessionStorage.getPlayerBySession(sess);
         String opponentName = request.queryParams("opponentName");
         Player p2 = playerLobby.getPlayerByUsername(opponentName);
+
 
         Game p1_game = p1.getGame();
         Game p2_game = p2.getGame();

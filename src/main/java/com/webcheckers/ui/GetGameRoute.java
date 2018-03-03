@@ -40,7 +40,7 @@ public class GetGameRoute implements Route {
         Player p2 = playerLobby.getPlayerByUsername(opponentName);
 
         // createNewGame
-        Game.startNewGame(gameId, p1, p2);
+        //Game.startNewGame(gameId, p1, p2);
         response.redirect(RouteManager.GAMES_ROUTE);
         return null;
     }
@@ -59,7 +59,7 @@ public class GetGameRoute implements Route {
         final Player player1 = game.getPlayers()[0];
         final Player player2 = game.getPlayers()[1];
 
-        Game.startNewGame(gameId, player1, player2);
+        //Game.startNewGame(gameId, player1, player2);
 
         // Has game been won?
         if (game.getWinner() != null) {
