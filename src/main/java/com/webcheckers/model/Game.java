@@ -4,12 +4,16 @@ package com.webcheckers.model;
  * Created by qadirhaqq on 2/28/18.
  */
 public class Game {
-    private final Player p1;
-    private final Player p2;
+
+
     private Board board;
-    private Player playerTurn;
+    private String playerTurn;
+    private String winner;
     private boolean forfeit = false;
     private int id;
+    private Player p1;
+    private Player p2;
+
 
     public Game(Integer id, Player p1, Player p2) {
         this.id = id;
@@ -25,7 +29,7 @@ public class Game {
      * @param player1 player who picked opponent, assign RED PieceColor
      * @param player2 player who got picked, assign WHITE PieceColor
      */
-    public void startNewGame(int id, Player player1, Player player2){
+    public static void startNewGame(int id, Player player1, Player player2){
         Game newGame = new Game(id, player1, player2);
         player1.assignGame(Player.PieceColor.RED, newGame);
         player2.assignGame(Player.PieceColor.WHITE, newGame);
@@ -33,8 +37,8 @@ public class Game {
 
     public Player[] getPlayers() {
         Player[] players = new Player[2];
-        players[0] = p1;
-        players[1] = p2;
+        players[0] = this.p1;
+        players[1] = this.p2;
         return players;
     }
 
@@ -42,12 +46,37 @@ public class Game {
         return this.board;
     }
 
+
+    public String getPlayerTurn() {
+        return this.playerTurn;
+    }
+
     public void setTurn() {
-        if (this.playerTurn == p1) {
-            playerTurn = p2;
+        if (this.playerTurn.equals(p1.getPlayerName())) {
+            playerTurn = p2.getPlayerName();
         } else {
-            playerTurn = p1;
+            playerTurn = p1.getPlayerName();
         }
+    }
+
+    public String getWinner() {
+        return this.winner;
+    }
+
+    public boolean isWinner() {
+        if (board.getP1Pieces() == 0) {
+            this.winner = p2.getPlayerName();
+            return true;
+        } else if (board.getP2Pieces() == 0){
+            this.winner = p1.getPlayerName();
+            return true;
+        } else
+            return false;
+    }
+
+    public boolean didPlayerResign() {
+
+        return this.forfeit;
     }
 
     public int getId(){
