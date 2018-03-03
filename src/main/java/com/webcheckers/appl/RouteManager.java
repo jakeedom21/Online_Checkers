@@ -5,8 +5,6 @@ package com.webcheckers.appl;
  */
 
 import com.webcheckers.controller.GameController;
-
-import static spark.Spark.*;
 import spark.Spark;
 
 public class RouteManager {
@@ -16,13 +14,19 @@ public class RouteManager {
     public static final String SPECFIC_GAMES_ROUTE = GAMES_ROUTE + "/:id";
 
     public static GameController gameController;
+    public static PlayerLobby playerLobby;
 
-    public RoutingEngine(GameController gameController) {
+    public RouteManager(GameController gameController, PlayerLobby playerLobby) {
         this.gameController = gameController;
+        this.playerLobby = playerLobby;
 
     }
 
     public void init() {
+
+
+
+        // Start Game
         Spark.post(GAMES_ROUTE, gameController::createNewGame);
         Spark.get(SPECFIC_GAMES_ROUTE, gameController::renderGamePage);
     }

@@ -11,7 +11,6 @@ public class Player {
     private PieceColor pieceColor;
     private Game currentGame;
 
-
     /**
      * Constructor for Player
      *
@@ -28,8 +27,21 @@ public class Player {
         return playerName;
     }
 
+
+    public void setGame(Game game){
+        this.currentGame = game;
+    }
+
+    public Game getGame() {
+        return this.currentGame;
+    }
+
     public boolean isInGame() {
         return inGame;
+    }
+
+    public void setInGame(boolean inGame) {
+        this.inGame = inGame;
     }
 
     public PieceColor getPieceColor() {

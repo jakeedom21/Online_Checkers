@@ -9,8 +9,10 @@ public class Game {
     private Board board;
     private Player playerTurn;
     private boolean forfeit = false;
+    private int id;
 
     public Game(Integer id, Player p1, Player p2) {
+        this.id = id;
         this.p1 = p1;
         this.p2 = p2;
         this.board = new Board();
@@ -36,6 +38,10 @@ public class Game {
         return players;
     }
 
+    public Board getBoard() {
+        return this.board;
+    }
+
     public void setTurn() {
         if (this.playerTurn == p1) {
             playerTurn = p2;
@@ -44,4 +50,8 @@ public class Game {
         }
     }
 
+    public int getId(){
+        return this.id;
+    }
 }
+
