@@ -2,7 +2,7 @@ package com.webcheckers.model;
 
 public class Player {
 
-    enum PieceColor{
+    public enum PieceColor {
         RED, WHITE
     }
 

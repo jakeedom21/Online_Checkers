@@ -36,14 +36,8 @@ public class GameController {
         Player p2 = playerLobby.getPlayerByUsername(opponentName);
 
         // createNewGame
-        Game g = new Game(gameId++, p1, p2);
-
-        p1.setGame(g);
-        p2.setGame(g);
-
-
+        Game.startNewGame(gameId, p1, p2);
         response.redirect(RouteManager.GAMES_ROUTE);
-
         return null;
     }
 
@@ -62,11 +56,10 @@ public class GameController {
         } else {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("title", String.format("Game #%d (%s vs. %s)", p1_game.getId(), p1.getPlayerName(), p2.getPlayerName()));
-            attributes.put("playerColor", playerColor);
-            attributes.put("opponentName", opponent.getUsername());
-            attributes.put("opponentColor", opponentColor);
-            attributes.put("isMyTurn", isMyTurn);
-
+            attributes.put("playerColor", p1.getPieceColor());
+            attributes.put("opponentName", p2.getPlayerName());
+            attributes.put("opponentColor", p2.getPieceColor());
+            attributes.put("isMyTurn", p1_game.getPlayerTurn());
         }
 
         return null;

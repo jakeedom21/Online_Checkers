@@ -1,16 +1,16 @@
 package com.webcheckers;
 
+import com.google.gson.Gson;
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.storage.SessionStorage;
+import com.webcheckers.ui.WebServer;
+import spark.TemplateEngine;
+import spark.template.freemarker.FreeMarkerEngine;
+
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-
-import com.google.gson.Gson;
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.ui.WebServer;
-
-import spark.TemplateEngine;
-import spark.template.freemarker.FreeMarkerEngine;
 
 
 /**
@@ -47,11 +47,12 @@ public final class Application {
             System.err.println("Could not initialize log manager because: " + e.getMessage());
         }
         final PlayerLobby playerLobby = new PlayerLobby();
-
+        final SessionStorage sessionStorage = new SessionStorage(playerLobby);
         // The application uses FreeMarker templates to generate the HTML
         // responses sent back to the client. This will be the engine processing
         // the templates and associated data.
         final TemplateEngine templateEngine = new FreeMarkerEngine();
+
 
         // The application uses Gson to generate JSON representations of Java objects.
         // This should be used by your Ajax Routes to generate JSON for the HTTP
@@ -59,7 +60,8 @@ public final class Application {
         final Gson gson = new Gson();
 
         // inject the game center and freemarker engine into web server
-        final WebServer webServer = new WebServer(playerLobby, templateEngine, gson);
+        final WebServer webServer = new WebServer(playerLobby, sessionStorage,templateEngine, gson);
+
 
         // inject web server into application
         final Application app = new Application(webServer);

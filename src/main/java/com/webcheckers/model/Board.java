@@ -7,8 +7,8 @@ import java.util.HashSet;
  * Created by qadirhaqq on 2/27/18.
  */
 public class Board implements Serializable{
-//    private int redPieces = 12;
-//    private int whitePieces = 12;
+    private int redPieces = 12;
+    private int whitePieces = 12;
     private static final int MAX_DIM = 8;
     private static final String PLAYER1_COLOR = "W";
     private static final String PLAYER2_COLOR = "R";
@@ -65,5 +65,12 @@ public class Board implements Serializable{
         return returnString;
     }
 
+    public int getP1Pieces() {
+        return this.redPieces;
+    }
+
+    public int getP2Pieces() {
+        return this.whitePieces;
+    }
 }
 

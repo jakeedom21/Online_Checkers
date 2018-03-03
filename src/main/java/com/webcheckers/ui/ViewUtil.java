@@ -21,7 +21,6 @@ public class ViewUtil {
     }
 
     public String render(Request request, Map<String, Object> model, String templatePath) {
-        //  Player p = playerLobby.getPlayerBySession(request.session().id()); // in case we need to render user specific messages
 
         return templateEngine.render(new ModelAndView(model, templatePath));
     }
