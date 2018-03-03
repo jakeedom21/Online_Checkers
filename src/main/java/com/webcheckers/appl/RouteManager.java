@@ -11,6 +11,8 @@ import spark.Spark;
 
 public class RouteManager {
     public static final String GAMES_ROUTE = "/game";
+    public static final String HOME_ROUTE = "/home";
+    public static final String SIGNIN_ROUTE = "/signin";
     public static final String SPECFIC_GAMES_ROUTE = GAMES_ROUTE + "/:id";
 
     public static GameController gameController;
