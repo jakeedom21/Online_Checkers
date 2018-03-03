@@ -9,6 +9,7 @@ public class Player {
     private String playerName;
     private boolean inGame;
     private PieceColor pieceColor;
+    private Game currentGame;
 
 
     /**
@@ -20,6 +21,7 @@ public class Player {
         this.playerName = playerName;
         this.inGame = false;
         this.pieceColor = null;
+        this.currentGame = null;
     }
 
     public String getPlayerName(){
@@ -30,7 +32,7 @@ public class Player {
         return inGame;
     }
 
-    public void setInGame(boolean inGame) {
+    public void setGame(boolean inGame) {
         this.inGame = inGame;
     }
 
