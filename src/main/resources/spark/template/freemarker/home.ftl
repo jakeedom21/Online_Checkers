@@ -7,19 +7,30 @@
 </head>
 <body>
   <div class="page">
-  
     <h1>Web Checkers</h1>
-    
     <div class="navigation">
       <a href="/">my home</a>
-      <a href="/signin">sign in</a>
     </div>
     
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
       <p>Online: ${numUsers}</p>
+
+      <#if signedInPlayer>
+
+        <#list freePlayers as opponent>
+          <form action="./game" method="GET">
+            <li><input type="hidden" name="opponentName" value=${opponent} /></li>
+            <input type="submit" value=Challange />
+      	  </form>
+      	  </p>
+      	<#else>
+          <p>Waiting for an opponent...</p>
+      	</#list>
+      <#else>
+        <p><a href="/signin">sign in</a></p>
+      </#if>
     </div>
-    
   </div>
 </body>
 </html>

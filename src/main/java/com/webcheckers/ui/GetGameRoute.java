@@ -4,113 +4,124 @@ package com.webcheckers.ui;
  * Created by Sameen Luo <xxl2398@rit.edu> on 2/28/2018.
  */
 
-import com.webcheckers.storage.GameStorage;
-import spark.Request;
-import spark.Response;
-import spark.Spark.*;
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.RouteManager;
+import com.webcheckers.model.Game;
+import com.webcheckers.model.Player;
+import com.webcheckers.storage.SessionStorage;
+import spark.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 
-public class GetGameRoute {
+public class GetGameRoute implements Route {
 
     public static final String GAME = "/game";
-    public static final String GAME_ID = GAME + "/:id";
-    private GameStorage gs;
+    private static final String GAME_FTL = "game.ftl";
+    PlayerLobby playerLobby;
+    SessionStorage sessionStorage;
+    TemplateEngine templateEngine;
+    private static int gameId = 0;
+
+    public GetGameRoute(final PlayerLobby playerLobby, SessionStorage sessionStorage, final TemplateEngine templateEngine) {
+        this.playerLobby = playerLobby;
+        this.sessionStorage = sessionStorage;
+        this.templateEngine = templateEngine;
+    }
+
+    public String createNewGame(Request request, Response response) {
+        // initialize new game
+        Player p1 = sessionStorage.getPlayerBySession(request.session().id());
+        if (p1 == null){
+            // redirect
+        }
+        final String opponentName = request.queryParams("opponentName");
+        Player p2 = playerLobby.getPlayerByUsername(opponentName);
+
+        // createNewGame
+        //Game.startNewGame(gameId, p1, p2);
+        response.redirect(RouteManager.GAMES_ROUTE);
+        return null;
+    }
 
     public String renderGamePage(Request request, Response response) {
-        UserManager userManager = new UserManager(null, userDao, sessionDao, request);
-        Optional<User> user = userManager.getLoggedInUser();
 
-        if (!user.isPresent()) {
-            // User is not logged in, redirect to the login page with a warning
-            ViewUtil.setFlashMessage(request, new FlashMessage(FlashMessageType.WARNING, MUST_BE_LOGGED_IN_VIEW));
-            response.redirect(RoutingEngine.LOGIN_ROUTE);
-            return null;
-        }
+        Player currentPlayer = sessionStorage.getPlayerBySession(request.session().id());
 
-        User currentUser = user.get();
 
-        // Make sure a valid game ID was passed
-        final Integer gameId = Integer.parseInt(request.params(":id"));
-        final Optional<Game> game = gs.find(gameId);
-        if (!game.isPresent()) {
-            // Invalid game
-            ViewUtil.setFlashMessage(request, new FlashMessage(FlashMessageType.WARNING, INVALID_GAME));
-            response.redirect(RoutingEngine.GAMES_ROUTE);
-            return null;
-        }
-
-        Game gameObj = game.get();
+        Game game = currentPlayer.getGame();
 
         Map<String, Object> attributes = new HashMap<>();
-        final List<User> players = gameObj.getPlayers();
         boolean readOnlyMode = false;
 
         // Get players
-        final User player1 = gameObj.getPlayer1();
-        final User player2 = gameObj.getPlayer2();
+        final Player player1 = game.getPlayers()[0];
+        final Player player2 = game.getPlayers()[1];
+
+        //Game.startNewGame(gameId, player1, player2);
 
         // Has game been won?
-        if (gameObj.getWinner().isPresent()) {
+        if (game.getWinner() != null) {
             readOnlyMode = true;
 
-            User winner = gameObj.getWinner().get();
-            attributes.put("winner", winner.getUsername());
+            String winner = game.getWinner();
+            attributes.put("winner", winner);
 
-            if (gameObj.didPlayerResign()) {
-                if (winner.getUsername().equals(player1.getUsername())) {
-                    attributes.put("resigned", player2.getUsername());
+            if (game.didPlayerResign()) {
+                if (winner.equals(player1.getPlayerName())) {
+                    attributes.put("resigned", player2.getPlayerName());
                 } else {
-                    attributes.put("resigned", player1.getUsername());
+                    attributes.put("resigned", player1.getPlayerName());
                 }
             }
 
         }
 
-        if (!players.contains(currentUser)) {
+        if (player1 != currentPlayer && player2 != currentPlayer) {
             readOnlyMode = true;
-            attributes.put("title", String.format("Game #%d (%s vs. %s)", gameId, player1.getUsername(), player2.getUsername()));
+            attributes.put("title", String.format("Game #%d (%s vs. %s)", gameId, player1.getPlayerName(), player2.getPlayerName()));
         } else {
-            User opponent = player2;
-            String playerColor = GameBoard.PLAYER_1_PIECE_COLOR;
-            String opponentColor = GameBoard.PLAYER_2_PIECE_COLOR;
-            Boolean isMyTurn = gameObj.getCurrentTurn() == GameTurn.PLAYER1;
+            Player opponent = player2;
+            String playerColor = currentPlayer.getPieceColor() == Player.PieceColor.RED ? "RED" : "WHITE" ;
+            String opponentColor = playerColor.equals("RED") ? "WHITE" : "RED";
+            Boolean isMyTurn = game.getPlayerTurn().equals(player1.getPlayerName());
 
-            if (currentUser.equals(player2)) {
+            if (currentPlayer.equals(player2)) {
                 opponent = player1;
-                playerColor = GameBoard.PLAYER_2_PIECE_COLOR;
-                opponentColor = GameBoard.PLAYER_1_PIECE_COLOR;
-                isMyTurn = gameObj.getCurrentTurn() == GameTurn.PLAYER2;
+                playerColor = currentPlayer.getPieceColor() == Player.PieceColor.WHITE ? "WHITE" : "RED";
+                opponentColor = playerColor.equals("WHITE") ? "WHITE" : "RED";
+                isMyTurn = game.getPlayerTurn().equals(player2.getPlayerName());
             }
 
-            attributes.put("title", String.format("Game #%d (Opponent: %s)", gameId, opponent.getUsername()));
+            attributes.put("title", String.format("Game #%d (Opponent: %s)", gameId, opponent.getPlayerName()));
             attributes.put("playerColor", playerColor);
-            attributes.put("opponentName", opponent.getUsername());
+            attributes.put("opponentName", opponent.getPlayerName());
             attributes.put("opponentColor", opponentColor);
             attributes.put("isMyTurn", isMyTurn);
         }
 
         String whoseTurn;
-        if (game.get().getCurrentTurn() == GameTurn.PLAYER1) {
-            whoseTurn = player1.getUsername();
+        if (game.getPlayerTurn().equals(game.getPlayers()[0].getPlayerName())) {
+            whoseTurn = player1.getPlayerName();
         } else {
-            whoseTurn = player2.getUsername();
+            whoseTurn = player2.getPlayerName();
         }
 
         attributes.put("whoseTurn", whoseTurn);
         attributes.put("gameId", gameId);
-        attributes.put("playerName", currentUser.getUsername());
-        attributes.put("board", game.get().getBoard().getRaw());
+        attributes.put("playerName", currentPlayer.getPlayerName());
+        attributes.put("board", game.getBoard());
         attributes.put("readOnly", readOnlyMode);
-        attributes.put("apiRoot", RoutingEngine.GAMES_API_ROOT.replace(":id", gameObj.getId().toString()));
 
-        return viewUtil.render(request, attributes, TPL_GAME);
+        return templateEngine.render(new ModelAndView(attributes, GAME_FTL));
     }
 
+
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+        return renderGamePage(request, response);
+    }
 }
 
 

@@ -3,7 +3,7 @@ package com.webcheckers.model;
 
 import java.io.Serializable;
 
-public class Piece implements Serializable{
+public class Piece implements Serializable {
 
     private int row;
     private int col;
