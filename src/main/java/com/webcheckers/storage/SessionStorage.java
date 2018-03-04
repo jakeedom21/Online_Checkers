@@ -24,6 +24,16 @@ public class SessionStorage {
         sessionsByPlayer.put(session.id(), playerUsername);
     }
 
+    public void removeUserSession(String playerUsername) {
+        Session session = getSessionByUsername(playerUsername);
+        if(sessionsByPlayer.containsKey(playerUsername)) {
+            sessionsByPlayer.remove(session.id());
+        }
+        if(playersBySession.containsKey(playerUsername)) {
+            playersBySession.remove(playerUsername);
+        }
+    }
+
     public Session getSessionByUsername(String playerUsername) {
         return playersBySession.get(playerUsername);
     }

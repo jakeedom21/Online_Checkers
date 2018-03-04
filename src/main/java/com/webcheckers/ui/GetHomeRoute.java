@@ -23,6 +23,7 @@ public class GetHomeRoute implements Route {
     static final String NUM_USER_ATTR = "numUsers";
     static final String SIGNED_IN_ATTR = "signedInPlayer";
     static final String FREE_PLAYERS_ATTR = "freePlayers";
+    static final String PLAYER_NAME_ATTR = "playerName";
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     private final PlayerLobby playerLobby;
@@ -66,6 +67,7 @@ public class GetHomeRoute implements Route {
         String thisPlayerName = currentSession.attribute(PLAYER_NAME_ATTR);
         vm.put(SIGNED_IN_ATTR, playerLobby.isActiveUser(thisPlayerName));
         vm.put(FREE_PLAYERS_ATTR, playerLobby.getFreePlayerNames(thisPlayerName));
+        vm.put(PLAYER_NAME_ATTR, thisPlayerName);
         System.out.println(vm);
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
