@@ -26,6 +26,7 @@ public class Game {
         this.p1 = p1;
         this.p2 = p2;
         this.board = new Board();
+        this.playerTurn = p1.getPlayerName();
         p1.assignGame(Player.PieceColor.RED, this);
         p2.assignGame(Player.PieceColor.WHITE, this);
     }

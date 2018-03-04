@@ -13,6 +13,7 @@ import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 
 public class GetGameRoute implements Route {
@@ -23,6 +24,7 @@ public class GetGameRoute implements Route {
     SessionStorage sessionStorage;
     TemplateEngine templateEngine;
     private static int gameId = 0;
+    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     public GetGameRoute(final PlayerLobby playerLobby, SessionStorage sessionStorage, final TemplateEngine templateEngine) {
         this.playerLobby = playerLobby;
@@ -48,22 +50,30 @@ public class GetGameRoute implements Route {
     public String renderGamePage(Request request, Response response) {
 
         Player currentPlayer = sessionStorage.getPlayerBySession(request.session().id());
+        if (currentPlayer == null) {
+            sessionStorage.debugPrint();
+        }
 
+        String opponentName = request.queryParams("opponentName");
+        Player opponent = playerLobby.getPlayerByUsername(opponentName);
 
         Game game = currentPlayer.getGame();
+        if (game == null) {
+            game = new Game(gameId, currentPlayer, opponent);
+        }
 
         Map<String, Object> attributes = new HashMap<>();
-        boolean readOnlyMode = false;
+        boolean viewMode = false;
 
         // Get players
         final Player player1 = game.getPlayers()[0];
         final Player player2 = game.getPlayers()[1];
 
-        //Game.startNewGame(gameId, player1, player2);
+
 
         // Has game been won?
         if (game.getWinner() != null) {
-            readOnlyMode = true;
+            viewMode = true;
 
             String winner = game.getWinner();
             attributes.put("winner", winner);
@@ -79,10 +89,10 @@ public class GetGameRoute implements Route {
         }
 
         if (player1 != currentPlayer && player2 != currentPlayer) {
-            readOnlyMode = true;
+            viewMode = true;
             attributes.put("title", String.format("Game #%d (%s vs. %s)", gameId, player1.getPlayerName(), player2.getPlayerName()));
         } else {
-            Player opponent = player2;
+            opponent = player2;
             String playerColor = currentPlayer.getPieceColor() == Player.PieceColor.RED ? "RED" : "WHITE" ;
             String opponentColor = playerColor.equals("RED") ? "WHITE" : "RED";
             Boolean isMyTurn = game.getPlayerTurn().equals(player1.getPlayerName());
@@ -96,23 +106,24 @@ public class GetGameRoute implements Route {
 
             attributes.put("title", String.format("Game #%d (Opponent: %s)", gameId, opponent.getPlayerName()));
             attributes.put("playerColor", playerColor);
-            attributes.put("opponentName", opponent.getPlayerName());
+            attributes.put("name", opponent.getPlayerName());
             attributes.put("opponentColor", opponentColor);
             attributes.put("isMyTurn", isMyTurn);
         }
 
-        String whoseTurn;
+        Player whoseTurn;
         if (game.getPlayerTurn().equals(game.getPlayers()[0].getPlayerName())) {
-            whoseTurn = player1.getPlayerName();
+            whoseTurn = player1;
         } else {
-            whoseTurn = player2.getPlayerName();
+            whoseTurn = player2;
         }
 
-        attributes.put("whoseTurn", whoseTurn);
-        attributes.put("gameId", gameId);
-        attributes.put("playerName", currentPlayer.getPlayerName());
-        attributes.put("board", game.getBoard());
-        attributes.put("readOnly", readOnlyMode);
+        attributes.put("redPlayer", player1);
+        attributes.put("whitePlayer", player2);
+        attributes.put("viewMode", viewMode);
+        attributes.put("activeColor", "RED");
+        attributes.put("currentPlayer", whoseTurn);
+        // response.redirect(GAME);
 
         return templateEngine.render(new ModelAndView(attributes, GAME_FTL));
     }
@@ -120,6 +131,7 @@ public class GetGameRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
+        LOG.finer("GetGameRoute is invoked");
         return renderGamePage(request, response);
     }
 }
