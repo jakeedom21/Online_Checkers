@@ -11,7 +11,7 @@ import spark.Route;
 import spark.Session;
 
 /**
- * The UI Controller to log the user out.
+ * The UI Controller to sign the user out.
  *
  */
 public class GetSignOutRoute implements Route {
@@ -41,7 +41,7 @@ public class GetSignOutRoute implements Route {
     }
 
     /**
-     * Render the WebCheckers Home page.
+     * Sign the user out.
      *
      * @param request
      *   the HTTP request
@@ -49,18 +49,23 @@ public class GetSignOutRoute implements Route {
      *   the HTTP response
      *
      * @return
-     *   redirect the user to the home page, logged out
+     *   null, redirect the user to the home page
      */
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetSignOutRoute is invoked.");
 
         final Session currentSession = request.session();
-        String playerName = currentSession.attribute(PostSignInRoute.PLAYER_NAME_ATTR);
+
+        // get the player name from the session
+        String playerName = currentSession.attribute(GetHomeRoute.PLAYER_NAME_ATTR);
+
+        // remove the player from the PlayerLobby and SessionStorage
         this.playerLobby.removePlayer(playerName);
         this.sessionStorage.removeUserSession(playerName);
-        response.redirect("/");
 
+        // redirect the user back to the home page after signing out
+        response.redirect("/");
         return null;
     }
 
