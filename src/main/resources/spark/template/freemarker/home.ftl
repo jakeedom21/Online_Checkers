@@ -9,12 +9,12 @@
   <div class="page">
     <h1>Web Checkers</h1>
     <div class="navigation">
-      <a href="/">my home</a>
-      <#if !signedInPlayer>
-        <a href="/signin">sign in</a>
-      <#else>
-        <a href="/signout">sign out</a>
-      </#if>
+    <#if signedInPlayer>
+      <a href="/">my home</a> |
+      <a href="/signout">sign out [${playerName}]</a>
+    <#else>
+      <a href="/signin">sign in</a>
+    </#if>
     </div>
     
     <div class="body">
@@ -25,10 +25,9 @@
 
         <#list freePlayers as opponent>
           <form action="./game" method="GET">
-            <li><input type="hidden" name="opponentName" value=${opponent} /></li>
-            <input type="submit" value=Challange />
+            <input type="hidden" name="opponentName" value="${opponent}" />
+            <input type="submit" value="Challenge ${opponent} to a game!" />
       	  </form>
-      	  </p>
       	<#else>
           <p>Waiting for an opponent...</p>
       	</#list>
