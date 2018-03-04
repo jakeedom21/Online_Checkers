@@ -5,7 +5,6 @@ package com.webcheckers.ui;
  */
 
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.appl.RouteManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.storage.SessionStorage;
@@ -30,21 +29,6 @@ public class GetGameRoute implements Route {
         this.playerLobby = playerLobby;
         this.sessionStorage = sessionStorage;
         this.templateEngine = templateEngine;
-    }
-
-    public String createNewGame(Request request, Response response) {
-        // initialize new game
-        Player p1 = sessionStorage.getPlayerBySession(request.session().id());
-        if (p1 == null){
-            // redirect
-        }
-        final String opponentName = request.queryParams("opponentName");
-        Player p2 = playerLobby.getPlayerByUsername(opponentName);
-
-        // createNewGame
-        //Game.startNewGame(gameId, p1, p2);
-        response.redirect(RouteManager.GAMES_ROUTE);
-        return null;
     }
 
     public String renderGamePage(Request request, Response response) {
@@ -128,8 +112,7 @@ public class GetGameRoute implements Route {
 
         return templateEngine.render(new ModelAndView(attributes, GAME_FTL));
     }
-
-
+    
     @Override
     public Object handle(Request request, Response response) throws Exception {
         LOG.finer("GetGameRoute is invoked");

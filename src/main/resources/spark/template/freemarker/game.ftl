@@ -83,7 +83,7 @@
                   <div class="Piece"
                        id="piece-${row?index}-${space?index}"
                        data-type="${space.getPiece().getType()}"
-                       data-color="${space.getPiece().getColor()}">     
+                       data-color="${space.getPiece().getColor()}">
                   </div>
                 </#if>
                 </td>
