@@ -72,5 +72,9 @@ public class Board implements Serializable{
     public int getP2Pieces() {
         return this.whitePieces;
     }
+
+    public Space[][] getRaw() {
+        return this.board;
+    }
 }
 
