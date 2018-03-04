@@ -118,11 +118,12 @@ public class GetGameRoute implements Route {
             whoseTurn = player2;
         }
 
-        attributes.put("redPlayer", player1);
-        attributes.put("whitePlayer", player2);
+        attributes.put("redPlayerName", player1.getPlayerName());
+        attributes.put("whitePlayerName", player2.getPlayerName());
         attributes.put("viewMode", viewMode);
         attributes.put("activeColor", "RED");
-        attributes.put("currentPlayer", whoseTurn);
+        attributes.put("currentPlayerName", whoseTurn.getPlayerName());
+        attributes.put("board", game.getBoard().getRaw());
         // response.redirect(GAME);
 
         return templateEngine.render(new ModelAndView(attributes, GAME_FTL));
