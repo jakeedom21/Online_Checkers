@@ -28,6 +28,16 @@ public class PlayerLobby {
         allUserNames.add(playerName);
     }
 
+    public void removePlayer(String playerName) {
+        if(signedInPlayers.containsKey(playerName)) {
+            signedInPlayers.remove(playerName);
+        }
+
+        if(allUserNames.contains(playerName)) {
+            allUserNames.remove(playerName);
+        }
+    }
+
     public boolean isActiveUser(String playerName) {
         return signedInPlayers.keySet().contains(playerName);
     }
