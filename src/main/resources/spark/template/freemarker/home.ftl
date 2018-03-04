@@ -10,6 +10,11 @@
     <h1>Web Checkers</h1>
     <div class="navigation">
       <a href="/">my home</a>
+      <#if !signedInPlayer>
+        <a href="/signin">sign in</a>
+      <#else>
+        <a href="/signout">sign out</a>
+      </#if>
     </div>
     
     <div class="body">
@@ -27,8 +32,6 @@
       	<#else>
           <p>Waiting for an opponent...</p>
       	</#list>
-      <#else>
-        <p><a href="/signin">sign in</a></p>
       </#if>
     </div>
   </div>
