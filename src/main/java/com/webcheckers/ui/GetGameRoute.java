@@ -7,10 +7,11 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.ViewType;
 import com.webcheckers.storage.SessionStorage;
 import spark.*;
 
-import resources.public.js.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -108,10 +109,10 @@ public class GetGameRoute implements Route {
         attributes.put("activeColor", "RED");
         attributes.put("currentPlayerName", whoseTurn.getPlayerName());
         attributes.put("board", game.getBoard().getRaw());
-        attributes.put("boardController", BoardController)
-        BoardController(game);
-        // response.redirect(GAME);
+        attributes.put("viewMode", ViewType.PLAY);
 
+        // response.redirect(GAME);
+        templateEngine.render(new ModelAndView(game, "main.js"));
         return templateEngine.render(new ModelAndView(attributes, GAME_FTL));
     }
     

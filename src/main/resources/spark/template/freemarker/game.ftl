@@ -61,7 +61,7 @@
               </table>
             </div>
           </fieldset>
-          
+
           <fieldset id="game-toolbar">
             <legend>Controls</legend>
             <div class="toolbar"></div>
