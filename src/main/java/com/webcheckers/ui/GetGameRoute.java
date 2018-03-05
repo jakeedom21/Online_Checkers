@@ -8,6 +8,7 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.storage.SessionStorage;
+import javafx.geometry.Pos;
 import spark.*;
 
 import java.util.HashMap;
@@ -69,9 +70,12 @@ public class GetGameRoute implements Route {
             game = currentPlayer.getGame();
         }
 
+        // save game in session attribute map
         currentSession.attribute(GAME_ATTR,game);
 
         Map<String, Object> attributes = new HashMap<>();
+        attributes.put(GetHomeRoute.SIGNED_IN_ATTR, playerLobby.isActiveUser(currentPlayer.getPlayerName()));
+        attributes.put(PostSignInRoute.PLAYER_NAME_ATTR, currentSession.attribute(PostSignInRoute.PLAYER_NAME_ATTR));
         boolean viewMode = false;
 
         // Get players
