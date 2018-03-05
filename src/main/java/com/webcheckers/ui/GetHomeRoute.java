@@ -65,6 +65,14 @@ public class GetHomeRoute implements Route {
         vm.put(NUM_USER_ATTR, playerLobby.getPlayers().size());
 
         final Session currentSession = request.session();
+
+        if (currentSession.attribute(SIGNED_IN_ATTR)!=null ) {
+            String myUserName = currentSession.attribute(PLAYER_NAME_ATTR);
+            if(playerLobby.getPlayerByUsername(myUserName).isInGame()){
+                response.redirect("/game");
+            }
+        }
+
         if (currentSession.attribute(BUSY_OPPONENT_ATTR)==null){
             currentSession.attribute(BUSY_OPPONENT_ATTR, false);
         }

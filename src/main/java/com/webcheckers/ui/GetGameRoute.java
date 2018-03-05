@@ -19,6 +19,7 @@ public class GetGameRoute implements Route {
 
     public static final String GAME = "/game";
     private static final String GAME_FTL = "game.ftl";
+    final static String GAME_ATTR = "game";
     PlayerLobby playerLobby;
     SessionStorage sessionStorage;
     TemplateEngine templateEngine;
@@ -31,7 +32,7 @@ public class GetGameRoute implements Route {
         this.templateEngine = templateEngine;
     }
 
-    private boolean busyOpponent(String opponentName){
+    private boolean busyOpponent(String opponentName) {
         return playerLobby.getPlayerByUsername(opponentName).isInGame();
     }
 
@@ -43,21 +44,32 @@ public class GetGameRoute implements Route {
             sessionStorage.debugPrint();
         }
 
+        Game game;
+        Player opponent;
+
         String opponentName = request.queryParams("opponentName");
-        Player opponent = playerLobby.getPlayerByUsername(opponentName);
 
-        //busyOpponentError, back to home choose opponent again
-        if (busyOpponent(opponentName)){
-            currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, true);
-            response.redirect("/");
-        } else {
-            currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, false);
-        }
+        // if player chose opponent successfully, opponentName is not null
+        if (opponentName != null) {
+            opponent = playerLobby.getPlayerByUsername(opponentName);
 
-        Game game = currentPlayer.getGame();
-        if (game == null) {
+            //busyOpponentError, back to /home choose opponent again
+            if (busyOpponent(opponentName)) {
+                currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, true);
+                response.redirect("/");
+            } else {
+                currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, false);
+            }
             game = new Game(gameId, currentPlayer, opponent);
+
+        // if player did not choose opponent (assigned a game),
+        // opponentName is null(?) since there's no request came from /home
+        } else {
+            //opponent = playerLobby.getPlayerByUsername(currentPlayer.getOpponentName());
+            game = currentPlayer.getGame();
         }
+
+        currentSession.attribute(GAME_ATTR,game);
 
         Map<String, Object> attributes = new HashMap<>();
         boolean viewMode = false;
@@ -65,8 +77,6 @@ public class GetGameRoute implements Route {
         // Get players
         final Player player1 = game.getPlayers()[0];
         final Player player2 = game.getPlayers()[1];
-
-
 
         // Has game been won?
         if (game.getWinner() != null) {
@@ -90,7 +100,7 @@ public class GetGameRoute implements Route {
             attributes.put("title", String.format("Game #%d (%s vs. %s)", gameId, player1.getPlayerName(), player2.getPlayerName()));
         } else {
             opponent = player2;
-            String playerColor = currentPlayer.getPieceColor() == Player.PieceColor.RED ? "RED" : "WHITE" ;
+            String playerColor = currentPlayer.getPieceColor() == Player.PieceColor.RED ? "RED" : "WHITE";
             String opponentColor = playerColor.equals("RED") ? "WHITE" : "RED";
             Boolean isMyTurn = game.getPlayerTurn().equals(player1.getPlayerName());
 
@@ -125,7 +135,7 @@ public class GetGameRoute implements Route {
 
         return templateEngine.render(new ModelAndView(attributes, GAME_FTL));
     }
-    
+
     @Override
     public Object handle(Request request, Response response) throws Exception {
         LOG.finer("GetGameRoute is invoked");

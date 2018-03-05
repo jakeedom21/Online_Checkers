@@ -67,6 +67,7 @@ public class  PostSignInRoute implements TemplateViewRoute {
                 sessionStorage.addSession(playerName, currentSession);
                 vm.put(PLAYER, playerName);
                 currentSession.attribute(PLAYER_NAME_ATTR, playerName);
+                currentSession.attribute(GetHomeRoute.SIGNED_IN_ATTR, true);
                 LOG.log(Level.INFO,"POST /signin: " + request.session().id() + playerName);
                 response.redirect("/");
 
