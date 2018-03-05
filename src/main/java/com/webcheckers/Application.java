@@ -1,11 +1,8 @@
 package com.webcheckers;
 
 import com.google.gson.Gson;
-<<<<<<< HEAD
 import com.webcheckers.appl.PlayerLobby;
-=======
-import com.webcheckers.model.Board;
->>>>>>> start_game
+import com.webcheckers.storage.SessionStorage;
 import com.webcheckers.ui.WebServer;
 import spark.TemplateEngine;
 import spark.template.freemarker.FreeMarkerEngine;
@@ -22,65 +19,22 @@ import java.util.logging.Logger;
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public final class Application {
-<<<<<<< HEAD
-  private static final Logger LOG = Logger.getLogger(Application.class.getName());
-
-  //
-  // Application Launch method
-  //
-
-  /**
-   * Entry point for the WebCheckers web application.
-   *
-   * <p>
-   * It wires the application components together.  This is an example
-   * of <a href='https://en.wikipedia.org/wiki/Dependency_injection'>Dependency Injection</a>
-   * </p>
-   *
-   * @param args
-   *    Command line arguments; none expected.
-   */
-  public static void main(String[] args) {
-    // initialize Logging
-    try {
-      ClassLoader classLoader = Application.class.getClassLoader();
-      final InputStream logConfig = classLoader.getResourceAsStream("log.properties");
-      LogManager.getLogManager().readConfiguration(logConfig);
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.err.println("Could not initialize log manager because: " + e.getMessage());
-    }
-    final PlayerLobby playerLobby = new PlayerLobby();
-
-    // The application uses FreeMarker templates to generate the HTML
-    // responses sent back to the client. This will be the engine processing
-    // the templates and associated data.
-    final TemplateEngine templateEngine = new FreeMarkerEngine();
-
-    // The application uses Gson to generate JSON representations of Java objects.
-    // This should be used by your Ajax Routes to generate JSON for the HTTP
-    // response to Ajax requests.
-    final Gson gson = new Gson();
-
-    // inject the game center and freemarker engine into web server
-    final WebServer webServer = new WebServer(playerLobby, templateEngine, gson);
-=======
     private static final Logger LOG = Logger.getLogger(Application.class.getName());
 
     //
     // Application Launch method
     //
->>>>>>> start_game
 
     /**
      * Entry point for the WebCheckers web application.
-     * <p>
+     *
      * <p>
      * It wires the application components together.  This is an example
      * of <a href='https://en.wikipedia.org/wiki/Dependency_injection'>Dependency Injection</a>
      * </p>
      *
-     * @param args Command line arguments; none expected.
+     * @param args
+     *    Command line arguments; none expected.
      */
     public static void main(String[] args) {
         // initialize Logging
@@ -92,11 +46,13 @@ public final class Application {
             e.printStackTrace();
             System.err.println("Could not initialize log manager because: " + e.getMessage());
         }
-
+        final PlayerLobby playerLobby = new PlayerLobby();
+        final SessionStorage sessionStorage = new SessionStorage(playerLobby);
         // The application uses FreeMarker templates to generate the HTML
         // responses sent back to the client. This will be the engine processing
         // the templates and associated data.
         final TemplateEngine templateEngine = new FreeMarkerEngine();
+
 
         // The application uses Gson to generate JSON representations of Java objects.
         // This should be used by your Ajax Routes to generate JSON for the HTTP
@@ -104,7 +60,8 @@ public final class Application {
         final Gson gson = new Gson();
 
         // inject the game center and freemarker engine into web server
-        final WebServer webServer = new WebServer(templateEngine, gson);
+        final WebServer webServer = new WebServer(playerLobby, sessionStorage,templateEngine, gson);
+
 
         // inject web server into application
         final Application app = new Application(webServer);
@@ -137,13 +94,10 @@ public final class Application {
     private void initialize() {
         LOG.config("WebCheckers is initializing.");
 
-
         // configure Spark and startup the Jetty web server
         webServer.initialize();
 
         // other applications might have additional services to configure
-        Board b = new Board();
-        System.out.println(b);
 
         LOG.config("WebCheckers initialization complete.");
     }

@@ -1,9 +1,11 @@
 package com.webcheckers.model;
 
+import java.io.Serializable;
+
 /**
  * Created by qadirhaqq on 2/27/18.
  */
-public class Space {
+public class Space implements Serializable{
     private int row;
     private int col;
     private Piece piece = null;
