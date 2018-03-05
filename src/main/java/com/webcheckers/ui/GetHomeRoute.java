@@ -24,6 +24,7 @@ public class GetHomeRoute implements Route {
     static final String SIGNED_IN_ATTR = "signedInPlayer";
     static final String FREE_PLAYERS_ATTR = "freePlayers";
     static final String PLAYER_NAME_ATTR = "playerName";
+    static final String BUSY_OPPONENT_ATTR = "busyOpponentError";
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     private final PlayerLobby playerLobby;
@@ -58,14 +59,21 @@ public class GetHomeRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetHomeRoute is invoked.");
-        //
+
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         vm.put(NUM_USER_ATTR, playerLobby.getPlayers().size());
 
         final Session currentSession = request.session();
+        if (currentSession.attribute(BUSY_OPPONENT_ATTR)==null){
+            currentSession.attribute(BUSY_OPPONENT_ATTR, false);
+        }
+
         String thisPlayerName = currentSession.attribute(PLAYER_NAME_ATTR);
         vm.put(SIGNED_IN_ATTR, playerLobby.isActiveUser(thisPlayerName));
+
+        vm.put(BUSY_OPPONENT_ATTR, currentSession.attribute(BUSY_OPPONENT_ATTR));
+
         vm.put(FREE_PLAYERS_ATTR, playerLobby.getFreePlayerNames(thisPlayerName));
         vm.put(PLAYER_NAME_ATTR, thisPlayerName);
         System.out.println(vm);

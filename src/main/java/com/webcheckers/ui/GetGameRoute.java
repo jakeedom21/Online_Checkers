@@ -31,15 +31,28 @@ public class GetGameRoute implements Route {
         this.templateEngine = templateEngine;
     }
 
+    private boolean busyOpponent(String opponentName){
+        return playerLobby.getPlayerByUsername(opponentName).isInGame();
+    }
+
     public String renderGamePage(Request request, Response response) {
 
-        Player currentPlayer = sessionStorage.getPlayerBySession(request.session().id());
+        Session currentSession = request.session();
+        Player currentPlayer = sessionStorage.getPlayerBySession(currentSession.id());
         if (currentPlayer == null) {
             sessionStorage.debugPrint();
         }
 
         String opponentName = request.queryParams("opponentName");
         Player opponent = playerLobby.getPlayerByUsername(opponentName);
+
+        //busyOpponentError, back to home choose opponent again
+        if (busyOpponent(opponentName)){
+            currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, true);
+            response.redirect("/");
+        } else {
+            currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, false);
+        }
 
         Game game = currentPlayer.getGame();
         if (game == null) {
