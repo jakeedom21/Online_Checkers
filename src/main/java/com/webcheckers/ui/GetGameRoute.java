@@ -42,6 +42,8 @@ public class GetGameRoute implements Route {
         Player currentPlayer = sessionStorage.getPlayerBySession(currentSession.id());
         if (currentPlayer == null) {
             sessionStorage.debugPrint();
+            response.redirect("/");
+            return null;
         }
 
         Game game;
@@ -57,6 +59,7 @@ public class GetGameRoute implements Route {
             if (busyOpponent(opponentName)) {
                 currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, true);
                 response.redirect("/");
+                return null;
             } else {
                 currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, false);
             }

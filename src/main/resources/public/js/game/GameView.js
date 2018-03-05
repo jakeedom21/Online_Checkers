@@ -45,6 +45,7 @@ define(function(require){
   //
 
   GameView.prototype.startup = function startup() {
+    console.log('GameView.startup()');
     // initialize the Info fieldset with the player's names
     this.setRedPlayersName(this._gameState.getRedPlayer());
     this.setWhitePlayersName(this._gameState.getWhitePlayer());
