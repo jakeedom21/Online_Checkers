@@ -8,7 +8,6 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.storage.SessionStorage;
-import javafx.geometry.Pos;
 import spark.*;
 
 import java.util.HashMap;
@@ -139,7 +138,6 @@ public class GetGameRoute implements Route {
         attributes.put("activeColor", "RED");
         attributes.put("currentPlayerName", whoseTurn.getPlayerName());
         attributes.put("board", game.getBoard().getRaw());
-        // response.redirect(GAME);
 
         return templateEngine.render(new ModelAndView(attributes, GAME_FTL));
     }
