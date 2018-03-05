@@ -10,13 +10,13 @@ import com.webcheckers.model.Player;
 import com.webcheckers.storage.SessionStorage;
 import spark.*;
 
+import resources.public.js.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
 
 public class GetGameRoute implements Route {
-
     public static final String GAME = "/game";
     private static final String GAME_FTL = "game.ftl";
     PlayerLobby playerLobby;
@@ -108,6 +108,8 @@ public class GetGameRoute implements Route {
         attributes.put("activeColor", "RED");
         attributes.put("currentPlayerName", whoseTurn.getPlayerName());
         attributes.put("board", game.getBoard().getRaw());
+        attributes.put("boardController", BoardController)
+        BoardController(game);
         // response.redirect(GAME);
 
         return templateEngine.render(new ModelAndView(attributes, GAME_FTL));

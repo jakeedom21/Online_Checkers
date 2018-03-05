@@ -28,7 +28,8 @@
     </div>
     
     <div class="body">
-      
+
+
       <p id="help_text"></p>
       
       <div>
