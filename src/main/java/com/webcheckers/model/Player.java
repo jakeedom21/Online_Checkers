@@ -1,13 +1,7 @@
 package com.webcheckers.model;
 
-/**
- * This class holds Player metadata and functions to modify and get player values.
- *
- * @version 1.0
- */
 public class Player {
 
-    // Constants
     public enum PieceColor {
         RED, WHITE
     }
@@ -17,6 +11,7 @@ public class Player {
     private boolean inGame;
     private PieceColor pieceColor;
     private Game currentGame;
+    private String opponentName;
 
     /**
      * Constructor for Player
@@ -29,52 +24,34 @@ public class Player {
         this.inGame = false;
         this.pieceColor = null;
         this.currentGame = null;
+        this.opponentName = null;
     }
 
-    /**
-     * Getter for the players name
-     * @return the player's name
-     */
     public String getPlayerName(){
         return playerName;
     }
 
-    /**
-     * Setter for the player's game
-     * @param game
-     */
-    public void setGame(Game game){
-        this.currentGame = game;
+
+    public String getOpponentName(){
+        return opponentName;
     }
 
-    /**
-     * Getter for the player's game
-     * @return
-     */
+//    public void setGame(Game game){
+//        this.currentGame = game;
+//    }
+
     public Game getGame() {
         return this.currentGame;
     }
 
-    /**
-     * Function to identify if a player is in a game
-     * @return boolean: True if player is in a game
-     */
     public boolean isInGame() {
         return inGame;
     }
 
-    /**
-     * Setter for the boolean for whether a player is in a game
-     * @param inGame
-     */
-    public void setInGame(boolean inGame) {
-        this.inGame = inGame;
-    }
+//    public void setInGame(boolean inGame) {
+//        this.inGame = inGame;
+//    }
 
-    /**
-     * Getter for the player's piece color
-     * @return red or white piece color
-     */
     public PieceColor getPieceColor() {
         return pieceColor;
     }
@@ -85,10 +62,11 @@ public class Player {
      * @param pieceColor assigned to this player, RED(1) and WHITE(2) for the playee
      * @param gameToPlay the Game object for this player and his/her opponent
      */
-    public void assignGame(PieceColor pieceColor, Game gameToPlay) {
+    public void assignGame(PieceColor pieceColor, Game gameToPlay, Player opponent) {
         this.inGame = true;
         this.pieceColor = pieceColor;
         this.currentGame = gameToPlay;
+        this.opponentName = opponent.getOpponentName();
     }
 
     /**
@@ -98,6 +76,7 @@ public class Player {
         this.inGame = false;
         this.pieceColor = null;
         this.currentGame = null;
+        this.opponentName = null;
     }
 
     @Override

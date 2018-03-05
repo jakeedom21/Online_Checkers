@@ -5,10 +5,10 @@ package com.webcheckers.ui;
  */
  
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.appl.RouteManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.storage.SessionStorage;
+import javafx.geometry.Pos;
 import spark.*;
 
 import java.util.HashMap;
@@ -20,6 +20,7 @@ public class GetGameRoute implements Route {
 
     public static final String GAME = "/game";
     private static final String GAME_FTL = "game.ftl";
+    final static String GAME_ATTR = "game";
     PlayerLobby playerLobby;
     SessionStorage sessionStorage;
     TemplateEngine templateEngine;
@@ -32,44 +33,58 @@ public class GetGameRoute implements Route {
         this.templateEngine = templateEngine;
     }
 
-    public String createNewGame(Request request, Response response) {
-        // initialize new game
-        Player p1 = sessionStorage.getPlayerBySession(request.session().id());
-        if (p1 == null){
-            // redirect
-        }
-        final String opponentName = request.queryParams("opponentName");
-        Player p2 = playerLobby.getPlayerByUsername(opponentName);
-
-        // createNewGame
-        //Game.startNewGame(gameId, p1, p2);
-        response.redirect(RouteManager.GAMES_ROUTE);
-        return null;
+    private boolean busyOpponent(String opponentName) {
+        return playerLobby.getPlayerByUsername(opponentName).isInGame();
     }
 
     public String renderGamePage(Request request, Response response) {
 
-        Player currentPlayer = sessionStorage.getPlayerBySession(request.session().id());
+        Session currentSession = request.session();
+        Player currentPlayer = sessionStorage.getPlayerBySession(currentSession.id());
         if (currentPlayer == null) {
             sessionStorage.debugPrint();
         }
 
-        String opponentName = request.queryParams("opponentName");
-        Player opponent = playerLobby.getPlayerByUsername(opponentName);
+        Game game;
+        Player opponent;
 
-        Game game = currentPlayer.getGame();
-        if (game == null) {
+        String opponentName = request.queryParams("opponentName");
+
+        // if player chose opponent successfully, opponentName is not null
+        if (opponentName != null) {
+            opponent = playerLobby.getPlayerByUsername(opponentName);
+
+            //busyOpponentError, back to /home choose opponent again
+            if (busyOpponent(opponentName)) {
+                currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, true);
+                response.redirect("/");
+            } else {
+                currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, false);
+            }
             game = new Game(gameId, currentPlayer, opponent);
+
+        // if player did not choose opponent (assigned a game),
+        // opponentName is null(?) since there's no request came from /home
+        } else {
+            //opponent = playerLobby.getPlayerByUsername(currentPlayer.getOpponentName());
+            game = currentPlayer.getGame();
         }
 
+        //set pieces' orientation according the session's owner
+        game.setOrientation(currentPlayer);
+
+
+        // save game in session attribute map
+        currentSession.attribute(GAME_ATTR,game);
+
         Map<String, Object> attributes = new HashMap<>();
+        attributes.put(GetHomeRoute.SIGNED_IN_ATTR, playerLobby.isActiveUser(currentPlayer.getPlayerName()));
+        attributes.put(PostSignInRoute.PLAYER_NAME_ATTR, currentSession.attribute(PostSignInRoute.PLAYER_NAME_ATTR));
         boolean viewMode = false;
 
         // Get players
         final Player player1 = game.getPlayers()[0];
         final Player player2 = game.getPlayers()[1];
-
-
 
         // Has game been won?
         if (game.getWinner() != null) {
@@ -93,7 +108,7 @@ public class GetGameRoute implements Route {
             attributes.put("title", String.format("Game #%d (%s vs. %s)", gameId, player1.getPlayerName(), player2.getPlayerName()));
         } else {
             opponent = player2;
-            String playerColor = currentPlayer.getPieceColor() == Player.PieceColor.RED ? "RED" : "WHITE" ;
+            String playerColor = currentPlayer.getPieceColor() == Player.PieceColor.RED ? "RED" : "WHITE";
             String opponentColor = playerColor.equals("RED") ? "WHITE" : "RED";
             Boolean isMyTurn = game.getPlayerTurn().equals(player1.getPlayerName());
 
@@ -118,16 +133,16 @@ public class GetGameRoute implements Route {
             whoseTurn = player2;
         }
 
-        attributes.put("redPlayer", player1);
-        attributes.put("whitePlayer", player2);
+        attributes.put("redPlayerName", player1.getPlayerName());
+        attributes.put("whitePlayerName", player2.getPlayerName());
         attributes.put("viewMode", viewMode);
         attributes.put("activeColor", "RED");
-        attributes.put("currentPlayer", whoseTurn);
+        attributes.put("currentPlayerName", whoseTurn.getPlayerName());
+        attributes.put("board", game.getBoard().getRaw());
         // response.redirect(GAME);
 
         return templateEngine.render(new ModelAndView(attributes, GAME_FTL));
     }
-
 
     @Override
     public Object handle(Request request, Response response) throws Exception {

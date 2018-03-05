@@ -54,7 +54,7 @@ public class Piece implements Serializable {
      * @return piece color
      */
     public String getColor() {
-        return color;
+        return this.color.equals("R") ? "RED" : "WHITE";
     }
 
     /**
@@ -71,6 +71,8 @@ public class Piece implements Serializable {
     public boolean isKing() {
         return isKing;
     }
+
+    public String getType() { return isKing ? "KING" : "SINGLE"; }
 
     public String toString() {
         return this.color;

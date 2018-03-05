@@ -9,6 +9,9 @@ import java.util.HashSet;
 public class Board implements Serializable{
     private int redPieces = 12;
     private int whitePieces = 12;
+    //private Player plyer1;
+    //private Player player2;
+    //private Player owner;
     private static final int MAX_DIM = 8;
     private static final String PLAYER1_COLOR = "W";
     private static final String PLAYER2_COLOR = "R";
@@ -20,16 +23,23 @@ public class Board implements Serializable{
 
     //Picture used as reference: http://allaboutfunandgames.com/wp-content/uploads/2011/11/Checkers.jpg
     public Board() {
+        //this.plyer1  = player1;
+        //this.player2 = player2;
+        //this.owner = owner;
         //Create each space
         for (int i = 0; i < MAX_DIM; i++) {
             for (int j = 0; j < MAX_DIM; j++) {
                 board[i][j] = new Space(i, j);
             }
         }
-        setBoardPieces();
+        //setBoardPieces(owner);
     }
 
-    private void setBoardPieces(){
+    /**
+     * Call when want to flip the board orientation by passing in the owner of the session
+     * @param owner
+     */
+     void setBoardPieces(Player owner){
         EMPTY_ROWS.add(3);
         EMPTY_ROWS.add(4);
         // Populate the board from top to bottom
@@ -37,20 +47,25 @@ public class Board implements Serializable{
             if (!EMPTY_ROWS.contains(row)) { // not rows 3 or 4
                 if (row % 2 == 0) {
                     for (int col = 1; col < MAX_DIM; col += 2) {
-                        createPiece(row, col);
+                        createPiece(row, col, owner.getPieceColor());
                     }
                 }
                 if (row % 2 == 1) {
                     for (int col = 0; col < MAX_DIM; col += 2) {
-                        createPiece(row, col);
+                        createPiece(row, col, owner.getPieceColor());
                     }
                 }
             }
         }
     }
 
-    private void createPiece(int row, int col) {
-        String color = (row > MAX_DIM/2) ? PLAYER1_COLOR : PLAYER2_COLOR;
+    private void createPiece(int row, int col, Player.PieceColor pieceColor) {
+        String color;
+        if (pieceColor.equals(Player.PieceColor.WHITE)) {
+            color = (row > MAX_DIM / 2) ? PLAYER1_COLOR : PLAYER2_COLOR;
+        } else { //RED
+            color = (row > MAX_DIM / 2) ? PLAYER2_COLOR : PLAYER1_COLOR;
+        }
         board[row][col].setPiece(new Piece(row, col, color));
     }
 
@@ -71,6 +86,10 @@ public class Board implements Serializable{
 
     public int getP2Pieces() {
         return this.whitePieces;
+    }
+
+    public Space[][] getRaw() {
+        return this.board;
     }
 }
 
