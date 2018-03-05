@@ -27,8 +27,12 @@ public class Game {
         this.p2 = p2;
         this.board = new Board();
         this.playerTurn = p1.getPlayerName();
-        p1.assignGame(Player.PieceColor.RED, this);
-        p2.assignGame(Player.PieceColor.WHITE, this);
+        p1.assignGame(Player.PieceColor.RED, this,p2);
+        p2.assignGame(Player.PieceColor.WHITE, this,p1);
+    }
+
+    public void setOrientation(Player player){
+        board.setBoardPieces(player);
     }
 
     public Player[] getPlayers() {
@@ -41,9 +45,6 @@ public class Game {
     public Board getBoard() {
         return this.board;
     }
-
-
-
 
     public String getPlayerTurn() {
         return this.playerTurn;

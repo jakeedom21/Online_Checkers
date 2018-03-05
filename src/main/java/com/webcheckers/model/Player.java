@@ -11,6 +11,7 @@ public class Player {
     private boolean inGame;
     private PieceColor pieceColor;
     private Game currentGame;
+    private String opponentName;
 
     /**
      * Constructor for Player
@@ -23,6 +24,7 @@ public class Player {
         this.inGame = false;
         this.pieceColor = null;
         this.currentGame = null;
+        this.opponentName = null;
     }
 
     public String getPlayerName(){
@@ -30,9 +32,13 @@ public class Player {
     }
 
 
-    public void setGame(Game game){
-        this.currentGame = game;
+    public String getOpponentName(){
+        return opponentName;
     }
+
+//    public void setGame(Game game){
+//        this.currentGame = game;
+//    }
 
     public Game getGame() {
         return this.currentGame;
@@ -42,9 +48,9 @@ public class Player {
         return inGame;
     }
 
-    public void setInGame(boolean inGame) {
-        this.inGame = inGame;
-    }
+//    public void setInGame(boolean inGame) {
+//        this.inGame = inGame;
+//    }
 
     public PieceColor getPieceColor() {
         return pieceColor;
@@ -56,10 +62,11 @@ public class Player {
      * @param pieceColor assigned to this player, RED(1) and WHITE(2) for the playee
      * @param gameToPlay the Game object for this player and his/her opponent
      */
-    public void assignGame(PieceColor pieceColor, Game gameToPlay) {
+    public void assignGame(PieceColor pieceColor, Game gameToPlay, Player opponent) {
         this.inGame = true;
         this.pieceColor = pieceColor;
         this.currentGame = gameToPlay;
+        this.opponentName = opponent.getOpponentName();
     }
 
     /**
@@ -69,6 +76,7 @@ public class Player {
         this.inGame = false;
         this.pieceColor = null;
         this.currentGame = null;
+        this.opponentName = null;
     }
 
     @Override

@@ -22,6 +22,9 @@
       <p>Online: ${numUsers}</p>
 
       <#if signedInPlayer>
+        <#if busyOpponentError>
+          <div class="error">The player you chose is currently in a game! Choose another one.</div>
+        </#if>
 
         <#list freePlayers as opponent>
           <form action="./game" method="GET">
