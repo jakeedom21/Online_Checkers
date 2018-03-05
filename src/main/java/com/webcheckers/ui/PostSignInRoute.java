@@ -40,7 +40,7 @@ public class  PostSignInRoute implements TemplateViewRoute {
         this.sessionStorage = sessionStorage;
     }
     public boolean isAlpha(String name) {
-        return name.matches("[a-zA-Z]+");
+        return name.matches("^[a-zA-Z][a-zA-Z0-9]*$");
     }
     /**
      * Render the WebCheckers Home page.
