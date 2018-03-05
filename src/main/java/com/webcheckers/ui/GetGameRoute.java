@@ -70,6 +70,10 @@ public class GetGameRoute implements Route {
             game = currentPlayer.getGame();
         }
 
+        //set pieces' orientation according the session's owner
+        game.setOrientation(currentPlayer);
+
+
         // save game in session attribute map
         currentSession.attribute(GAME_ATTR,game);
 

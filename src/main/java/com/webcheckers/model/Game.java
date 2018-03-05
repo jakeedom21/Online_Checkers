@@ -31,6 +31,10 @@ public class Game {
         p2.assignGame(Player.PieceColor.WHITE, this,p1);
     }
 
+    public void setOrientation(Player player){
+        board.setBoardPieces(player);
+    }
+
     public Player[] getPlayers() {
         Player[] players = new Player[2];
         players[0] = this.p1;
