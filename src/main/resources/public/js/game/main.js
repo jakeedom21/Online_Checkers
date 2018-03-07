@@ -10,7 +10,6 @@
   // some global Game state data such as the names and piece colors
   // for both players.
   var gameState = this.gameState;
-
   define(function(require){
     'use strict';
 

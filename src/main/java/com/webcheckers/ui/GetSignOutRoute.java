@@ -64,6 +64,9 @@ public class GetSignOutRoute implements Route {
         this.playerLobby.removePlayer(playerName);
         this.sessionStorage.removeUserSession(playerName);
 
+        // set the SIGNED_IN session attribute to null
+        currentSession.attribute(GetHomeRoute.SIGNED_IN_ATTR, null);
+
         // redirect the user back to the home page after signing out
         response.redirect("/");
         return null;

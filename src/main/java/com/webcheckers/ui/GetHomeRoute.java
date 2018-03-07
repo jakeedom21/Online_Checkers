@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import com.webcheckers.storage.SessionStorage;
 import spark.*;
 
@@ -65,10 +66,10 @@ public class GetHomeRoute implements Route {
         vm.put(NUM_USER_ATTR, playerLobby.getPlayers().size());
 
         final Session currentSession = request.session();
-
-        if (currentSession.attribute(SIGNED_IN_ATTR)!=null ) {
+        if (currentSession.attribute(SIGNED_IN_ATTR) != null ) {
             String myUserName = currentSession.attribute(PLAYER_NAME_ATTR);
-            if(playerLobby.getPlayerByUsername(myUserName).isInGame()){
+            Player player = playerLobby.getPlayerByUsername(myUserName);
+            if(player != null && player.isInGame()){
                 response.redirect("/game");
             }
         }

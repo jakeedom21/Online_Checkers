@@ -216,6 +216,7 @@ define(function(require){
     var startCell = $startEl.attr('data-cell');
     var endRow = $endEl.parent().attr('data-row');
     var endCell = $endEl.attr('data-cell');
+
     return new Move(
             new Position(parseInt(startRow), parseInt(startCell)),
             new Position(parseInt(endRow), parseInt(endCell)));

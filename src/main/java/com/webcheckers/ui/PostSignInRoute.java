@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * The UI Controller to POST the sign in page.
  *
  */
-public class  PostSignInRoute implements TemplateViewRoute {
+public class  PostSignInRoute implements Route {
     // Constants
     static final String PLAYER = "player";
     static final String MESSAGE_ATTR = "message";
@@ -23,6 +23,7 @@ public class  PostSignInRoute implements TemplateViewRoute {
 
     private final PlayerLobby playerLobby;
     private final SessionStorage sessionStorage;
+    private final TemplateEngine templateEngine;
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
     /**
@@ -32,12 +33,13 @@ public class  PostSignInRoute implements TemplateViewRoute {
      * @param playerLobby
      *   the playerLobby used by the application users
      */
-    public PostSignInRoute (final PlayerLobby playerLobby, SessionStorage sessionStorage) {
+    public PostSignInRoute (final PlayerLobby playerLobby, SessionStorage sessionStorage, TemplateEngine templateEngine) {
         // validation
         Objects.requireNonNull(playerLobby, "gameCenter must not be null");
         //
         this.playerLobby = playerLobby;
         this.sessionStorage = sessionStorage;
+        this.templateEngine = templateEngine;
     }
     public boolean isAlpha(String name) {
         return name.matches("^[a-zA-Z][a-zA-Z0-9]*$");
@@ -54,7 +56,7 @@ public class  PostSignInRoute implements TemplateViewRoute {
      *   the rendered HTML for the Home page
      */
     @Override
-    public ModelAndView handle(Request request, Response response) {
+    public Object handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
 //        vm.put("title", "Welcome!");
         LOG.finer("PostSignInRoute is invoked.");
@@ -78,10 +80,8 @@ public class  PostSignInRoute implements TemplateViewRoute {
             vm.put(MESSAGE_ATTR, "Not a valid name.");
         }
 
-
-        return null;
 //        return new ModelAndView(vm , "signin.ftl");
-//        return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+        return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
 
     }
 

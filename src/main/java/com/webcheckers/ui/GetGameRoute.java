@@ -3,15 +3,12 @@ package com.webcheckers.ui;
 /**
  * Created by Sameen Luo <xxl2398@rit.edu> on 2/28/2018.
  */
-
+ 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
-import com.webcheckers.model.ViewType;
 import com.webcheckers.storage.SessionStorage;
-import javafx.geometry.Pos;
 import spark.*;
-
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +16,7 @@ import java.util.logging.Logger;
 
 
 public class GetGameRoute implements Route {
+
     public static final String GAME = "/game";
     private static final String GAME_FTL = "game.ftl";
     final static String GAME_ATTR = "game";
@@ -44,6 +42,8 @@ public class GetGameRoute implements Route {
         Player currentPlayer = sessionStorage.getPlayerBySession(currentSession.id());
         if (currentPlayer == null) {
             sessionStorage.debugPrint();
+            response.redirect("/");
+            return null;
         }
 
         Game game;
@@ -59,6 +59,7 @@ public class GetGameRoute implements Route {
             if (busyOpponent(opponentName)) {
                 currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, true);
                 response.redirect("/");
+                return null;
             } else {
                 currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, false);
             }
@@ -140,10 +141,7 @@ public class GetGameRoute implements Route {
         attributes.put("activeColor", "RED");
         attributes.put("currentPlayerName", whoseTurn.getPlayerName());
         attributes.put("board", game.getBoard().getRaw());
-        attributes.put("viewMode", ViewType.PLAY);
 
-        // response.redirect(GAME);
-        templateEngine.render(new ModelAndView(game, "main.js"));
         return templateEngine.render(new ModelAndView(attributes, GAME_FTL));
     }
 
