@@ -23,6 +23,11 @@ public class GetGameRoute implements Route {
     PlayerLobby playerLobby;
     SessionStorage sessionStorage;
     TemplateEngine templateEngine;
+
+    public enum VIEW_MODE {
+        PLAY, REPLAY, SPECTATOR
+    }
+
     private static int gameId = 0;
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
@@ -134,7 +139,7 @@ public class GetGameRoute implements Route {
 
         attributes.put("redPlayerName", player1.getPlayerName());
         attributes.put("whitePlayerName", player2.getPlayerName());
-        attributes.put("viewMode", viewMode);
+        attributes.put("viewMode", VIEW_MODE.PLAY.name());
         attributes.put("activeColor", "RED");
         attributes.put("currentPlayerName", whoseTurn.getPlayerName());
         attributes.put("board", game.getBoard().getRaw());
