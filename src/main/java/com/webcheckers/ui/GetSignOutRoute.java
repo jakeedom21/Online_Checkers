@@ -2,13 +2,13 @@ package com.webcheckers.ui;
 
 
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.storage.SessionStorage;
-import java.util.Objects;
-import java.util.logging.Logger;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Session;
+
+import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  * The UI Controller to sign the user out.
@@ -18,7 +18,6 @@ public class GetSignOutRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignOutRoute.class.getName());
 
     private final PlayerLobby playerLobby;
-    private final SessionStorage sessionStorage;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -26,16 +25,12 @@ public class GetSignOutRoute implements Route {
      *
      * @param playerLobby
      *    the player lobby shared object
-     * @param sessionStorage
-     *    the shared session storage object
      */
-    public GetSignOutRoute(final PlayerLobby playerLobby, final SessionStorage sessionStorage) {
+    public GetSignOutRoute(final PlayerLobby playerLobby) {
         // validation
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
-        Objects.requireNonNull(sessionStorage, "sessionStorage must not be null");
         // set the instance variables
         this.playerLobby = playerLobby;
-        this.sessionStorage = sessionStorage;
         // log that the class has now been initialized
         LOG.config("GetSignOutRoute is initialized.");
     }
@@ -62,7 +57,6 @@ public class GetSignOutRoute implements Route {
 
         // remove the player from the PlayerLobby and SessionStorage
         this.playerLobby.removePlayer(playerName);
-        this.sessionStorage.removeUserSession(playerName);
 
         // set the SIGNED_IN session attribute to null
         currentSession.attribute(GetHomeRoute.SIGNED_IN_ATTR, null);

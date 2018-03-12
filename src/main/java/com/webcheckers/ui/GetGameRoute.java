@@ -7,7 +7,6 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
-import com.webcheckers.storage.SessionStorage;
 import spark.*;
 
 import java.util.HashMap;
@@ -21,7 +20,6 @@ public class GetGameRoute implements Route {
     private static final String GAME_FTL = "game.ftl";
     final static String GAME_ATTR = "game";
     PlayerLobby playerLobby;
-    SessionStorage sessionStorage;
     TemplateEngine templateEngine;
 
     public enum VIEW_MODE {
@@ -31,9 +29,8 @@ public class GetGameRoute implements Route {
     private static int gameId = 0;
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-    public GetGameRoute(final PlayerLobby playerLobby, SessionStorage sessionStorage, final TemplateEngine templateEngine) {
+    public GetGameRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
         this.playerLobby = playerLobby;
-        this.sessionStorage = sessionStorage;
         this.templateEngine = templateEngine;
     }
 
@@ -44,9 +41,9 @@ public class GetGameRoute implements Route {
     public String renderGamePage(Request request, Response response) {
 
         Session currentSession = request.session();
-        Player currentPlayer = sessionStorage.getPlayerBySession(currentSession.id());
+        String currentPlayerName = currentSession.attribute("playerName");
+        Player currentPlayer = playerLobby.getPlayerByUsername(currentPlayerName);
         if (currentPlayer == null) {
-            sessionStorage.debugPrint();
             response.redirect("/");
             return null;
         }
@@ -87,7 +84,6 @@ public class GetGameRoute implements Route {
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(GetHomeRoute.SIGNED_IN_ATTR, playerLobby.isActiveUser(currentPlayer.getPlayerName()));
         attributes.put(PostSignInRoute.PLAYER_NAME_ATTR, currentSession.attribute(PostSignInRoute.PLAYER_NAME_ATTR));
-        boolean viewMode = false;
 
         // Get players
         final Player player1 = game.getPlayers()[0];
@@ -95,8 +91,6 @@ public class GetGameRoute implements Route {
 
         // Has game been won?
         if (game.getWinner() != null) {
-            viewMode = true;
-
             String winner = game.getWinner();
             attributes.put("winner", winner);
 
@@ -111,7 +105,6 @@ public class GetGameRoute implements Route {
         }
 
         if (player1 != currentPlayer && player2 != currentPlayer) {
-            viewMode = true;
             attributes.put("title", String.format("Game #%d (%s vs. %s)", gameId, player1.getPlayerName(), player2.getPlayerName()));
         } else {
             opponent = player2;
@@ -142,6 +135,7 @@ public class GetGameRoute implements Route {
 
         attributes.put("redPlayerName", player1.getPlayerName());
         attributes.put("whitePlayerName", player2.getPlayerName());
+        System.out.println("Play mode: " + VIEW_MODE.PLAY.name());
         attributes.put("viewMode", VIEW_MODE.PLAY.name());
         attributes.put("activeColor", "RED");
         attributes.put("currentPlayerName", whoseTurn.getPlayerName());

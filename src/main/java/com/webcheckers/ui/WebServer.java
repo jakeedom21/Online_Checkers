@@ -2,7 +2,6 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.storage.SessionStorage;
 import spark.TemplateEngine;
 
 import java.util.Objects;
@@ -64,7 +63,6 @@ public class WebServer {
     private final TemplateEngine templateEngine;
     private final Gson gson;
     private final PlayerLobby playerLobby;
-    private final SessionStorage sessionStorage;
     //
     // Constructor
     //
@@ -76,7 +74,7 @@ public class WebServer {
      * @param gson           The Google JSON parser object used to render Ajax responses.
      * @throws NullPointerException If any of the parameters are {@code null}.
      */
-    public WebServer(final PlayerLobby playerLobby, SessionStorage sessionStorage, final TemplateEngine templateEngine, final Gson gson) {
+    public WebServer(final PlayerLobby playerLobby, final TemplateEngine templateEngine, final Gson gson) {
         // validation
         Objects.requireNonNull(playerLobby, "must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -85,7 +83,6 @@ public class WebServer {
         this.templateEngine = templateEngine;
         this.gson = gson;
         this.playerLobby = playerLobby;
-        this.sessionStorage = new SessionStorage(playerLobby);
     }
 
     //
@@ -140,14 +137,14 @@ public class WebServer {
         //// code clean; using small classes.
 
         // Shows the Checkers game Home page.
-        get(HOME_URL, new GetHomeRoute(playerLobby, sessionStorage, templateEngine));
+        get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
 
-        get(GAME_URL, new GetGameRoute(playerLobby, sessionStorage, templateEngine));
+        get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
 
         get(SIGN_IN, new GetSignInRoute(templateEngine));
-        get(SIGN_OUT, new GetSignOutRoute(playerLobby, sessionStorage));
+        get(SIGN_OUT, new GetSignOutRoute(playerLobby));
 
-        post(SIGN_IN, new PostSignInRoute(playerLobby, sessionStorage, templateEngine));
+        post(SIGN_IN, new PostSignInRoute(playerLobby, templateEngine));
         //
         LOG.config("WebServer is initialized.");
     }

@@ -2,15 +2,12 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
-import com.webcheckers.storage.SessionStorage;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-
-import static com.webcheckers.ui.PostSignInRoute.PLAYER_NAME_ATTR;
 
 /**
  * The UI Controller to GET the Home page.
@@ -30,7 +27,6 @@ public class GetHomeRoute implements Route {
 
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
-    private final SessionStorage sessionStorage;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -39,12 +35,11 @@ public class GetHomeRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetHomeRoute(final PlayerLobby playerLobby, SessionStorage sessionStorage, final TemplateEngine templateEngine) {
+    public GetHomeRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
         // validation
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         //
         this.playerLobby = playerLobby;
-        this.sessionStorage = sessionStorage;
         this.templateEngine = templateEngine;
         //
         LOG.config("GetHomeRoute is initialized.");
