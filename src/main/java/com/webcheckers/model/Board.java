@@ -51,7 +51,7 @@ public class Board implements Serializable{
                     }
                 }
                 if (row % 2 == 1) {
-                    for (int col = 0; col < MAX_DIM; col += 2) {
+                    for (int col = 0; col <  MAX_DIM; col += 2) {
                         createPiece(row, col, owner.getPieceColor());
                     }
                 }
