@@ -54,6 +54,7 @@ public class MoveValidation {
                     }
                 }
             }
+
             //only get top left
             else if(piece.getColNumber() + 1 >= MAX_DIM){
                 basicMoves.add(topLeft);
