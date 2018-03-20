@@ -3,22 +3,22 @@ geometry: margin=1in
 ---
 # PROJECT Design Documentation
 
-> The following template provides the headings for your Design Documentation.  As you edit each section make sure you remove these commentary 'blockquotes'; the lines that start with a > character.
-
 # Team Information
-* Team name: TEAMNAME
+* Team name: 2175-swen-261-02-d
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Joel Margolis
+  * Brandon Dossantos
+  * Jake Edom
+  * Qadir Haqq
+  * Sameen Luo
 
 ## Executive Summary
 
-This is a summary of the project.
+An application that allows signed in players to play checkers with other signed in players. Players use drag and drop capabilities in the browser to make moves.
 
 ### Purpose
-> Provide a very brief statement about the project and the most important user group and user goals.
+
+Allow players to play checker games in their browsers.
 
 ### Glossary and Acronyms
 > Provide a table of terms and acronyms.
@@ -35,10 +35,16 @@ This section describes the features of the application.
 > In this section you do not need to be exhaustive and list every story.  Focus on top-level features from the Vision document and maybe Epics and critical Stories.
 
 ### Definition of MVP
-> Provide a simple description of the Minimum Viable Product.
+
+Every player must sign-in before playing a game, and be able to sign-out when finished playing.
+Two players must be able to play a game of checkers based upon the American rules.
+Either player of a game may choose to resign, at any point, which ends the game.
 
 ### MVP Features
 > Provide a list of top-level Epics and/or Stories of the MVP.
+
+Start a Game
+As a Player I want to start a game so that I can play checkers with an opponent.
 
 ### Roadmap of Enhancements
 > Provide a list of top-level features in the order you plan to consider them.
@@ -49,11 +55,12 @@ This section describes the features of the application.
 This section describes the application domain.
 
 ![The WebCheckers Domain Model](domain-model-placeholder.png)
-> Replace the placeholder image above with your team's own domain model. 
 
-> Provide a high-level overview of the domain for this application. You can discuss the more important domain entities and their relationship to each other.
-
-
+The most important entities in the domain of this project are *player*, *board*, *pieces* and the *checkers* game. 
+Two *players* (red/white) initiates a game of *checkers*. They are given the same *board* on their browser with opposite rotations. 
+On their *board* in the browser, each *player* has the ownership of 12 pieces according to his/her color. The *player* can drag and drop
+one movable *piece* (according to American rule) each turn to make a move to take off his/her opponent's *pieces* as many as possible 
+to win this *checkers* game. 
 
 ## Architecture
 
@@ -81,10 +88,12 @@ This section describes the web interface flow; this is how the user views and in
 with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)
-> Replace the placeholder image above with your team's own web interface state model. 
 
-> Provide a summary of the application's user interface.  Describe, from the user's perspective, the flow of the pages in the web application.
-
+Upon opening the home page in a browser, a user is shown the signin link. Once clicked on the signin link, the user is brought to the 
+signin page. There, the user enters their username and clicks signin to submit. Once submit, the user is shown a list of
+signed in opponents to choose from is there are any. If not, the wait message shows until another player signs in. 
+After the user clicks on an opponent to start a game, they are brought to the game page where the board with their 
+red/white pieces are shown. On the board, they can drag and drop their own pieces to make moves. 
 
 ### UI Tier
 > Provide a summary of the Server-side UI tier of your architecture.
