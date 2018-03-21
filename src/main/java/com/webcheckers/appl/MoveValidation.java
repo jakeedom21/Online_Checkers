@@ -99,6 +99,9 @@ public class MoveValidation {
      *         false on full spaces or any space a checkers piece shouldn't be able to access
      */
     public static boolean validPlacement(Space finalSpace) {
+        if(finalSpace == null){
+            return false;
+        }
         //if both col and row are even or odd is an invalid move
         if (finalSpace.getCol() % 2 == 0 && finalSpace.getRow() % 2 == 0) {
             return false;
