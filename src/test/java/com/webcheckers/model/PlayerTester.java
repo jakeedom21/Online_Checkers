@@ -20,23 +20,31 @@ public class PlayerTester {
     private static final Player.PieceColor piececolor = RED;
     private static final String playername = "StormRed";
     private static final String opponentname = "MidBoss";
-    private static final Game currentgame = mock(Game.class);
-    private static final Player opponent = mock(Player.class);
+    private static Game currentgame;
+    private static Player opponent;
 
     /**
      * The component-under-test (CuT).
      */
     private Player CuT;
 
-    // friendly objects
-
+    /**
+     * Set up before each test
+     */
+    @BeforeEach
+    public void setUp(){
+        currentgame = mock(Game.class);
+        opponent = mock(Player.class);
+        //when(opponent.getPlayerName()).thenReturn(opponentname);
+    }
 
     /**
      * Test that the main constructor works without failure.
      */
     @Test
     public void creator(){
-        new Player(playername);
+        Player newbie = new Player(playername);
+        assertEquals(playername, newbie.getPlayerName());
     }
 
     /**
@@ -45,15 +53,13 @@ public class PlayerTester {
     @Test
     public void testAssignGame(){
 
-        when(opponent.getPlayerName()).thenReturn(opponentname);
-
         Player CuT = new Player((playername));
-        CuT.assignGame(piececolor,currentgame,opponent);
+        CuT.assignGame(piececolor, currentgame, opponent);
 
         assertTrue(CuT.isInGame());
-        assertEquals(CuT.getPieceColor(),piececolor);
-        assertEquals(CuT.getGame(), currentgame);
-        assertEquals(CuT.getOpponentName(), opponentname);
+        assertEquals(piececolor, CuT.getPieceColor());
+        assertEquals(currentgame, CuT.getGame());
+        assertEquals(null,CuT.getOpponentName());
     }
 
     /**

@@ -76,10 +76,10 @@ public class GetHomeRouteTester {
         testHelper.assertViewModelIsaMap();
 
         //   * model contains all necessary View-Model data
-        testHelper.assertViewModelAttributeIsAbsent(GetHomeRoute.SIGNED_IN_ATTR);
+        testHelper.assertViewModelAttribute(GetHomeRoute.SIGNED_IN_ATTR, Boolean.FALSE);
         testHelper.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE);
         testHelper.assertViewModelAttribute(GetHomeRoute.NUM_USER_ATTR, 3);
-        testHelper.assertViewModelAttribute(GetHomeRoute.BUSY_OPPONENT_ATTR, Boolean.FALSE);
+        testHelper.assertViewModelAttribute(GetHomeRoute.BUSY_OPPONENT_ATTR, null);
 
 
     }
