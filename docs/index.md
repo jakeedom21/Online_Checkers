@@ -1,6 +1,6 @@
 # PROJECT Home
 
-Welcome to the PROJECT Project!
+Welcome to the WebCheckers Project!
 
 ## Team
 
@@ -9,7 +9,7 @@ Welcome to the PROJECT Project!
 
 ## [Design Documentation](DesignDoc)
 
-Click above for details of the PROJECT design documentation.
+Click above for details of the WebCheckers design documentation.
 
 ## [Setup Guide](SetupGuide)
 
