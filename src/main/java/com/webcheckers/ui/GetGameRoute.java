@@ -135,7 +135,6 @@ public class GetGameRoute implements Route {
 
         attributes.put("redPlayerName", player1.getPlayerName());
         attributes.put("whitePlayerName", player2.getPlayerName());
-        System.out.println("Play mode: " + VIEW_MODE.PLAY.name());
         attributes.put("viewMode", VIEW_MODE.PLAY.name());
         attributes.put("activeColor", "RED");
         attributes.put("currentPlayerName", whoseTurn.getPlayerName());
