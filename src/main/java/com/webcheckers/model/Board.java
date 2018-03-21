@@ -23,23 +23,19 @@ public class Board implements Serializable{
 
     //Picture used as reference: http://allaboutfunandgames.com/wp-content/uploads/2011/11/Checkers.jpg
     public Board() {
-        //this.plyer1  = player1;
-        //this.player2 = player2;
-        //this.owner = owner;
         //Create each space
         for (int i = 0; i < MAX_DIM; i++) {
             for (int j = 0; j < MAX_DIM; j++) {
                 board[i][j] = new Space(i, j);
             }
         }
-        //setBoardPieces(owner);
     }
 
     /**
      * Call when want to flip the board orientation by passing in the owner of the session
      * @param owner
      */
-     void setBoardPieces(Player owner){
+     public void setBoardPieces(Player owner){
         EMPTY_ROWS.add(3);
         EMPTY_ROWS.add(4);
         // Populate the board from top to bottom

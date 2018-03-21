@@ -7,7 +7,6 @@ public class Player {
     }
 
     private String playerName;
-    private String name;
     private boolean inGame;
     private PieceColor pieceColor;
     private Game currentGame;
@@ -20,7 +19,6 @@ public class Player {
      */
     public Player(String playerName){
         this.playerName = playerName;
-        this.name = playerName;
         this.inGame = false;
         this.pieceColor = null;
         this.currentGame = null;
