@@ -20,71 +20,82 @@ public class MoveValidation {
      * WILL BE NEEDED LATER ON
      *
      * Get the basic moves for all pieces
-     * this means the all moves from the single space/piece one space away
-     * will see if it is a valid move later
+     * grabs all immediate possible moves
+     * checks if the space is valid if not it is removed from the possibilities
+     * after checking validity of basicMoves all those should be good possible moves
+     * then checks the jumps to see if their is an enemy piece they are jumping
+     * if there is not that jump is removed
+     * returns the possible jumpMoves if array is not empty
+     * basicMoves otherwise
      * @param piece
      * @return
      */
     public ArrayList<Space> basicMoves(Piece piece, Board gameBoard){
         ArrayList<Space> basicMoves = new ArrayList<>(4);
         ArrayList<Space> jumpMoves = new ArrayList<>(4);
-        Space topRight = new Space(piece.getRowNumber() - 1, piece.getColNumber() + 1);
-        Space topLeft = new Space(piece.getRowNumber() - 1, piece.getColNumber() - 1);
-        Space jumpTopRight = new Space(topRight.getRow() - 1, topRight.getCol() + 1);
-        Space jumpTopLeft = new Space(topRight.getRow() - 1, topRight.getCol() - 1);
         Space[][] board = gameBoard.getRaw();
-        boolean jumpPresent = false;
-        if(piece.getRowNumber() -1 < 0){
-            //only get top right
-            if(piece.getColNumber() + 1 > MAX_DIM){
-                if(board[topRight.getRow()][topRight.getCol()].getPiece() == null){
-                    basicMoves.add(topRight);
-                }
-                //jumping over opponents piece
-                else if(!board[topRight.getRow()][topRight.getCol()].getPiece().getColor().equals(piece.getColor())){
-                    //valid jump+
-                    if(jumpTopRight.getRow() >= 0 && jumpTopRight.getCol() < MAX_DIM){
-                        if(board[jumpTopRight.getRow()][jumpTopRight.getCol()].getPiece() == null){
-                            jumpPresent = true;
-                            jumpMoves.add(jumpTopRight);
-                        }
-                    }
-                }
-            }
 
-            //only get top left
-            else if(piece.getColNumber() + 1 >= MAX_DIM){
-                basicMoves.add(topLeft);
+        //gets all moves a piece should be able to make
+        Space topRight = board[piece.getRowNumber() - 1][piece.getColNumber() + 1];
+        basicMoves.add(topRight);
+        Space topLeft = board[piece.getRowNumber() - 1] [piece.getColNumber() - 1];
+        basicMoves.add(topLeft);
+        Space jumpTopRight = board[topRight.getRow() - 1] [topRight.getCol() + 1];
+        jumpMoves.add(jumpTopRight);
+        Space jumpTopLeft = board[topRight.getRow() - 1] [topRight.getCol() - 1];
+        jumpMoves.add(jumpTopLeft);
+
+        //grabs moves a king should be able to make
+        if(piece.isKing()){
+            Space bottomRight = board[piece.getRowNumber() + 1] [piece.getColNumber() + 1];
+            basicMoves.add(bottomRight);
+            Space bottomLeft = board[piece.getRowNumber() + 1] [piece.getColNumber() - 1];
+            basicMoves.add(bottomLeft);
+            Space bottomRightJump = board[bottomRight.getRow() + 1] [bottomRight.getCol() + 1];
+            jumpMoves.add(bottomRightJump);
+            Space bottomLeftJump = board[bottomLeft.getRow() + 1][bottomLeft.getCol() - 1];
+            jumpMoves.add(bottomLeftJump);
+        }
+
+        //removes all invalid basicMoves
+        for(int i = 0; i < basicMoves.size(); i++){
+            if(!basicMoves.get(i).isValid()){
+                basicMoves.remove(i);
+                i--;
             }
-            //get both
+        }
+        //nothing more needs to be done with basicMoves
+        //cause validity is all they need
+
+        //removes invalid jumpsMoves
+        for(int j = 0; j < jumpMoves.size(); j++){
+            if(!jumpMoves.get(j).isValid()){
+                jumpMoves.remove(j);
+                j--;
+            }
+        }
+        //needs to check for a piece to jump and confirm its an opponents piece
+
+        for(int jumpCheck = 0; jumpCheck < jumpMoves.size(); jumpCheck++){
+            Space currentJump = jumpMoves.get(jumpCheck);
+            int jumpRow = currentJump.getRow() + piece.getRowNumber();
+            int jumpCol = currentJump.getCol() + piece.getColNumber();
+            Space jumpOver = board[jumpRow][jumpCol];
+            //if no piece in between jump and start remove jump
+            if(jumpOver.getPiece() == null){
+                jumpMoves.remove(jumpCheck);
+                jumpCheck--;
+            }
             else{
-                basicMoves.add(topLeft);
-                basicMoves.add(topRight);
-            }
-        }
-        //
-        if(piece.isKing()) {
-            Space bottomRight = new Space(piece.getRowNumber() + 1, piece.getColNumber() + 1);
-            Space bottomLeft = new Space(piece.getRowNumber() + 1, piece.getColNumber() - 1);
-            Space bottomRightJump = new Space(bottomRight.getRow() + 1, bottomRight.getCol() + 1);
-            Space bottomLeftJump = new Space(bottomLeft.getRow() + 1, bottomLeft.getCol() - 1);
-            if (piece.getRowNumber() + 1 >= MAX_DIM) {
-                //only gets the bottomRight
-                if (piece.getColNumber() - 1 < 0) {
-                    basicMoves.add(bottomRight);
-                }
-                //only get bottom left
-                else if (piece.getColNumber() + 1 >= MAX_DIM) {
-                    basicMoves.add(bottomLeft);
-                }
-                //get both
-                else {
-                    basicMoves.add(bottomLeft);
-                    basicMoves.add(bottomRight);
+                //if piece is the same color as piece remove jump
+                if(jumpOver.getPiece().getColor().equals(piece.getColor())){
+                    jumpMoves.remove(jumpCheck);
+                    jumpCheck--;
                 }
             }
         }
-        if(jumpPresent){
+        //Any jumpMoves past here are good jumps that can be made
+        if(jumpMoves.size() > 0){
             return jumpMoves;
         }
         else{
