@@ -46,7 +46,7 @@ public class  GetSignInRoute implements Route {
     }
 
     /**
-     * Render the WebCheckers Home page.
+     * Render the WebCheckers Sign in page.
      *
      * @param request
      *   the HTTP request

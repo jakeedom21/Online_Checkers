@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import static com.webcheckers.ui.GetResultRoute.GAME_WON_ATTR;
+import static com.webcheckers.ui.GetResultRoute.OPPO_FORFEIT_ATTR;
+
 
 public class GetGameRoute implements Route {
 
@@ -44,7 +47,7 @@ public class GetGameRoute implements Route {
         String currentPlayerName = currentSession.attribute("playerName");
         Player currentPlayer = playerLobby.getPlayerByUsername(currentPlayerName);
         if (currentPlayer == null) {
-            response.redirect("/");
+            response.redirect("/");   //TODO: refactor constant Strings for urls
             return null;
         }
 
@@ -78,7 +81,7 @@ public class GetGameRoute implements Route {
         game.setOrientation(currentPlayer);
 
 
-        // save game in session attribute map
+        // save game in session attribute map(necessary?)
         currentSession.attribute(GAME_ATTR,game);
 
         Map<String, Object> attributes = new HashMap<>();
@@ -88,6 +91,25 @@ public class GetGameRoute implements Route {
         // Get players
         final Player player1 = game.getPlayers()[0];
         final Player player2 = game.getPlayers()[1];
+
+        // see if opponent has resigned the game
+        if (game.didPlayerResign()) {
+            currentSession.attribute( GAME_WON_ATTR, true );
+            currentSession.attribute( OPPO_FORFEIT_ATTR, true );
+            response.redirect("/result");
+            return null;
+        }
+
+        String forfeit = request.queryParams("forfeit");
+        if (forfeit.equals("forfeit")) {
+            game.setForfeit(currentPlayerName);
+            response.redirect("/");
+            //game.didPlayerResign();
+            //notify opponent forfeit&opponent win
+            //separate ui from model? need change in Game, Player class?
+
+            return null;
+        }
 
         // Has game been won?
         if (game.getWinner() != null) {
