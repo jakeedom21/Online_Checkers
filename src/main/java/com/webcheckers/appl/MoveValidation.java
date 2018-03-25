@@ -17,8 +17,6 @@ public class MoveValidation {
 
     /**
      *
-     * WILL BE NEEDED LATER ON
-     *
      * Get the basic moves for all pieces
      * grabs all immediate possible moves
      * checks if the space is valid if not it is removed from the possibilities
@@ -27,7 +25,8 @@ public class MoveValidation {
      * if there is not that jump is removed
      * returns the possible jumpMoves if array is not empty
      * basicMoves otherwise
-     * @param piece
+     *
+     *  @param piece
      * @return
      */
     public ArrayList<Space> basicMoves(Piece piece, Board gameBoard){
@@ -136,7 +135,7 @@ public class MoveValidation {
     }
 
     /**
-     * Will determine if its a validMove us'in some good old math
+     * Will determine if its a validMove using the distance
      * Three types of moves, basic, jump, multijump
      * Basic:
      * Any move that does not involve jumping
@@ -145,75 +144,29 @@ public class MoveValidation {
      * Multijump:
      * A subclass of sorts to jump will act as a system determining multijumps
      *
-     * Will need to determine if the player can do a move as if they can
-     * it will invalidate if it were a valid basic move
-     * Will do so by grabbing all basic moves the player can make and
-     * check the spots it can go and see if there is an opponent's piece
-     * Additionally check if the player can jump that piece
-     * It could add it too a list and then if the list has anything look at that
-     *
-     * First determines the distance of the move since it will be each move will be
-     * either a jump or a move which means a difference in x/y by 2/2 and 1/1 for each
-     * anything with a difference larger then this is invalid
-     *
+     * Only works one move at a time and does not validate multijumps
      *
      * @param start
      * @param end
      * @return true if its a valid move
      *         false if not a valid move
      */
-    public boolean validMove(Space start, Space end) {
+    public boolean validMove(Space start, Space end, Board board) {
         int x_dist = Math.abs(start.getCol() - end.getCol());
         int y_dist = Math.abs(start.getRow() - end.getRow());
         if (x_dist < 1 || x_dist > 2) {
             return false;
-        }
-        else if(y_dist < 1 || y_dist > 2){
+        } else if (y_dist < 1 || y_dist > 2) {
             return false;
         }
-
-
-        //otherwise the distance is a single move/jump
-        //Single move onto empty diagonal space
-        if(x_dist == 1 && y_dist == 1){
-            return basicMove(start, end);
+        //gets the possible ending spots
+        ArrayList<Space> possibleEnds = basicMoves(start.getPiece(), board);
+        for (int i = 0; i < possibleEnds.size(); i++) {
+            Space jump = possibleEnds.get(i);
+            if (start.getCol() == jump.getCol() && start.getRow() == jump.getRow()) {
+                return true;
+            }
         }
         return false;
     }
-
-    /**
-     * Takes in the moves with the assumption it is confirming a valid simple move
-     * Must take into account
-     * Color of piece
-     * If its a king or not
-     *
-     * Non king red pieces
-     * @param start
-     * @param end
-     * @return true if its a valid basic move
-     *         false if otherwise
-     */
-    public boolean basicMove(Space start, Space end){
-        Piece movingPiece = start.getPiece();
-        return false;
-    }
-
-    public boolean validJump(Space start, Space end){
-        return false;
-    }
-
-    /**
-     * Will find all available jumps for a piece
-     * if the list is empty, then no viable jumps
-     * With multiple jumps then any in the list are viable
-     *
-     * Should be a max of 4 jumps at any one time
-     * Due to how the board is set up every player will have their pieces at row 7
-     * @param start
-     * @return
-     */
-    public List<Space> findJumps(Space start){
-        return null;
-    }
-
 }
