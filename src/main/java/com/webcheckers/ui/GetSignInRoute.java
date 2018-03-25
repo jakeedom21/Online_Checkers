@@ -6,11 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import spark.*;
 
 /**
  * The UI Controller to GET the Home page.
@@ -18,6 +14,17 @@ import spark.TemplateEngine;
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public class  GetSignInRoute implements Route {
+    static final String TITLE_ATTR = "title";
+    static final String TITLE = "Welcome!";
+    static final String VIEW_NAME = "signin.ftl";
+
+    // Key in the session attribute map for the player who started the session
+    static final String PLAYERSERVICES_KEY = "playerServices";
+    static final String TIMEOUT_SESSION_KEY = "timeoutWatchdog";
+
+    // The length of the session timeout in seconds
+    static final int SESSION_TIMEOUT_PERIOD = 120;
+
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
     private final TemplateEngine templateEngine;
@@ -51,11 +58,17 @@ public class  GetSignInRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
+        // retrieve the HTTP session
+        final Session httpSession = request.session();
+
         LOG.finer("GetSignInRoute is invoked.");
         //
+
+        // start building the View-Model
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Welcome!");
-        return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+        vm.put(TITLE_ATTR, TITLE);
+
+        return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
     }
 
 }

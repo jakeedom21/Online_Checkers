@@ -9,9 +9,6 @@ import java.util.List;
 
 /**
  * Created by Jake on 3/2/2018.
- * basicMoves:
- * Will get all possible single space moves from a piece does
- * only validation it does is that it doesn't go out of bounds
  *
  *
  */
@@ -45,7 +42,7 @@ public class MoveValidation {
                 }
                 //jumping over opponents piece
                 else if(!board[topRight.getRow()][topRight.getCol()].getPiece().getColor().equals(piece.getColor())){
-                    //valid jump
+                    //valid jump+
                     if(jumpTopRight.getRow() >= 0 && jumpTopRight.getCol() < MAX_DIM){
                         if(board[jumpTopRight.getRow()][jumpTopRight.getCol()].getPiece() == null){
                             jumpPresent = true;
@@ -54,6 +51,7 @@ public class MoveValidation {
                     }
                 }
             }
+
             //only get top left
             else if(piece.getColNumber() + 1 >= MAX_DIM){
                 basicMoves.add(topLeft);
@@ -97,13 +95,11 @@ public class MoveValidation {
     /**
      * Checks to see if finalSpace is a valid place for a piece to be
      * @param finalSpace
-     * @param gameBoard
      * @return true on empty space that a checkers piece should be able to access at some point,
      *         false on full spaces or any space a checkers piece shouldn't be able to access
      */
-    public boolean validPlacement(Space finalSpace, Board gameBoard) {
-        //validates the gameBoard
-        if (gameBoard == null) {
+    public static boolean validPlacement(Space finalSpace) {
+        if(finalSpace == null){
             return false;
         }
         //if both col and row are even or odd is an invalid move
