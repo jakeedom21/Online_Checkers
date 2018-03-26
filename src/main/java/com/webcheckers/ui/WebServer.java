@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.MoveManager;
 import com.webcheckers.appl.PlayerLobby;
 import spark.TemplateEngine;
 
@@ -53,11 +54,14 @@ public class WebServer {
      * The URL pattern to request the Home page.
      */
     private static final String HOME_URL = "/";
-    private static final String SIGN_IN = "/signin";
-    private static final String SIGN_OUT = "/signout";
+    private static final String SIGN_IN = HOME_URL + "signin";
+    private static final String SIGN_OUT = HOME_URL +  "signout";
     private static final String GAME_URL = HOME_URL + "game";
     private static final String VALIDATE_MOVE = HOME_URL + "validateMove";
     private static final String SUBMIT_MOVE = HOME_URL + "submitTurn";
+    private static final String BACKUP_MOVE = HOME_URL + "backupMove";
+    private static final String CHECK_TURN = HOME_URL + "checkTurn";
+
     //
     // Attributes
     //
@@ -148,9 +152,13 @@ public class WebServer {
 
         post(SIGN_IN, new PostSignInRoute(playerLobby, templateEngine));
 
-        post(VALIDATE_MOVE, new MoveValidationRoute(playerLobby, templateEngine));
+        post(VALIDATE_MOVE, MoveManager::validateMove);
 
-        post(SUBMIT_MOVE, new SubmitMoveRoute());
+        post(SUBMIT_MOVE, MoveManager::submitMove);
+
+        post(BACKUP_MOVE, MoveManager::backupMove);
+
+        post(CHECK_TURN, MoveManager::checkTurn);
         //
         LOG.config("WebServer is initialized.");
     }

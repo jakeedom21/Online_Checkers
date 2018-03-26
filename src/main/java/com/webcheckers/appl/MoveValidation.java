@@ -1,4 +1,4 @@
-package com.webcheckers.ui;
+package com.webcheckers.appl;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
@@ -17,13 +17,13 @@ import java.util.List;
  *
  *
  */
-public class MoveValidationRoute implements Route {
+public class MoveValidation implements Route {
     private final static int MAX_DIM = 8;
 
     PlayerLobby playerLobby;
     TemplateEngine templateEngine;
 
-    public MoveValidationRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
+    public MoveValidation(PlayerLobby playerLobby, TemplateEngine templateEngine) {
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
     }

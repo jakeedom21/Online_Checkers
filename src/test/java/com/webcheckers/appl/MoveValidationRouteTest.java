@@ -1,7 +1,6 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Space;
-import com.webcheckers.ui.MoveValidationRoute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by Jake on 3/20/2018.
- * This is the test case for MoveValidationRoute
+ * This is the test case for MoveValidation
  *
  * Note full implementation has not been completed
  */
@@ -31,17 +30,17 @@ public class MoveValidationRouteTest {
 
     @Test
     public void testBadSpace(){
-        assertFalse(MoveValidationRoute.validPlacement(bad));
+        assertFalse(MoveValidation.validPlacement(bad));
     }
 
 
     @Test
     public void testBadSpace2(){
-        assertFalse(MoveValidationRoute.validPlacement(bad2));
+        assertFalse(MoveValidation.validPlacement(bad2));
     }
 
     @Test
     public void testNoSpace(){
-        assertFalse(MoveValidationRoute.validPlacement(none));
+        assertFalse(MoveValidation.validPlacement(none));
     }
 }
