@@ -2,6 +2,7 @@ package com.webcheckers.appl;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
+import com.webcheckers.model.Move;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Space;
 import spark.Request;
@@ -74,7 +75,7 @@ public class MoveValidation {
 
         //removes all invalid basicMoves
         for(int i = 0; i < basicMoves.size(); i++){
-            if(!basicMoves.get(i).isValid()){
+            if(!Move.isValid(basicMoves.get(i))){
                 basicMoves.remove(i);
                 i--;
             }
@@ -84,7 +85,7 @@ public class MoveValidation {
 
         //removes invalid jumpsMoves
         for(int j = 0; j < jumpMoves.size(); j++){
-            if(!isValid(jumpMoves.get(j))){
+            if(!Move.isValid(jumpMoves.get(j))){
                 jumpMoves.remove(j);
                 j--;
             }
@@ -93,8 +94,8 @@ public class MoveValidation {
 
         for(int jumpCheck = 0; jumpCheck < jumpMoves.size(); jumpCheck++){
             Space currentJump = jumpMoves.get(jumpCheck);
-            int jumpRow = currentJump.getRow() + piece.getRowNumber();
-            int jumpCol = currentJump.getCol() + piece.getColNumber();
+            int jumpRow = (int) Math.floor((currentJump.getRow() + piece.getRowNumber()) / 2);
+            int jumpCol = (int) Math.floor((currentJump.getCol() + piece.getColNumber()) / 2);
             Space jumpOver = board[jumpRow][jumpCol];
             //if no piece in between jump and start remove jump
             if(jumpOver.getPiece() == null){

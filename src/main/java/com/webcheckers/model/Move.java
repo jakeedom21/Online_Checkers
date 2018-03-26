@@ -1,7 +1,7 @@
 package com.webcheckers.model;
 
 public class Move {
-    int MAX_DIM = 8;
+    private static final int MAX_DIM = 8;
     private Space start;
     private Space end;
 
@@ -18,7 +18,7 @@ public class Move {
         return end;
     }
 
-    public boolean isValid(Space space) {
+    public static boolean isValid(Space space) {
         //if both col and row are even or odd is an invalid move
         if(space.getCol()%2 == 0 && space.getRow()%2 == 0){
 //            throw new IllegalArgumentException("Invalid Move: Row and Col are both even");
