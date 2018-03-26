@@ -1,8 +1,13 @@
-package com.webcheckers.appl;
+package com.webcheckers.ui;
 
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Space;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.TemplateEngine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +17,16 @@ import java.util.List;
  *
  *
  */
-public class MoveValidation {
+public class MoveValidationRoute implements Route {
     private final static int MAX_DIM = 8;
+
+    PlayerLobby playerLobby;
+    TemplateEngine templateEngine;
+
+    public MoveValidationRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
+        this.playerLobby = playerLobby;
+        this.templateEngine = templateEngine;
+    }
 
     /**
      *
@@ -168,5 +181,11 @@ public class MoveValidation {
             }
         }
         return false;
+    }
+
+    public Object handle(Request request, Response response) {
+        System.out.println(request);
+        System.out.println(response);
+        return true;
     }
 }

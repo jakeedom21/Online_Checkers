@@ -56,6 +56,8 @@ public class WebServer {
     private static final String SIGN_IN = "/signin";
     private static final String SIGN_OUT = "/signout";
     private static final String GAME_URL = HOME_URL + "game";
+    private static final String VALIDATE_MOVE = HOME_URL + "validateMove";
+    private static final String SUBMIT_MOVE = HOME_URL + "submitTurn";
     //
     // Attributes
     //
@@ -145,6 +147,10 @@ public class WebServer {
         get(SIGN_OUT, new GetSignOutRoute(playerLobby));
 
         post(SIGN_IN, new PostSignInRoute(playerLobby, templateEngine));
+
+        post(VALIDATE_MOVE, new MoveValidationRoute(playerLobby, templateEngine));
+
+        post(SUBMIT_MOVE, new SubmitMoveRoute());
         //
         LOG.config("WebServer is initialized.");
     }
