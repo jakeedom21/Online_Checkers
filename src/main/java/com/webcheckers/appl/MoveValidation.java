@@ -17,16 +17,8 @@ import java.util.List;
  *
  *
  */
-public class MoveValidation implements Route {
+public class MoveValidation {
     private final static int MAX_DIM = 8;
-
-    PlayerLobby playerLobby;
-    TemplateEngine templateEngine;
-
-    public MoveValidation(PlayerLobby playerLobby, TemplateEngine templateEngine) {
-        this.playerLobby = playerLobby;
-        this.templateEngine = templateEngine;
-    }
 
     /**
      *
@@ -42,30 +34,41 @@ public class MoveValidation implements Route {
      *  @param piece
      * @return
      */
-    public ArrayList<Space> basicMoves(Piece piece, Board gameBoard){
+    public static ArrayList<Space> basicMoves(Piece piece, Board gameBoard){
         ArrayList<Space> basicMoves = new ArrayList<>(4);
         ArrayList<Space> jumpMoves = new ArrayList<>(4);
         Space[][] board = gameBoard.getRaw();
 
         //gets all moves a piece should be able to make
-        Space topRight = board[piece.getRowNumber() - 1][piece.getColNumber() + 1];
+//        Space topRight = board[piece.getRowNumber() - 1][piece.getColNumber() + 1];
+//        basicMoves.add(topRight);
+//        Space topLeft = board[piece.getRowNumber() - 1] [piece.getColNumber() - 1];
+//        basicMoves.add(topLeft);
+//        Space jumpTopRight = board[topRight.getRow() - 1] [topRight.getCol() + 1];
+//        jumpMoves.add(jumpTopRight);
+//        Space jumpTopLeft = board[topRight.getRow() - 1] [topRight.getCol() - 1];
+//        jumpMoves.add(jumpTopLeft);
+
+        // editting
+        Space topRight = new Space(piece.getRowNumber()- 1, piece.getColNumber() + 1);
         basicMoves.add(topRight);
-        Space topLeft = board[piece.getRowNumber() - 1] [piece.getColNumber() - 1];
+        Space topLeft = new Space( piece.getRowNumber() - 1,  piece.getColNumber() - 1);
         basicMoves.add(topLeft);
-        Space jumpTopRight = board[topRight.getRow() - 1] [topRight.getCol() + 1];
+        Space jumpTopRight = new Space(topRight.getRow() - 1, topRight.getCol() + 1);
         jumpMoves.add(jumpTopRight);
-        Space jumpTopLeft = board[topRight.getRow() - 1] [topRight.getCol() - 1];
+        Space jumpTopLeft = new Space(topRight.getRow() - 1, topRight.getCol() - 1);
         jumpMoves.add(jumpTopLeft);
+
 
         //grabs moves a king should be able to make
         if(piece.isKing()){
-            Space bottomRight = board[piece.getRowNumber() + 1] [piece.getColNumber() + 1];
+            Space bottomRight = new Space(piece.getRowNumber() ,  piece.getColNumber() + 1);
             basicMoves.add(bottomRight);
-            Space bottomLeft = board[piece.getRowNumber() + 1] [piece.getColNumber() - 1];
+            Space bottomLeft = new Space(piece.getRowNumber() + 1, piece.getColNumber() - 1);
             basicMoves.add(bottomLeft);
-            Space bottomRightJump = board[bottomRight.getRow() + 1] [bottomRight.getCol() + 1];
+            Space bottomRightJump = new Space(bottomRight.getRow() + 1, bottomRight.getCol() + 1);
             jumpMoves.add(bottomRightJump);
-            Space bottomLeftJump = board[bottomLeft.getRow() + 1][bottomLeft.getCol() - 1];
+            Space bottomLeftJump = new Space(bottomLeft.getRow() + 1, bottomLeft.getCol() - 1);
             jumpMoves.add(bottomLeftJump);
         }
 
@@ -81,7 +84,7 @@ public class MoveValidation implements Route {
 
         //removes invalid jumpsMoves
         for(int j = 0; j < jumpMoves.size(); j++){
-            if(!jumpMoves.get(j).isValid()){
+            if(!isValid(jumpMoves.get(j))){
                 jumpMoves.remove(j);
                 j--;
             }
@@ -164,7 +167,7 @@ public class MoveValidation implements Route {
      * @return true if its a valid move
      *         false if not a valid move
      */
-    public boolean validMove(Space start, Space end, Board board) {
+    public static boolean validMove(Space start, Space end, Board board) {
         int x_dist = Math.abs(start.getCol() - end.getCol());
         int y_dist = Math.abs(start.getRow() - end.getRow());
         if (x_dist < 1 || x_dist > 2) {
@@ -181,11 +184,5 @@ public class MoveValidation implements Route {
             }
         }
         return false;
-    }
-
-    public Object handle(Request request, Response response) {
-        System.out.println(request);
-        System.out.println(response);
-        return true;
     }
 }

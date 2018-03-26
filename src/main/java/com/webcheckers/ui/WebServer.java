@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.MoveManager;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Move;
 import spark.TemplateEngine;
 
 import java.util.Objects;
@@ -69,6 +70,7 @@ public class WebServer {
     private final TemplateEngine templateEngine;
     private final Gson gson;
     private final PlayerLobby playerLobby;
+
     //
     // Constructor
     //
@@ -80,7 +82,9 @@ public class WebServer {
      * @param gson           The Google JSON parser object used to render Ajax responses.
      * @throws NullPointerException If any of the parameters are {@code null}.
      */
-    public WebServer(final PlayerLobby playerLobby, final TemplateEngine templateEngine, final Gson gson) {
+    public WebServer(final PlayerLobby playerLobby,
+                     final TemplateEngine templateEngine,
+                     final Gson gson) {
         // validation
         Objects.requireNonNull(playerLobby, "must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -108,7 +112,6 @@ public class WebServer {
 
         // Configuration to serve static files
         staticFileLocation("/public");
-
         //// Setting any route (or filter) in Spark triggers initialization of the
         //// embedded Jetty web server.
 
@@ -152,13 +155,14 @@ public class WebServer {
 
         post(SIGN_IN, new PostSignInRoute(playerLobby, templateEngine));
 
-        post(VALIDATE_MOVE, MoveManager::validateMove);
+        MoveManager moveManager = new MoveManager(playerLobby, gson);
+        post(VALIDATE_MOVE, moveManager::validateMove);
 
-        post(SUBMIT_MOVE, MoveManager::submitMove);
+        post(SUBMIT_MOVE, moveManager::submitMove);
 
-        post(BACKUP_MOVE, MoveManager::backupMove);
+        post(BACKUP_MOVE, moveManager::backupMove);
 
-        post(CHECK_TURN, MoveManager::checkTurn);
+        post(CHECK_TURN, moveManager::checkTurn);
         //
         LOG.config("WebServer is initialized.");
     }

@@ -1,4 +1,4 @@
-package com.webcheckers.ui;
+package com.webcheckers.utils;
 
 import com.webcheckers.appl.PlayerLobby;
 import spark.ModelAndView;

@@ -76,6 +76,17 @@ public class Board implements Serializable{
         return returnString;
     }
 
+    public void movePiece(Space start, Space end) {
+        Piece piece = start.getPiece();
+        start.setPiece(null);
+        end.setPiece(piece);
+        System.out.println(this);
+    }
+
+    public Space getSpace(Space space) {
+         return this.board[space.getRow()][space.getCol()];
+    }
+
     public int getP1Pieces() {
         return this.redPieces;
     }

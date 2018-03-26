@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created by qadirhaqq on 2/28/18.
  */
@@ -10,6 +13,7 @@ public class Game {
     private String playerTurn;
     private String winner;
     private boolean forfeit = false;
+    private Queue<Move> moveQueue;
     private int id;
     private Player p1;
     private Player p2;
@@ -27,6 +31,7 @@ public class Game {
         this.p2 = p2;
         this.board = new Board();
         this.playerTurn = p1.getPlayerName();
+        this.moveQueue = new LinkedList<>();
         p1.assignGame(Player.PieceColor.RED, this,p2);
         p2.assignGame(Player.PieceColor.WHITE, this,p1);
     }
@@ -80,6 +85,14 @@ public class Game {
 
     public int getId(){
         return this.id;
+    }
+
+    public void queueMove(Move move){
+        this.moveQueue.add(move);
+    }
+
+    public Move getNextMove() {
+        return this.moveQueue.poll();
     }
 }
 
