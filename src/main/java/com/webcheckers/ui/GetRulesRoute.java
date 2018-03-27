@@ -13,7 +13,7 @@ import spark.TemplateEngine;
  * The UI Controller to GET the Rules page.
  */
 public class GetRulesRoute implements Route {
-    private static final String VIEW_NAME = "rules.ftl";
+    public static final String VIEW_NAME = "rules.ftl";
     private final TemplateEngine templateEngine;
 
     /**
