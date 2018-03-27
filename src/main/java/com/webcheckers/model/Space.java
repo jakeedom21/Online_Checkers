@@ -37,6 +37,8 @@ public class Space implements Serializable{
         return this.piece != null;
     }
 
+    public boolean isValid() { return true; }
+
     public String toString() {
         String returnString = "|";
         returnString += this.piece == null ?  " " : piece.toString();

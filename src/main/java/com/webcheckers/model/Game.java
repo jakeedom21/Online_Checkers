@@ -55,7 +55,7 @@ public class Game {
         return this.playerTurn;
     }
 
-    public void setTurn() {
+    public void finishMove() {
         if (this.playerTurn.equals(p1.getPlayerName())) {
             playerTurn = p2.getPlayerName();
         } else {

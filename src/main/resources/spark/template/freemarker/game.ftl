@@ -52,13 +52,13 @@
               <table data-color='RED'>
                 <tr>
                   <td><img src="../img/single-piece-red.svg" /></td>
-                  <td class="name">Red</td>
+                  <td class="name">RED</td>
                 </tr>
               </table>
               <table data-color='WHITE'>
                 <tr>
                   <td><img src="../img/single-piece-white.svg" /></td>
-                  <td class="name">White</td>
+                  <td class="name">WHITE</td>
                 </tr>
               </table>
             </div>

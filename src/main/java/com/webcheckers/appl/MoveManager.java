@@ -32,7 +32,7 @@ public class MoveManager {
         Space end = board.getSpace(jsonMove.getEnd());
         Move move = new Move(start, end);
 
-        boolean result = MoveValidation.validMove(move.getStart(), move.getEnd(), game.getBoard());
+        boolean result = true; // MoveValidation.validMove(move.getStart(), move.getEnd(), game.getBoard());
         if (result) {
             game.queueMove(move);
         }
@@ -49,15 +49,16 @@ public class MoveManager {
         Board board = game.getBoard();
         board.movePiece(oldSpace, newSpace);
         response.redirect("/game");
+        game.finishMove();
         return null;
     }
 
     public String backupMove(Request request, Response response) {
-        return "";
+        return "SOMETHING";
     }
 
     public String checkTurn(Request request, Response response) {
-        return "false";
+        return gson.toJson(new Message(MessageType.INFO,"true"));
     }
 
 }

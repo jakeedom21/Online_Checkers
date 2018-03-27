@@ -55,6 +55,8 @@ public class Board implements Serializable{
         }
     }
 
+
+
     private void createPiece(int row, int col, Player.PieceColor pieceColor) {
         String color;
         if (pieceColor.equals(Player.PieceColor.WHITE)) {
