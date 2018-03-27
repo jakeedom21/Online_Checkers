@@ -28,6 +28,7 @@ public class Game {
         this.board = new Board();
         this.playerTurn = p1.getPlayerName();
         this.forfeit = false;
+        this.winner = null;
         p1.assignGame(Player.PieceColor.RED, this,p2);
         p2.assignGame(Player.PieceColor.WHITE, this,p1);
     }
@@ -59,6 +60,18 @@ public class Game {
         }
     }
 
+    /**
+     * See if the game is finished
+     * @return true if there's a winner of game, false otherwise
+     */
+    public boolean isGameWon(){
+        return winner != null;
+    }
+
+    /**
+     * pre: game is finished (there is a winner)
+     * @return String username of the winning player
+     */
     public String getWinner() {
         return this.winner.getPlayerName();
     }

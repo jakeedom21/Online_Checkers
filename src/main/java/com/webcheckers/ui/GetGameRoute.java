@@ -3,7 +3,7 @@ package com.webcheckers.ui;
 /**
  * Created by Sameen Luo <xxl2398@rit.edu> on 2/28/2018.
  */
- 
+
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
@@ -70,8 +70,8 @@ public class GetGameRoute implements Route {
             }
             game = new Game(gameId, currentPlayer, opponent);
 
-        // if player did not choose opponent (assigned a game),
-        // opponentName is null(?) since there's no request came from /home
+            // if player did not choose opponent (assigned a game),
+            // opponentName is null(?) since there's no request came from /home
         } else {
             //opponent = playerLobby.getPlayerByUsername(currentPlayer.getOpponentName());
             game = currentPlayer.getGame();
@@ -82,7 +82,7 @@ public class GetGameRoute implements Route {
 
 
         // save game in session attribute map(necessary?)
-        currentSession.attribute(GAME_ATTR,game);
+        //currentSession.attribute(GAME_ATTR,game);
 
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(GetHomeRoute.SIGNED_IN_ATTR, playerLobby.isActiveUser(currentPlayer.getPlayerName()));
@@ -94,25 +94,26 @@ public class GetGameRoute implements Route {
 
         // see if opponent has resigned the game
         if (game.didPlayerResign()) {
-            currentSession.attribute( GAME_WON_ATTR, true );
-            currentSession.attribute( OPPO_FORFEIT_ATTR, true );
+            currentSession.attribute(GAME_WON_ATTR, true);
+            currentSession.attribute(OPPO_FORFEIT_ATTR, true);
             response.redirect("/result");
             return null;
         }
 
         String forfeit = request.queryParams("forfeit");
-        if (forfeit.equals("forfeit")) {
-            game.setForfeit(currentPlayerName);
-            response.redirect("/");
-            //game.didPlayerResign();
-            //notify opponent forfeit&opponent win
-            //separate ui from model? need change in Game, Player class?
+        if (forfeit != null) {
+            if (forfeit.equals("forfeit")) {
+                game.setForfeit(currentPlayerName);
+                response.redirect("/");
+                //game.didPlayerResign();
+                //notify opponent forfeit&opponent win
 
-            return null;
+                return null;
+            }
         }
 
         // Has game been won?
-        if (game.getWinner() != null) {
+        if (game.isGameWon()) {
             String winner = game.getWinner();
             attributes.put("winner", winner);
 
@@ -120,10 +121,9 @@ public class GetGameRoute implements Route {
                 if (winner.equals(player1.getPlayerName())) {
                     attributes.put("resigned", player2.getPlayerName());
                 } else {
-                    attributes.put("resigned", player1.getPlayerName());
+                    attributes.put("resigned", player1.getPlayerName());  //TODO: make use of attribute map to redirect to forfeit result page
                 }
             }
-
         }
 
         if (player1 != currentPlayer && player2 != currentPlayer) {
