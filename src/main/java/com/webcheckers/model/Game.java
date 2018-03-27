@@ -36,8 +36,12 @@ public class Game {
         p2.assignGame(Player.PieceColor.WHITE, this,p1);
     }
 
-    public void setOrientation(Player player){
-        board.setBoardPieces(player);
+    public void flipOrientation(Player player) {
+        if (player.equals(this.p1)) {
+            board.setBottomPieces(Player.PieceColor.RED);
+        } else {
+            board.setBottomPieces(Player.PieceColor.WHITE);
+        }
     }
 
     public Player[] getPlayers() {

@@ -59,7 +59,7 @@ public class WebServer {
     private static final String SIGN_OUT = HOME_URL +  "signout";
     private static final String GAME_URL = HOME_URL + "game";
     private static final String VALIDATE_MOVE = HOME_URL + "validateMove";
-    private static final String SUBMIT_MOVE = HOME_URL + "submitTurn";
+    private static final String SUBMIT_TURN = HOME_URL + "submitTurn";
     private static final String BACKUP_MOVE = HOME_URL + "backupMove";
     private static final String CHECK_TURN = HOME_URL + "checkTurn";
 
@@ -158,7 +158,7 @@ public class WebServer {
         MoveManager moveManager = new MoveManager(playerLobby, gson);
         post(VALIDATE_MOVE, moveManager::validateMove);
 
-        post(SUBMIT_MOVE, moveManager::submitMove);
+        post(SUBMIT_TURN, moveManager::submitMove);
 
         post(BACKUP_MOVE, moveManager::backupMove);
 

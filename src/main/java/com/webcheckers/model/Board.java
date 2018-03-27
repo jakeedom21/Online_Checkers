@@ -9,13 +9,9 @@ import java.util.HashSet;
 public class Board implements Serializable{
     private int redPieces = 12;
     private int whitePieces = 12;
-    //private Player plyer1;
-    //private Player player2;
-    //private Player owner;
     private static final int MAX_DIM = 8;
     private static final String PLAYER1_COLOR = "W";
     private static final String PLAYER2_COLOR = "R";
-
     private static HashSet<Integer> EMPTY_ROWS = new HashSet<>();
 
 
@@ -29,13 +25,13 @@ public class Board implements Serializable{
                 board[i][j] = new Space(i, j);
             }
         }
+        setBoardPieces();
     }
 
     /**
      * Call when want to flip the board orientation by passing in the owner of the session
-     * @param owner
      */
-     public void setBoardPieces(Player owner){
+     public void setBoardPieces(){
         EMPTY_ROWS.add(3);
         EMPTY_ROWS.add(4);
         // Populate the board from top to bottom
@@ -43,16 +39,39 @@ public class Board implements Serializable{
             if (!EMPTY_ROWS.contains(row)) { // not rows 3 or 4
                 if (row % 2 == 0) {
                     for (int col = 1; col < MAX_DIM; col += 2) {
-                        createPiece(row, col, owner.getPieceColor());
+                        createPiece(row, col, Player.PieceColor.RED);
                     }
                 }
                 if (row % 2 == 1) {
                     for (int col = 0; col <  MAX_DIM; col += 2) {
-                        createPiece(row, col, owner.getPieceColor());
+                        createPiece(row, col, Player.PieceColor.RED);
                     }
                 }
             }
         }
+    }
+
+    public void setBottomPieces(Player.PieceColor color){
+         switch (color) {
+             case RED:
+                 System.out.println("Piece color RED");
+                 rotateBoard(this.board); // rotate 90 degrees
+                 System.out.println("FIRST ROTATION");
+                 System.out.println(this);
+                 rotateBoard(this.board); // rotate 90 degrees
+                 System.out.println("SECOND ROTATION");
+                 System.out.println(this);
+                 break;
+             case WHITE:
+                 System.out.println("Piece color WHITE");
+                 rotateBoard(this.board); // rotate 90 degrees
+                 System.out.println("FIRST ROTATION");
+                 System.out.println(this);
+                 rotateBoard(this.board); // rotate 90 degrees
+                 System.out.println("SECOND ROTATION");
+                 System.out.println(this);
+                 break;
+         }
     }
 
 
@@ -82,7 +101,6 @@ public class Board implements Serializable{
         Piece piece = start.getPiece();
         start.setPiece(null);
         end.setPiece(piece);
-        System.out.println(this);
     }
 
     public Space getSpace(Space space) {
@@ -99,6 +117,19 @@ public class Board implements Serializable{
 
     public Space[][] getRaw() {
         return this.board;
+    }
+
+    private void rotateBoard(Space[][] board) {
+        int n = board.length;
+        for (int l = 0; l < n/2; l++) {
+            for(int c = l; c < n-l-1; c++) {
+                Space top = board[l][c];
+                board[l][c] = board[n-1-c][l];
+                board[n-1-c][l] = board[n-l-1][n-c-1];
+                board[n-l-1][n-c-1] = board[c][n-l-1];
+                board[c][n-l-1] = top;
+            }
+        }
     }
 }
 

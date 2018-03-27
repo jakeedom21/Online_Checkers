@@ -50,7 +50,7 @@ public class MoveManager {
         board.movePiece(oldSpace, newSpace);
         response.redirect("/game");
         game.finishMove();
-        return null;
+        return gson.toJson(new Message(MessageType.INFO, "Turn submitted successfully"));
     }
 
     public String backupMove(Request request, Response response) {

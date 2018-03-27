@@ -45,7 +45,6 @@ class GetGameRouteTest {
 
 
         Player[] activePlayers = {player1, player2 };
-        System.out.println("Players: " + player1.getGame());
         assertArrayEquals(player1.getGame().getPlayers(), activePlayers);
     }
 }
