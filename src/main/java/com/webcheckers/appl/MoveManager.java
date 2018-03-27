@@ -11,11 +11,10 @@ public class MoveManager {
     PlayerLobby playerLobby;
     Gson gson;
 
-    private Game getGameFromRequest(Request request){
+    private Player getPlayerFromRequest(Request request){
         Session currentSession = request.session();
         String playerName = currentSession.attribute("playerName");
-        Player currentPlayer = playerLobby.getPlayerByUsername(playerName);
-        return currentPlayer.getGame();
+        return playerLobby.getPlayerByUsername(playerName);
     }
 
     public MoveManager(PlayerLobby playerLobby, Gson gson) {
@@ -24,9 +23,11 @@ public class MoveManager {
     }
 
     public String validateMove(Request request, Response response) {
-        Game game = getGameFromRequest(request);
+        Player currentPlayer = getPlayerFromRequest(request);
+        Game game = currentPlayer.getGame();
         Move jsonMove = gson.fromJson(request.body(), Move.class);
-        Board board = game.getBoard();
+
+        Board board = game.getBoard(currentPlayer);
 
         Space start = board.getSpace(jsonMove.getStart());
         Space end = board.getSpace(jsonMove.getEnd());
@@ -42,13 +43,12 @@ public class MoveManager {
     }
 
     public Object submitMove(Request request, Response response) {
-        Game game = getGameFromRequest(request);
+        Player currentPlayer = getPlayerFromRequest(request);
+        Game game = currentPlayer.getGame();
         Move move = game.getNextMove();
         Space oldSpace =  move.getStart();
         Space newSpace = move.getEnd();
-        Board board = game.getBoard();
-        board.movePiece(oldSpace, newSpace);
-        response.redirect("/game");
+        game.movePiece(oldSpace, newSpace, currentPlayer);
         game.finishMove();
         System.out.println(gson.toJson(new Message(MessageType.info, "Turn submitted successfully")));
         return  gson.toJson(new Message(MessageType.info, "Turn submitted successfully"));

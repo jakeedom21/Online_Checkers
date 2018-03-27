@@ -28,6 +28,24 @@ public class Board implements Serializable{
         setBoardPieces();
     }
 
+    // copy constructor
+    public Board(Board b) {
+        for (int i = 0; i < MAX_DIM; i++) {
+            for (int j = 0; j < MAX_DIM; j++) {
+                board[i][j] = new Space(i, j);
+            }
+        }
+        for (int i = 0; i < MAX_DIM; i++) {
+            for (int j = 0; j < MAX_DIM; j++) {
+                if (b.getSpace(i, j).getPiece() != null){
+                    String color = b.getSpace(i, j).getPiece().getColor();
+                    board[i][j].setPiece(new Piece(i, j, color.equals("WHITE") ? "W" : "R"));
+                }
+
+            }
+        }
+    }
+
     /**
      * Call when want to flip the board orientation by passing in the owner of the session
      */
@@ -49,16 +67,6 @@ public class Board implements Serializable{
                 }
             }
         }
-    }
-
-    public void setWhitePiecesAtBottom(){
-        System.out.println("Piece color RED");
-        rotateBoard(this.board); // rotate 90 degrees
-        System.out.println("FIRST ROTATION");
-        System.out.println(this);
-        rotateBoard(this.board); // rotate 90 degrees
-        System.out.println("SECOND ROTATION");
-        System.out.println(this);
     }
 
 
@@ -95,6 +103,10 @@ public class Board implements Serializable{
          return this.board[space.getRow()][space.getCol()];
     }
 
+    public Space getSpace(int row, int col) {
+        return board[row][col];
+    }
+
     public int getP1Pieces() {
         return this.redPieces;
     }
@@ -107,17 +119,21 @@ public class Board implements Serializable{
         return this.board;
     }
 
-    private void rotateBoard(Space[][] board) {
+    public void flip() {
         int n = board.length;
-        for (int l = 0; l < n/2; l++) {
-            for(int c = l; c < n-l-1; c++) {
-                Space top = board[l][c];
-                board[l][c] = board[n-1-c][l];
-                board[n-1-c][l] = board[n-l-1][n-c-1];
-                board[n-l-1][n-c-1] = board[c][n-l-1];
-                board[c][n-l-1] = top;
+        for (int i = 0; i < 2; i++) {
+            for (int l = 0; l < n/2; l++) {
+                for(int c = l; c < n-l-1; c++) {
+                    Space top = board[l][c];
+                    board[l][c] = board[n-1-c][l];
+                    board[n-1-c][l] = board[n-l-1][n-c-1];
+                    board[n-l-1][n-c-1] = board[c][n-l-1];
+                    board[c][n-l-1] = top;
+                }
             }
         }
     }
+
+
 }
 

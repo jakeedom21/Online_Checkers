@@ -74,9 +74,6 @@ public class GetGameRoute implements Route {
             game = currentPlayer.getGame();
         }
 
-        //set pieces' orientation according the session's owner
-        game.flipOrientation(currentPlayer);
-
         // save game in session attribute map
         currentSession.attribute(GAME_ATTR, game);
 
@@ -136,7 +133,7 @@ public class GetGameRoute implements Route {
         attributes.put("viewMode", VIEW_MODE.PLAY.name());
         attributes.put("activeColor", whoseTurn.getPieceColor() == Player.PieceColor.RED ? "RED" : "WHITE");
         attributes.put("currentPlayerName", whoseTurn.getPlayerName());
-        attributes.put("board", game.getBoard().getRaw());
+        attributes.put("board", game.getBoard(currentPlayer).getRaw());
 
         return templateEngine.render(new ModelAndView(attributes, GAME_FTL));
     }

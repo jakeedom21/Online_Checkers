@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-  <title>${title} | Web Checkers</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/game.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script data-main="js/game/main" src="js/require.js"></script>
-  <script>
-  window.gameState = {
-    "currentPlayer" : "${currentPlayerName}",
-    "redPlayer" : "${redPlayerName}",
-    "whitePlayer" : "${whitePlayerName}",
-    "activeColor" : "${activeColor}",
-    "viewMode": "PLAY"
-  };
-  </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <meta http-equiv="refresh" content="5">
+    <title>${title} | Web Checkers</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/game.css"><meta http-equiv="refresh" content="5">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script data-main="js/game/main" src="js/require.js"></script>
+    <script>
+        window.gameState = {
+            "currentPlayer" : "${currentPlayerName}",
+            "redPlayer" : "${redPlayerName}",
+            "whitePlayer" : "${whitePlayerName}",
+            "activeColor" : "${activeColor}",
+            "viewMode": "PLAY"
+        };
+    </script>
 </head>
 <body>
   <div class="page">
