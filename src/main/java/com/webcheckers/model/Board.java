@@ -51,20 +51,14 @@ public class Board implements Serializable{
         }
     }
 
-    public void setBottomPieces(Player.PieceColor color){
-         switch (color) {
-             case RED:
-                 System.out.println("Piece color RED");
-                 rotateBoard(this.board); // rotate 90 degrees
-                 System.out.println("FIRST ROTATION");
-                 System.out.println(this);
-                 rotateBoard(this.board); // rotate 90 degrees
-                 System.out.println("SECOND ROTATION");
-                 System.out.println(this);
-                 break;
-             case WHITE:
-                 break;
-         }
+    public void setWhitePiecesAtBottom(){
+        System.out.println("Piece color RED");
+        rotateBoard(this.board); // rotate 90 degrees
+        System.out.println("FIRST ROTATION");
+        System.out.println(this);
+        rotateBoard(this.board); // rotate 90 degrees
+        System.out.println("SECOND ROTATION");
+        System.out.println(this);
     }
 
 

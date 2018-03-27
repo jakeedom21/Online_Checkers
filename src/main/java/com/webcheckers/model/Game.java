@@ -38,9 +38,7 @@ public class Game {
 
     public void flipOrientation(Player player) {
         if (player.equals(this.p2)) {
-            board.setBottomPieces(Player.PieceColor.RED);
-        } else {
-            board.setBottomPieces(Player.PieceColor.WHITE);
+            board.setWhitePiecesAtBottom();
         }
     }
 

@@ -34,7 +34,7 @@ class BoardTest {
     @Test
     void setBoardPieces() {
         when(player1.getPieceColor()).thenReturn(Player.PieceColor.RED);
-        board.setBottomPieces(player1.getPieceColor());
+        board.setWhitePiecesAtBottom();
         assertTrue(board.toString().equals(expectedBoardSetUp));
         when(player1.getPieceColor()).thenReturn(Player.PieceColor.RED);
     }
