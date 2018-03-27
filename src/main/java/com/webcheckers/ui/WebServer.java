@@ -64,6 +64,7 @@ public class WebServer {
     private static final String RESIGN_URL = HOME_URL + "resign";
     private static final String RESULT_URL = HOME_URL + "result";
 
+    private static final String RULES_URL = HOME_URL + "rules";
     //
     // Attributes
     //
@@ -113,6 +114,7 @@ public class WebServer {
 
         // Configuration to serve static files
         staticFileLocation("/public");
+
         //// Setting any route (or filter) in Spark triggers initialization of the
         //// embedded Jetty web server.
 
@@ -148,7 +150,7 @@ public class WebServer {
 
         // Shows the Checkers game Home page.
         get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
-
+        get(RULES_URL, new GetRulesRoute(templateEngine));
         get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
 
         get(RESULT_URL, new GetResultRoute(templateEngine));
@@ -168,6 +170,7 @@ public class WebServer {
         post(BACKUP_MOVE, moveManager::backupMove);
 
         post(CHECK_TURN, moveManager::checkTurn);
+
         //
         LOG.config("WebServer is initialized.");
     }
