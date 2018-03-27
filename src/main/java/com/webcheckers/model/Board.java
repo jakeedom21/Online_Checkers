@@ -63,13 +63,6 @@ public class Board implements Serializable{
                  System.out.println(this);
                  break;
              case WHITE:
-                 System.out.println("Piece color WHITE");
-                 rotateBoard(this.board); // rotate 90 degrees
-                 System.out.println("FIRST ROTATION");
-                 System.out.println(this);
-                 rotateBoard(this.board); // rotate 90 degrees
-                 System.out.println("SECOND ROTATION");
-                 System.out.println(this);
                  break;
          }
     }
@@ -101,6 +94,7 @@ public class Board implements Serializable{
         Piece piece = start.getPiece();
         start.setPiece(null);
         end.setPiece(piece);
+        System.out.println(this);
     }
 
     public Space getSpace(Space space) {
