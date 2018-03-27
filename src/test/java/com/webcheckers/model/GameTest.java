@@ -38,9 +38,9 @@ public class GameTest {
     }
 
     @Test
-    void setTurn() {
+    void finishMove() {
         assertTrue(GAME.getPlayerTurn().equals(PLAYER1NAME));
-        GAME.setTurn();
+        GAME.finishMove();
         assertTrue(GAME.getPlayerTurn().equals(PLAYER2NAME));
     }
 

@@ -23,7 +23,7 @@ public class SpaceTest {
     public void space_withArg() {
         CuT = new Space(EVEN_ROW, ODD_COL);
         assertEquals(null, CuT.getPiece());
-        assertTrue(CuT.isValid());
+        assertTrue(Move.isValid(CuT));
         assertEquals("| |", CuT.toString());
     }
 
@@ -37,13 +37,13 @@ public class SpaceTest {
             for (int col=0; col<MAX_OUTBOUND; col++) {
                 CuT = new Space(row, col);
                 if(row%2 == 0 && col%2 == 0) {
-                    assertFalse(CuT.isValid());
+                    assertFalse(Move.isValid(CuT));
                 }
                 else if(row%2 == 1 && col%2 == 1) {
-                    assertFalse(CuT.isValid());
+                    assertFalse(Move.isValid(CuT));
                 }
                 else{
-                    assertTrue(CuT.isValid());
+                    assertTrue(Move.isValid(CuT));
                 }
             }
         }
@@ -58,7 +58,7 @@ public class SpaceTest {
         Piece piece = new Piece(EVEN_ROW, ODD_COL, PLAYER1_COLOR);
         CuT = new Space(EVEN_ROW, ODD_COL);
         CuT.setPiece(piece);
-        assertFalse(CuT.isValid());
+        assertFalse(Move.isValid(CuT));
         assertEquals("|W|", CuT.toString());
 
     }
@@ -69,7 +69,7 @@ public class SpaceTest {
     @Test
     public void max_outbound_space() {
         CuT = new Space(MAX_OUTBOUND, MAX_OUTBOUND);
-        assertFalse(CuT.isValid());
+        assertFalse(Move.isValid(CuT));
     }
 
     /**
@@ -78,6 +78,6 @@ public class SpaceTest {
     @Test
     public void min_outbound_space() {
         CuT = new Space(MIN_OUTBOUND, MIN_OUTBOUND);
-        assertFalse(CuT.isValid());
+        assertFalse(Move.isValid(CuT));
     }
 }

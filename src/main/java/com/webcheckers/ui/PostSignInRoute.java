@@ -55,11 +55,9 @@ public class  PostSignInRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
-//        vm.put("title", "Welcome!");
         LOG.finer("PostSignInRoute is invoked.");
         final String playerName = request.queryParams("name");
         final Session currentSession = request.session();
-//        System.out.println(playerName.chars().a);
         if(isAlpha(playerName)){
             if(!(playerLobby.hasUserName(playerName))) {
                 playerLobby.addPlayer(playerName);
@@ -76,7 +74,6 @@ public class  PostSignInRoute implements Route {
             vm.put(MESSAGE_ATTR, "Not a valid name.");
         }
 
-//        return new ModelAndView(vm , "signin.ftl");
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
 
     }

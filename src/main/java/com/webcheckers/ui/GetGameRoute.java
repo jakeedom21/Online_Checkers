@@ -3,7 +3,7 @@ package com.webcheckers.ui;
 /**
  * Created by Sameen Luo <xxl2398@rit.edu> on 2/28/2018.
  */
-
+ 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
@@ -77,12 +77,6 @@ public class GetGameRoute implements Route {
             game = currentPlayer.getGame();
         }
 
-        //set pieces' orientation according the session's owner
-        game.setOrientation(currentPlayer);
-
-
-        // save game in session attribute map(necessary?)
-        //currentSession.attribute(GAME_ATTR,game);
 
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(GetHomeRoute.SIGNED_IN_ATTR, playerLobby.isActiveUser(currentPlayer.getPlayerName()));
@@ -138,7 +132,7 @@ public class GetGameRoute implements Route {
                 opponent = player1;
                 playerColor = currentPlayer.getPieceColor() == Player.PieceColor.WHITE ? "WHITE" : "RED";
                 opponentColor = playerColor.equals("WHITE") ? "WHITE" : "RED";
-                isMyTurn = game.getPlayerTurn().equals(player2.getPlayerName());
+                isMyTurn = game.getPlayerTurn().equals(currentPlayerName);
             }
 
             attributes.put("title", String.format("Game #%d (Opponent: %s)", gameId, opponent.getPlayerName()));
@@ -158,9 +152,9 @@ public class GetGameRoute implements Route {
         attributes.put("redPlayerName", player1.getPlayerName());
         attributes.put("whitePlayerName", player2.getPlayerName());
         attributes.put("viewMode", VIEW_MODE.PLAY.name());
-        attributes.put("activeColor", "RED");
+        attributes.put("activeColor", whoseTurn.getPieceColor() == Player.PieceColor.RED ? "RED" : "WHITE");
         attributes.put("currentPlayerName", whoseTurn.getPlayerName());
-        attributes.put("board", game.getBoard().getRaw());
+        attributes.put("board", game.getBoard(currentPlayer).getRaw());
 
         return templateEngine.render(new ModelAndView(attributes, GAME_FTL));
     }

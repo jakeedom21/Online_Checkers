@@ -1,6 +1,7 @@
 package com.webcheckers;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.MoveManager;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.ui.WebServer;

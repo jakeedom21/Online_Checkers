@@ -6,9 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-
-import com.webcheckers.appl.GameCenter;
-
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -20,7 +17,7 @@ public class GetSignInRouteTest {
     private GetSignInRoute CuT;
 
     // friendly objects
-    private GameCenter gameCenter;
+
 
     // mock objects
     private Request request;
@@ -39,7 +36,7 @@ public class GetSignInRouteTest {
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
 
-        gameCenter = new GameCenter();
+
         CuT = new GetSignInRoute(engine);
 
     }

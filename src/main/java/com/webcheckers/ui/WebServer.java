@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.MoveManager;
 import com.webcheckers.appl.PlayerLobby;
 import spark.TemplateEngine;
 
@@ -53,9 +54,14 @@ public class WebServer {
      * The URL pattern to request the Home page.
      */
     private static final String HOME_URL = "/";
-    private static final String SIGN_IN = "/signin";
-    private static final String SIGN_OUT = "/signout";
+    private static final String SIGN_IN = HOME_URL + "signin";
+    private static final String SIGN_OUT = HOME_URL +  "signout";
     private static final String GAME_URL = HOME_URL + "game";
+    private static final String VALIDATE_MOVE = HOME_URL + "validateMove";
+    private static final String SUBMIT_TURN = HOME_URL + "submitTurn";
+    private static final String BACKUP_MOVE = HOME_URL + "backupMove";
+    private static final String CHECK_TURN = HOME_URL + "checkTurn";
+    private static final String RESIGN_URL = HOME_URL + "resign";
     private static final String RESULT_URL = HOME_URL + "result";
 
     //
@@ -65,6 +71,7 @@ public class WebServer {
     private final TemplateEngine templateEngine;
     private final Gson gson;
     private final PlayerLobby playerLobby;
+
     //
     // Constructor
     //
@@ -76,7 +83,9 @@ public class WebServer {
      * @param gson           The Google JSON parser object used to render Ajax responses.
      * @throws NullPointerException If any of the parameters are {@code null}.
      */
-    public WebServer(final PlayerLobby playerLobby, final TemplateEngine templateEngine, final Gson gson) {
+    public WebServer(final PlayerLobby playerLobby,
+                     final TemplateEngine templateEngine,
+                     final Gson gson) {
         // validation
         Objects.requireNonNull(playerLobby, "must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -104,7 +113,6 @@ public class WebServer {
 
         // Configuration to serve static files
         staticFileLocation("/public");
-
         //// Setting any route (or filter) in Spark triggers initialization of the
         //// embedded Jetty web server.
 
@@ -149,6 +157,17 @@ public class WebServer {
         get(SIGN_OUT, new GetSignOutRoute(playerLobby));
 
         post(SIGN_IN, new PostSignInRoute(playerLobby, templateEngine));
+
+        post(RESULT_URL, new PostResignRoute(playerLobby, gson));
+
+        MoveManager moveManager = new MoveManager(playerLobby, gson);
+        post(VALIDATE_MOVE, moveManager::validateMove);
+
+        post(SUBMIT_TURN, moveManager::submitMove);
+
+        post(BACKUP_MOVE, moveManager::backupMove);
+
+        post(CHECK_TURN, moveManager::checkTurn);
         //
         LOG.config("WebServer is initialized.");
     }
