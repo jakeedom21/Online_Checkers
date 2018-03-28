@@ -45,7 +45,8 @@ public class PostResignRoute implements Route{
         }
 
         currentGame.setForfeit(playername);
-        response.redirect("/");
+        player.finishGame();
+//        response.redirect("/");
 
         return this.gson.toJson(new Message(Message.MessageType.info, "resign success."));
     }

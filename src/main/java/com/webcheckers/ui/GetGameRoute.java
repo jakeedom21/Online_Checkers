@@ -68,12 +68,14 @@ public class GetGameRoute implements Route {
             } else {
                 currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, false);
             }
+            System.out.println("Hit init of game");
             game = new Game(gameId, currentPlayer, opponent);
-
+            System.out.println("Game init");
             // if player did not choose opponent (assigned a game),
             // opponentName is null(?) since there's no request came from /home
         } else {
             //opponent = playerLobby.getPlayerByUsername(currentPlayer.getOpponentName());
+            System.out.println("hit game= currentPlayer.getGame() in else | name: " + currentPlayerName);
             game = currentPlayer.getGame();
         }
 
@@ -88,6 +90,7 @@ public class GetGameRoute implements Route {
 
         // see if opponent has resigned the game
         if (game.didPlayerResign()) {
+            currentPlayer.finishGame();
             currentSession.attribute(GAME_WON_ATTR, true);
             currentSession.attribute(OPPO_FORFEIT_ATTR, true);
             response.redirect("/result");

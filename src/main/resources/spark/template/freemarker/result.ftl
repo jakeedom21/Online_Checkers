@@ -16,7 +16,7 @@
     
     <div class="body">
       
-      <#if win>
+      <#if won>
         <#if oppoForfeit??>
         <p>Your opponent has resigned!</p>
         </#if>

@@ -16,6 +16,7 @@ public class GetResultRoute implements Route{
     private static final String VIEW_NAME = "result.ftl";
     private static final String VIEW_WON_STATUS = "won";
     private static final String VIEW_OPPO_FORFEIT = "oppoForfeit";
+    private static final String PLAYER_NAME = "playerName";
 
     //session attributes
     static final String OPPO_FORFEIT_ATTR = "opponentForfeit";  //bool
@@ -71,8 +72,8 @@ public class GetResultRoute implements Route{
         } else {
             vm.put( VIEW_WON_STATUS, false );
         }
-
-        return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
+        vm.put(PLAYER_NAME, currentSession.attribute(PLAYER_NAME));
+        return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 
 }

@@ -109,8 +109,6 @@ public class Game {
         } else {
             winner = p1;
         }
-        p1.finishGame();
-        p2.finishGame();
     }
 
     public boolean didPlayerResign() {
