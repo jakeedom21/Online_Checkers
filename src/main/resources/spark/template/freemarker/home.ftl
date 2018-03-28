@@ -11,6 +11,9 @@
     <div class="navigation">
     <#if signedInPlayer>
       <a href="/">my home</a> |
+    </#if>
+      <a href="/rules">rules</a> |
+    <#if signedInPlayer>
       <a href="/signout">sign out [${playerName}]</a>
     <#else>
       <a href="/signin">sign in</a>
