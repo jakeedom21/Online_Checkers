@@ -38,7 +38,6 @@ public class MoveValidation {
     public static ArrayList<Space> basicMoves(Piece piece, Board gameBoard){
         ArrayList<Space> basicMoves = new ArrayList<>(4);
         ArrayList<Space> jumpMoves = new ArrayList<>(4);
-        Space[][] board = gameBoard.getRaw();
 
         //gets all moves a piece should be able to make
 //        Space topRight = board[piece.getRowNumber() - 1][piece.getColNumber() + 1];
@@ -63,7 +62,7 @@ public class MoveValidation {
 
         //grabs moves a king should be able to make
         if(piece.isKing()){
-            Space bottomRight = new Space(piece.getRowNumber() ,  piece.getColNumber() + 1);
+            Space bottomRight = new Space(piece.getRowNumber() + 1,  piece.getColNumber() + 1);
             basicMoves.add(bottomRight);
             Space bottomLeft = new Space(piece.getRowNumber() + 1, piece.getColNumber() - 1);
             basicMoves.add(bottomLeft);
@@ -75,9 +74,18 @@ public class MoveValidation {
 
         //removes all invalid basicMoves
         for(int i = 0; i < basicMoves.size(); i++){
-            if(!Move.isValid(basicMoves.get(i))){
+            Space basicCheck = basicMoves.get(i);
+            if(!Move.isValid(basicCheck)){
                 basicMoves.remove(i);
                 i--;
+            }
+            else{
+                basicCheck = gameBoard.getSpace(basicCheck.getRow(), basicCheck.getCol());
+                basicMoves.set(i, basicCheck);
+                if(basicCheck.hasPiece()){
+                    basicMoves.remove(i);
+                    i--;
+                }
             }
         }
         //nothing more needs to be done with basicMoves
@@ -85,18 +93,28 @@ public class MoveValidation {
 
         //removes invalid jumpsMoves
         for(int j = 0; j < jumpMoves.size(); j++){
-            if(!Move.isValid(jumpMoves.get(j))){
+            Space basicJump = jumpMoves.get(j);
+            if(!Move.isValid(basicJump)){
                 jumpMoves.remove(j);
                 j--;
             }
+            else{
+                basicJump = gameBoard.getSpace(basicJump.getRow(), basicJump.getCol());
+                jumpMoves.set(j, basicJump);
+                if(basicJump.hasPiece()){
+                    jumpMoves.remove(j);
+                    j--;
+                }
+
+            }
         }
         //needs to check for a piece to jump and confirm its an opponents piece
-
+        //the mid space is implicitly valid in terms of space placement
         for(int jumpCheck = 0; jumpCheck < jumpMoves.size(); jumpCheck++){
             Space currentJump = jumpMoves.get(jumpCheck);
             int jumpRow = (int) Math.floor((currentJump.getRow() + piece.getRowNumber()) / 2);
             int jumpCol = (int) Math.floor((currentJump.getCol() + piece.getColNumber()) / 2);
-            Space jumpOver = board[jumpRow][jumpCol];
+            Space jumpOver = gameBoard.getSpace(jumpRow, jumpCol);
             //if no piece in between jump and start remove jump
             if(jumpOver.getPiece() == null){
                 jumpMoves.remove(jumpCheck);
@@ -180,7 +198,8 @@ public class MoveValidation {
         ArrayList<Space> possibleEnds = basicMoves(start.getPiece(), board);
         for (int i = 0; i < possibleEnds.size(); i++) {
             Space jump = possibleEnds.get(i);
-            if (start.getCol() == jump.getCol() && start.getRow() == jump.getRow()) {
+            System.out.println(jump.getCol() + " Col " + jump.getRow() + " Row");
+            if (end.getCol() == jump.getCol() && end.getRow() == jump.getRow()) {
                 return true;
             }
         }

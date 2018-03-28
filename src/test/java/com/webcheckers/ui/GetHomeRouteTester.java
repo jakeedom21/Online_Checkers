@@ -63,7 +63,7 @@ public class GetHomeRouteTester {
 
     /**
      * Test that CuT shows the Home view when the session is brand new.
-     */
+    */
     @Test
     public void new_default_session() {
         final TemplateEngineTester testHelper = new TemplateEngineTester();
@@ -83,7 +83,6 @@ public class GetHomeRouteTester {
 
 
     }
-
 //    public void signed_in_session(){
 //        final TemplateEngineTester testHelper = new TemplateEngineTester();
 //        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
