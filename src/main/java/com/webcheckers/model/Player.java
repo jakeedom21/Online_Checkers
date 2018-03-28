@@ -34,9 +34,6 @@ public class Player {
         return opponentName;
     }
 
-//    public void setGame(Game game){
-//        this.currentGame = game;
-//    }
 
     public Game getGame() {
         return this.currentGame;
@@ -46,9 +43,6 @@ public class Player {
         return inGame;
     }
 
-//    public void setInGame(boolean inGame) {
-//        this.inGame = inGame;
-//    }
 
     public PieceColor getPieceColor() {
         return pieceColor;

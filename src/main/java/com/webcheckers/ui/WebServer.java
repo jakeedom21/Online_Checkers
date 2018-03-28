@@ -1,7 +1,9 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.MoveManager;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.utils.Constants;
 import spark.TemplateEngine;
 
 import java.util.Objects;
@@ -44,19 +46,10 @@ import static spark.Spark.*;
  */
 public class WebServer {
     private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
-
-    //
-    // Constants
-    //
-
     /**
      * The URL pattern to request the Home page.
      */
-    private static final String HOME_URL = "/";
-    private static final String SIGN_IN = "/signin";
-    private static final String SIGN_OUT = "/signout";
-    private static final String GAME_URL = HOME_URL + "game";
-    private static final String RULES_URL = HOME_URL + "rules";
+
     //
     // Attributes
     //
@@ -64,6 +57,7 @@ public class WebServer {
     private final TemplateEngine templateEngine;
     private final Gson gson;
     private final PlayerLobby playerLobby;
+
     //
     // Constructor
     //
@@ -75,7 +69,9 @@ public class WebServer {
      * @param gson           The Google JSON parser object used to render Ajax responses.
      * @throws NullPointerException If any of the parameters are {@code null}.
      */
-    public WebServer(final PlayerLobby playerLobby, final TemplateEngine templateEngine, final Gson gson) {
+    public WebServer(final PlayerLobby playerLobby,
+                     final TemplateEngine templateEngine,
+                     final Gson gson) {
         // validation
         Objects.requireNonNull(playerLobby, "must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -138,14 +134,26 @@ public class WebServer {
         //// code clean; using small classes.
 
         // Shows the Checkers game Home page.
-        get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
-        get(RULES_URL, new GetRulesRoute(templateEngine));
-        get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
+        get(Constants.HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
+        get(Constants.RULES_URL, new GetRulesRoute(templateEngine));
+        get(Constants.GAME_URL, new GetGameRoute(playerLobby, templateEngine));
+        get(Constants.RESULT_URL, new GetResultRoute(templateEngine));
 
-        get(SIGN_IN, new GetSignInRoute(templateEngine));
-        get(SIGN_OUT, new GetSignOutRoute(playerLobby));
+        get(Constants.SIGN_IN, new GetSignInRoute(templateEngine));
+        get(Constants.SIGN_OUT, new GetSignOutRoute(playerLobby));
 
-        post(SIGN_IN, new PostSignInRoute(playerLobby, templateEngine));
+        post(Constants.SIGN_IN, new PostSignInRoute(playerLobby, templateEngine));
+
+        post(Constants.RESIGN_URL, new PostResignRoute(playerLobby, gson));
+
+        MoveManager moveManager = new MoveManager(playerLobby, gson);
+        post(Constants.VALIDATE_MOVE, moveManager::validateMove);
+
+        post(Constants.SUBMIT_TURN, moveManager::submitMove);
+
+        post(Constants.BACKUP_MOVE, moveManager::backupMove);
+
+        post(Constants.CHECK_TURN, moveManager::checkTurn);
 
         //
         LOG.config("WebServer is initialized.");

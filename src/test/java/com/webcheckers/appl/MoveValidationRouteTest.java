@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Note full implementation has not been completed
  */
 @Tag("Application-tier")
-public class MoveValidationTest {
+public class MoveValidationRouteTest {
     private Space bad;
     private Space bad2;
     private Space none;

@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.utils.Constants;
 import spark.*;
 
 import java.util.HashMap;
@@ -15,11 +16,6 @@ import java.util.logging.Logger;
  *
  */
 public class  PostSignInRoute implements Route {
-    // Constants
-    static final String PLAYER = "player";
-    static final String MESSAGE_ATTR = "message";
-    static final String PLAYER_NAME_ATTR = "playerName";
-
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
@@ -55,28 +51,25 @@ public class  PostSignInRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
-//        vm.put("title", "Welcome!");
         LOG.finer("PostSignInRoute is invoked.");
         final String playerName = request.queryParams("name");
         final Session currentSession = request.session();
-//        System.out.println(playerName.chars().a);
         if(isAlpha(playerName)){
             if(!(playerLobby.hasUserName(playerName))) {
                 playerLobby.addPlayer(playerName);
-                vm.put(PLAYER, playerName);
-                currentSession.attribute(PLAYER_NAME_ATTR, playerName);
-                currentSession.attribute(GetHomeRoute.SIGNED_IN_ATTR, true);
+                vm.put(Constants.PLAYER, playerName);
+                currentSession.attribute(Constants.PLAYER_NAME, playerName);
+                currentSession.attribute(Constants.SIGNED_IN_PLAYER, true);
                 LOG.log(Level.INFO,"POST /signin: " + request.session().id() + playerName);
-                response.redirect("/");
+                response.redirect(Constants.HOME_URL);
 
             } else {
-                vm.put(MESSAGE_ATTR, "Name already in use.");
+                vm.put(Constants.MESSAGE, "Name already in use.");
             }
         } else {
-            vm.put(MESSAGE_ATTR, "Not a valid name.");
+            vm.put(Constants.MESSAGE, "Not a valid name.");
         }
 
-//        return new ModelAndView(vm , "signin.ftl");
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
 
     }
