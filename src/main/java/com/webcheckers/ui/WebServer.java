@@ -61,7 +61,7 @@ public class WebServer {
     private static final String SUBMIT_TURN = HOME_URL + "submitTurn";
     private static final String BACKUP_MOVE = HOME_URL + "backupMove";
     private static final String CHECK_TURN = HOME_URL + "checkTurn";
-    private static final String RESIGN_URL = HOME_URL + "resign";
+    private static final String RESIGN_URL = HOME_URL + "resignGame";
     private static final String RESULT_URL = HOME_URL + "result";
 
     private static final String RULES_URL = HOME_URL + "rules";

@@ -34,13 +34,14 @@ public class PostResignRoute implements Route{
     }
 
     public Object handle(Request request, Response response) {
+
         final Session currentSession = request.session();
         String playername = currentSession.attribute(PostSignInRoute.PLAYER_NAME_ATTR);
         Player player = playerLobby.getPlayerByUsername(playername);
         Game currentGame = player.getGame();
 
         if (currentGame == null) {
-            System.err.println("Game to resign from is null");
+            return this.gson.toJson(new Message(Message.MessageType.error, "Game to resign from is null"));
         }
 
         currentGame.setForfeit(playername);
