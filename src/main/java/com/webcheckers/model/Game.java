@@ -102,11 +102,7 @@ public class Game {
         if (currentPlayer.equals(this.p1)) {
             p1Board.movePiece(start, end);
             Board newP2board = new Board(p1Board);
-            System.out.println("New player2 board before flip");
-            System.out.println(newP2board);
             newP2board.flip();
-            System.out.println("New player2 board after flip");
-            System.out.println(newP2board);
             p2Board = newP2board;
         } else {
             p2Board.movePiece(start, end);

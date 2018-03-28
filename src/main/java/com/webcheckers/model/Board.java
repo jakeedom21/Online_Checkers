@@ -96,7 +96,6 @@ public class Board implements Serializable{
         Piece piece = start.getPiece();
         start.setPiece(null);
         end.setPiece(piece);
-        System.out.println(this);
     }
 
     public Space getSpace(Space space) {
@@ -119,7 +118,7 @@ public class Board implements Serializable{
         return this.board;
     }
 
-    public void flip() {
+    public void flip() { // Rotates board 90 degrees twice
         int n = board.length;
         for (int i = 0; i < 2; i++) {
             for (int l = 0; l < n/2; l++) {

@@ -38,8 +38,7 @@ public class MoveManager {
             game.queueMove(move);
         }
 
-        String resultJson = gson.toJson(result);
-        return resultJson;
+        return gson.toJson(result);
     }
 
     public Object submitMove(Request request, Response response) {
@@ -50,8 +49,7 @@ public class MoveManager {
         Space newSpace = move.getEnd();
         game.movePiece(oldSpace, newSpace, currentPlayer);
         game.finishMove();
-        System.out.println(gson.toJson(new Message(MessageType.info, "Turn submitted successfully")));
-        return  gson.toJson(new Message(MessageType.info, "Turn submitted successfully"));
+        return gson.toJson(new Message(MessageType.info, "Turn submitted successfully"));
     }
 
     public String backupMove(Request request, Response response) {

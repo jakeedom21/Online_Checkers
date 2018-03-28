@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 
 public class GetGameRoute implements Route {
 
-    public static final String GAME = "/game";
     private static final String GAME_FTL = "game.ftl";
     final static String GAME_ATTR = "game";
     PlayerLobby playerLobby;
@@ -121,18 +120,17 @@ public class GetGameRoute implements Route {
             attributes.put("isMyTurn", isMyTurn);
         }
 
-        Player whoseTurn;
-        if (game.getPlayerTurn().equals(game.getPlayers()[0].getPlayerName())) {
-            whoseTurn = player1;
-        } else {
-            whoseTurn = player2;
-        }
+
+        String whoseTurn =  game.getPlayerTurn();
+        String viewMode = whoseTurn.equals(currentPlayerName) ? VIEW_MODE.PLAY.name() : VIEW_MODE.SPECTATOR.name();
+        Player.PieceColor activeColor = player1.getPlayerName().equals(whoseTurn)
+                ? Player.PieceColor.RED : Player.PieceColor.WHITE ;
 
         attributes.put("redPlayerName", player1.getPlayerName());
         attributes.put("whitePlayerName", player2.getPlayerName());
-        attributes.put("viewMode", VIEW_MODE.PLAY.name());
-        attributes.put("activeColor", whoseTurn.getPieceColor() == Player.PieceColor.RED ? "RED" : "WHITE");
-        attributes.put("currentPlayerName", whoseTurn.getPlayerName());
+        attributes.put("viewMode", viewMode);
+        attributes.put("activeColor", activeColor == Player.PieceColor.RED ? "RED" : "WHITE");
+        attributes.put("currentPlayerName", currentPlayer);
         attributes.put("board", game.getBoard(currentPlayer).getRaw());
 
         return templateEngine.render(new ModelAndView(attributes, GAME_FTL));
