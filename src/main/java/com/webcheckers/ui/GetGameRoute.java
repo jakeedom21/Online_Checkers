@@ -123,14 +123,16 @@ public class GetGameRoute implements Route {
 
         String whoseTurn =  game.getPlayerTurn();
         String viewMode = whoseTurn.equals(currentPlayerName) ? VIEW_MODE.PLAY.name() : VIEW_MODE.SPECTATOR.name();
+        System.out.println("Player 1 in gameRoute: " + player1.getPlayerName());
         Player.PieceColor activeColor = player1.getPlayerName().equals(whoseTurn)
                 ? Player.PieceColor.RED : Player.PieceColor.WHITE ;
+        System.out.println("Active color:  " + activeColor);
 
         attributes.put("redPlayerName", player1.getPlayerName());
         attributes.put("whitePlayerName", player2.getPlayerName());
         attributes.put("viewMode", viewMode);
         attributes.put("activeColor", activeColor == Player.PieceColor.RED ? "RED" : "WHITE");
-        attributes.put("currentPlayerName", currentPlayer);
+        attributes.put("currentPlayerName", currentPlayerName);
         attributes.put("board", game.getBoard(currentPlayer).getRaw());
 
         return templateEngine.render(new ModelAndView(attributes, GAME_FTL));

@@ -33,6 +33,8 @@ public class Game {
         this.p1Board = new Board();
         this.p2Board = new Board();
         this.p2Board.flip();
+        System.out.println("Player 1: " + p1.getPlayerName());
+        System.out.println("Player 2: " + p2.getPlayerName());
         this.playerTurn = p1.getPlayerName();
         this.moveQueue = new LinkedList<>();
         p1.assignGame(Player.PieceColor.RED, this,p2);
@@ -48,10 +50,7 @@ public class Game {
     }
 
     public Board getBoard(Player p) {
-        if(p.equals(p1)){
-            return this.p1Board;
-        }
-        return this.p2Board;
+        return p.equals(p1) ? p1Board : p2Board;
     }
 
     public String getPlayerTurn() {
@@ -59,11 +58,7 @@ public class Game {
     }
 
     public void finishMove() {
-        if (this.playerTurn.equals(p1.getPlayerName())) {
-            playerTurn = p2.getPlayerName();
-        } else {
-            playerTurn = p1.getPlayerName();
-        }
+        playerTurn =  playerTurn.equals(p1.getPlayerName()) ? p2.getPlayerName() : p1.getPlayerName();
     }
 
     public String getWinner() {
@@ -82,7 +77,6 @@ public class Game {
     }
 
     public boolean didPlayerResign() {
-
         return this.forfeit;
     }
 
