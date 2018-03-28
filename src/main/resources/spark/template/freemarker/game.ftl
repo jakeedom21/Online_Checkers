@@ -23,6 +23,9 @@
     <div class="navigation">
     <#if signedInPlayer>
       <a href="/">my home</a> |
+    </#if>
+      <a href="#rules" id="showRules">rules</a> |
+    <#if signedInPlayer>
       <a href="/signout">sign out [${playerName}]</a>
     <#else>
       <a href="/signin">sign in</a>
@@ -35,6 +38,20 @@
       <p id="help_text"></p>
       
       <div>
+
+        <div id="rulesModal" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="close">&times;</span>
+              <h1>American Rules for Checkers</h1>
+            </div>
+            <div class="modal-body">
+              <#include "rules_body.ftl">
+            </div>
+          </div>
+
+        </div>
         <div id="game-controls">
         
           <fieldset id="game-info">
@@ -104,5 +121,26 @@
   <audio id="audio" src="http://www.soundjay.com/button/beep-07.mp3" autostart="false" ></audio>
   <script data-main="js/game/index" src="js/require.js"></script>
   <script data-main="js/game/index" src="js/game/main.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var modalElem = document.getElementById('rulesModal');
+      var modal = $(modalElem);
+
+      $('#showRules').on('click', function() {
+        modal.css('display', 'block');
+      });
+
+      $('.close').on('click', function() {
+        modal.css('display', 'none');
+      });
+
+      window.onclick = function(event) {
+        if (event.target === modalElem) {
+          modal.css('display', 'none');
+        }
+      };
+    })
+  </script>
 </body>
 </html>
