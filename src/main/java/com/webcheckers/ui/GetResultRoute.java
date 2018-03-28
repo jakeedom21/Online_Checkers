@@ -61,9 +61,9 @@ public class GetResultRoute implements Route{
         // start building the View-Model
         Map<String, Object> vm = new HashMap<>();
         boolean opponentForfeit = currentSession.attribute(OPPO_FORFEIT_ATTR);
-            if (opponentForfeit) {
+        if (opponentForfeit) {
                 vm.put(VIEW_OPPO_FORFEIT, true);
-            }
+        }
 
         boolean gameWon = currentSession.attribute(GAME_WON_ATTR);
         if (gameWon) {

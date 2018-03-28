@@ -152,7 +152,6 @@ public class WebServer {
         get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
         get(RULES_URL, new GetRulesRoute(templateEngine));
         get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
-
         get(RESULT_URL, new GetResultRoute(templateEngine));
 
         get(SIGN_IN, new GetSignInRoute(templateEngine));
@@ -160,7 +159,7 @@ public class WebServer {
 
         post(SIGN_IN, new PostSignInRoute(playerLobby, templateEngine));
 
-        post(RESULT_URL, new PostResignRoute(playerLobby, gson));
+        post(RESIGN_URL, new PostResignRoute(playerLobby, gson));
 
         MoveManager moveManager = new MoveManager(playerLobby, gson);
         post(VALIDATE_MOVE, moveManager::validateMove);

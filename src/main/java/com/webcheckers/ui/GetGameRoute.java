@@ -94,18 +94,6 @@ public class GetGameRoute implements Route {
             return null;
         }
 
-        String forfeit = request.queryParams("forfeit");
-        if (forfeit != null) {
-            if (forfeit.equals("forfeit")) {
-                game.setForfeit(currentPlayerName);
-                response.redirect("/");
-                //game.didPlayerResign();
-                //notify opponent forfeit&opponent win
-
-                return null;
-            }
-        }
-
         // Has game been won?
         if (game.isGameWon()) {
             String winner = game.getWinner();

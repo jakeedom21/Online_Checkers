@@ -2,7 +2,9 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
+import com.webcheckers.model.Player;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -33,7 +35,16 @@ public class PostResignRoute implements Route{
 
     public Object handle(Request request, Response response) {
         final Session currentSession = request.session();
-        //TODO
+        String playername = currentSession.attribute(PostSignInRoute.PLAYER_NAME_ATTR);
+        Player player = playerLobby.getPlayerByUsername(playername);
+        Game currentGame = player.getGame();
+
+        if (currentGame == null) {
+            System.err.println("Game to resign from is null");
+        }
+
+        currentGame.setForfeit(playername);
+        response.redirect("/");
 
         return this.gson.toJson(new Message(Message.MessageType.info, "resign success."));
     }
