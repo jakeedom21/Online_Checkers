@@ -50,6 +50,14 @@ public class MoveValidation {
 //        jumpMoves.add(jumpTopLeft);
 
         // editting
+        for(int i = -1; i <= 1; i += 2){
+            Space basicMove = new Space(piece.getRowNumber() - 1, piece.getColNumber() + i);
+            basicMoves.add(basicMove);
+            Space jumpMove = new Space(basicMove.getRow() - 1, basicMove.getCol() + i);
+            jumpMoves.add(jumpMove);
+        }
+
+        /*
         Space topRight = new Space(piece.getRowNumber()- 1, piece.getColNumber() + 1);
         basicMoves.add(topRight);
         Space topLeft = new Space( piece.getRowNumber() - 1,  piece.getColNumber() - 1);
@@ -58,10 +66,19 @@ public class MoveValidation {
         jumpMoves.add(jumpTopRight);
         Space jumpTopLeft = new Space(topRight.getRow() - 1, topRight.getCol() - 1);
         jumpMoves.add(jumpTopLeft);
-
+        */
 
         //grabs moves a king should be able to make
         if(piece.isKing()){
+
+            for(int i = -1; i <= 1; i += 2){
+                Space basicMove = new Space(piece.getRowNumber() + 1, piece.getColNumber() + i);
+                basicMoves.add(basicMove);
+                Space jumpMove = new Space(basicMove.getRow() + 1, basicMove.getCol() + i);
+                jumpMoves.add(jumpMove);
+            }
+
+            /*
             Space bottomRight = new Space(piece.getRowNumber() + 1,  piece.getColNumber() + 1);
             basicMoves.add(bottomRight);
             Space bottomLeft = new Space(piece.getRowNumber() + 1, piece.getColNumber() - 1);
@@ -70,6 +87,7 @@ public class MoveValidation {
             jumpMoves.add(bottomRightJump);
             Space bottomLeftJump = new Space(bottomLeft.getRow() + 1, bottomLeft.getCol() - 1);
             jumpMoves.add(bottomLeftJump);
+            */
         }
 
         //removes all invalid basicMoves
@@ -198,7 +216,6 @@ public class MoveValidation {
         ArrayList<Space> possibleEnds = basicMoves(start.getPiece(), board);
         for (int i = 0; i < possibleEnds.size(); i++) {
             Space jump = possibleEnds.get(i);
-            System.out.println(jump.getCol() + " Col " + jump.getRow() + " Row");
             if (end.getCol() == jump.getCol() && end.getRow() == jump.getRow()) {
                 return true;
             }

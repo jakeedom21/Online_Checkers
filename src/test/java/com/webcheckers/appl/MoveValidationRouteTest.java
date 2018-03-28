@@ -45,13 +45,13 @@ public class MoveValidationRouteTest {
         white2 = new Piece(0,0,"W");
     }
 
-    @AfterEach
     /**
      * Takes a look at each board config to confirm placement
-     */
+
     public void confirmBoard(){
         System.out.println(board.toString());
     }
+     */
 
     @Test
     public void testBadSpace(){
@@ -75,7 +75,6 @@ public class MoveValidationRouteTest {
         Space start = board.getSpace(2, 3);
         start.setPiece(red);
         Space end = board.getSpace(1, 4);
-        System.out.println("testValidBasiccMove");
         assertTrue(MoveValidation.validMove(start, end, board));
     }
 
@@ -87,7 +86,6 @@ public class MoveValidationRouteTest {
         red2.setPosition(1,4);
         Space end = board.getSpace(1,4);
         end.setPiece(red2);
-        System.out.println("testInvalidBasicMove");
         assertFalse(MoveValidation.validMove(start, end, board));
     }
 
@@ -100,7 +98,6 @@ public class MoveValidationRouteTest {
         Space mid = board.getSpace(1,4);
         mid.setPiece(white);
         Space end = board.getSpace(0,5);
-        System.out.println("testValidJumpMove");
         assertTrue(MoveValidation.validMove(start, end, board));
     }
 
@@ -115,7 +112,6 @@ public class MoveValidationRouteTest {
         white2.setPosition(0,5);
         Space end = board.getSpace(0,5);
         end.setPiece(white2);
-        System.out.println("testInvalidJumpMove");
         assertFalse(MoveValidation.validMove(start, end, board));
     }
 
@@ -123,12 +119,12 @@ public class MoveValidationRouteTest {
     public void testValidCorner(){
         red.setPosition(0, 1);
         Space start = board.getSpace(0,1);
+        red.setKing();
         start.setPiece(red);
         white.setPosition(1,2);
         Space mid = board.getSpace(1,2);
         mid.setPiece(white);
         Space end = board.getSpace(2,3);
-        System.out.println("testValidCorner");
         assertTrue(MoveValidation.validMove(start, end, board));
     }
 
@@ -143,7 +139,6 @@ public class MoveValidationRouteTest {
         white2.setPosition(2,3);
         Space end = board.getSpace(2,3);
         end.setPiece(white2);
-        System.out.println("testInvalidCorner");
         assertFalse(MoveValidation.validMove(start, end, board));
     }
 
@@ -154,7 +149,6 @@ public class MoveValidationRouteTest {
         Space start = board.getSpace(2, 3);
         start.setPiece(red);
         Space end = board.getSpace(3, 4);
-        System.out.println("testValidBasicKing");
         assertTrue(MoveValidation.validMove(start, end, board));
     }
 
@@ -168,7 +162,6 @@ public class MoveValidationRouteTest {
         Space mid = board.getSpace(3,4);
         mid.setPiece(white);
         Space end = board.getSpace(4, 5);
-        System.out.println("testValidJumpKing");
         assertTrue(MoveValidation.validMove(start, end, board));
     }
 
@@ -181,7 +174,6 @@ public class MoveValidationRouteTest {
         white.setPosition(3,4);
         Space end = board.getSpace(3, 4);
         end.setPiece(white);
-        System.out.println("testInvalidBasicKing");
         assertFalse(MoveValidation.validMove(start, end, board));
     }
 
@@ -196,7 +188,6 @@ public class MoveValidationRouteTest {
         white2.setPosition(4,5);
         Space end = board.getSpace(4, 5);
         end.setPiece(white2);
-        System.out.println("testInvalidJumpKing");
         assertFalse(MoveValidation.validMove(start, end, board));
     }
 }
