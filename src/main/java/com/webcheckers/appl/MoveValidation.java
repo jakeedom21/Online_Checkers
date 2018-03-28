@@ -39,34 +39,12 @@ public class MoveValidation {
         ArrayList<Space> basicMoves = new ArrayList<>(4);
         ArrayList<Space> jumpMoves = new ArrayList<>(4);
 
-        //gets all moves a piece should be able to make
-//        Space topRight = board[piece.getRowNumber() - 1][piece.getColNumber() + 1];
-//        basicMoves.add(topRight);
-//        Space topLeft = board[piece.getRowNumber() - 1] [piece.getColNumber() - 1];
-//        basicMoves.add(topLeft);
-//        Space jumpTopRight = board[topRight.getRow() - 1] [topRight.getCol() + 1];
-//        jumpMoves.add(jumpTopRight);
-//        Space jumpTopLeft = board[topRight.getRow() - 1] [topRight.getCol() - 1];
-//        jumpMoves.add(jumpTopLeft);
-
-        // editting
         for(int i = -1; i <= 1; i += 2){
             Space basicMove = new Space(piece.getRowNumber() - 1, piece.getColNumber() + i);
             basicMoves.add(basicMove);
             Space jumpMove = new Space(basicMove.getRow() - 1, basicMove.getCol() + i);
             jumpMoves.add(jumpMove);
         }
-
-        /*
-        Space topRight = new Space(piece.getRowNumber()- 1, piece.getColNumber() + 1);
-        basicMoves.add(topRight);
-        Space topLeft = new Space( piece.getRowNumber() - 1,  piece.getColNumber() - 1);
-        basicMoves.add(topLeft);
-        Space jumpTopRight = new Space(topRight.getRow() - 1, topRight.getCol() + 1);
-        jumpMoves.add(jumpTopRight);
-        Space jumpTopLeft = new Space(topRight.getRow() - 1, topRight.getCol() - 1);
-        jumpMoves.add(jumpTopLeft);
-        */
 
         //grabs moves a king should be able to make
         if(piece.isKing()){
@@ -77,17 +55,6 @@ public class MoveValidation {
                 Space jumpMove = new Space(basicMove.getRow() + 1, basicMove.getCol() + i);
                 jumpMoves.add(jumpMove);
             }
-
-            /*
-            Space bottomRight = new Space(piece.getRowNumber() + 1,  piece.getColNumber() + 1);
-            basicMoves.add(bottomRight);
-            Space bottomLeft = new Space(piece.getRowNumber() + 1, piece.getColNumber() - 1);
-            basicMoves.add(bottomLeft);
-            Space bottomRightJump = new Space(bottomRight.getRow() + 1, bottomRight.getCol() + 1);
-            jumpMoves.add(bottomRightJump);
-            Space bottomLeftJump = new Space(bottomLeft.getRow() + 1, bottomLeft.getCol() - 1);
-            jumpMoves.add(bottomLeftJump);
-            */
         }
 
         //removes all invalid basicMoves
@@ -161,31 +128,35 @@ public class MoveValidation {
      * @return true on empty space that a checkers piece should be able to access at some point,
      *         false on full spaces or any space a checkers piece shouldn't be able to access
      */
-    public static boolean validPlacement(Space finalSpace) {
+    public static String validPlacement(Space finalSpace, Board gameBoard){
         if(finalSpace == null){
-            return false;
+            return "Space does not exist";
         }
         //if both col and row are even or odd is an invalid move
         if (finalSpace.getCol() % 2 == 0 && finalSpace.getRow() % 2 == 0) {
-            return false;
+            return "Piece's can't go into this space";
         } else if (finalSpace.getCol() % 2 == 1 && finalSpace.getRow() % 2 == 1) {
-            return false;
-        }
-        //if finalSpace has a piece already in it
-        else if (!finalSpace.getPiece().equals(null)) {
-            return false;
+            return "Piece's can't go into this space";
         }
         //not sure if actually needed as don't know if player actually can place outside board
         else if (finalSpace.getRow() < 0 || finalSpace.getCol() < 0) {
-            return false;
+            return "Space does not exist";
         }
         //for this in particular, if player can place outside board will need a get in board for MAX_DIM
         else if (finalSpace.getCol() >= MAX_DIM || finalSpace.getRow() >= MAX_DIM) {
-            return false;
-        } else {
-            return true;
+            return "Space does not exist";
+        }
+        //if finalSpace has a piece already in it
+        finalSpace = gameBoard.getSpace(finalSpace.getRow(), finalSpace.getCol());
+        System.out.println(finalSpace.hasPiece());
+        if(finalSpace.hasPiece()) {
+            return "There is already a piece there";
+        }
+        else {
+            return "";
         }
     }
+
 
     /**
      * Will determine if its a validMove using the distance
@@ -201,25 +172,38 @@ public class MoveValidation {
      *
      * @param start
      * @param end
-     * @return true if its a valid move
-     *         false if not a valid move
+     * @return the reason for the invalid move if invalid
+     *         "Too large of a move": move/jump that's too big
+     *         "Too small of a move": move/jump that's too small
+     *         "Opponent's piece protected by another opponent's piece"
+     *         return "" if valid move
      */
-    public static boolean validMove(Space start, Space end, Board board) {
-        int x_dist = Math.abs(start.getCol() - end.getCol());
-        int y_dist = Math.abs(start.getRow() - end.getRow());
-        if (x_dist < 1 || x_dist > 2) {
-            return false;
-        } else if (y_dist < 1 || y_dist > 2) {
-            return false;
+    public static String validMove(Space start, Space end, Board board) {
+        String validPlacement = validPlacement(end, board);
+        //if the end space is not valid it will print an error
+        if(!validPlacement.equals("")) {
+            System.out.println(validPlacement);
         }
+        //ensures that end is at least within the board
         //gets the possible ending spots
         ArrayList<Space> possibleEnds = basicMoves(start.getPiece(), board);
         for (int i = 0; i < possibleEnds.size(); i++) {
             Space jump = possibleEnds.get(i);
             if (end.getCol() == jump.getCol() && end.getRow() == jump.getRow()) {
-                return true;
+                return "";
             }
         }
-        return false;
+        //This looks for errors in the jump
+        int row_mid = (int)Math.floor((start.getRow() + end.getRow())/2);
+        int col_mid = (int)Math.floor((start.getCol() + end.getCol())/2);
+        Space mid_space = board.getSpace(row_mid, col_mid);
+        String start_color = start.getPiece().getColor();
+        if(mid_space.hasPiece()){
+            if (mid_space.getPiece().getColor().equals(start_color)){
+                return "Can't jump over your own piece";
+            }
+        }
+        return "Can't jump over nothing";
+        //other errors are for basic moves
     }
 }
