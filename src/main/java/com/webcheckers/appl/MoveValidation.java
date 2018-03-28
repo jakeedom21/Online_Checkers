@@ -212,8 +212,8 @@ public class MoveValidation {
         } else if (y_dist < 1 || y_dist > 2) {
             return false;
         }
-        //gets the possible ending spots
-        ArrayList<Space> possibleEnds = basicMoves(start.getPiece(), board);
+
+        ArrayList<Space> possibleEnds = basicMoves(board.getSpace(start.getRow(), start.getCol()).getPiece(), board);
         for (int i = 0; i < possibleEnds.size(); i++) {
             Space jump = possibleEnds.get(i);
             if (end.getCol() == jump.getCol() && end.getRow() == jump.getRow()) {
