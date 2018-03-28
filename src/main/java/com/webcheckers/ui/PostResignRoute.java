@@ -1,10 +1,12 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.sun.tools.internal.jxc.ap.Const;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
+import com.webcheckers.utils.Constants;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -36,7 +38,7 @@ public class PostResignRoute implements Route{
     public Object handle(Request request, Response response) {
 
         final Session currentSession = request.session();
-        String playername = currentSession.attribute(PostSignInRoute.PLAYER_NAME_ATTR);
+        String playername = currentSession.attribute(Constants.PLAYER_NAME);
         Player player = playerLobby.getPlayerByUsername(playername);
         Game currentGame = player.getGame();
 

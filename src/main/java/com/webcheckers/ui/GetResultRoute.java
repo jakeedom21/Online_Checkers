@@ -1,5 +1,7 @@
 package com.webcheckers.ui;
 
+import com.sun.tools.internal.jxc.ap.Const;
+import com.webcheckers.utils.Constants;
 import spark.*;
 
 import java.util.HashMap;
@@ -14,14 +16,6 @@ public class GetResultRoute implements Route{
 
     //result.ftl vars
     private static final String VIEW_NAME = "result.ftl";
-    private static final String VIEW_WON_STATUS = "won";
-    private static final String VIEW_OPPO_FORFEIT = "oppoForfeit";
-    private static final String PLAYER_NAME = "playerName";
-
-    //session attributes
-    static final String OPPO_FORFEIT_ATTR = "opponentForfeit";  //bool
-    static final String GAME_WON_ATTR = "gameWon"; //bool
-
 
     private final TemplateEngine templateEngine;
     private static final Logger LOG = Logger.getLogger(GetResultRoute.class.getName());
@@ -61,18 +55,18 @@ public class GetResultRoute implements Route{
 
         // start building the View-Model
         Map<String, Object> vm = new HashMap<>();
-        boolean opponentForfeit = currentSession.attribute(OPPO_FORFEIT_ATTR);
+        boolean opponentForfeit = currentSession.attribute(Constants.OPPONENT_FORFEIT);
         if (opponentForfeit) {
-                vm.put(VIEW_OPPO_FORFEIT, true);
+            vm.put(Constants.OPPONENT_FORFEIT, true);
         }
 
-        boolean gameWon = currentSession.attribute(GAME_WON_ATTR);
+        boolean gameWon = currentSession.attribute(Constants.GAME_WON);
         if (gameWon) {
-            vm.put( VIEW_WON_STATUS, true );
+            vm.put(Constants.GAME_WON, true);
         } else {
-            vm.put( VIEW_WON_STATUS, false );
+            vm.put(Constants.GAME_WON, false);
         }
-        vm.put(PLAYER_NAME, currentSession.attribute(PLAYER_NAME));
+        vm.put(Constants.PLAYER_NAME, currentSession.attribute(Constants.PLAYER_NAME));
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 
