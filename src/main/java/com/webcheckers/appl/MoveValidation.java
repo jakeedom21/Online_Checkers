@@ -147,11 +147,6 @@ public class MoveValidation {
             return "Space does not exist";
         }
         //if finalSpace has a piece already in it
-        finalSpace = gameBoard.getSpace(finalSpace.getRow(), finalSpace.getCol());
-        System.out.println(finalSpace.hasPiece());
-        if(finalSpace.hasPiece()) {
-            return "There is already a piece there";
-        }
         else {
             return "";
         }
@@ -192,6 +187,9 @@ public class MoveValidation {
             if (end.getCol() == jump.getCol() && end.getRow() == jump.getRow()) {
                 return "";
             }
+        }
+        if(end.hasPiece()){
+            return "There is already a piece at the end";
         }
         //This looks for errors in the jump
         int row_mid = (int)Math.floor((start.getRow() + end.getRow())/2);
