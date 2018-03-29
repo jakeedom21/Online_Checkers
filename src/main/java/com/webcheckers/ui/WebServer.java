@@ -3,7 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.MoveManager;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Move;
+import com.webcheckers.utils.Constants;
 import spark.TemplateEngine;
 
 import java.util.Objects;
@@ -46,22 +46,9 @@ import static spark.Spark.*;
  */
 public class WebServer {
     private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
-
-    //
-    // Constants
-    //
-
     /**
      * The URL pattern to request the Home page.
      */
-    private static final String HOME_URL = "/";
-    private static final String SIGN_IN = HOME_URL + "signin";
-    private static final String SIGN_OUT = HOME_URL +  "signout";
-    private static final String GAME_URL = HOME_URL + "game";
-    private static final String VALIDATE_MOVE = HOME_URL + "validateMove";
-    private static final String SUBMIT_TURN = HOME_URL + "submitTurn";
-    private static final String BACKUP_MOVE = HOME_URL + "backupMove";
-    private static final String CHECK_TURN = HOME_URL + "checkTurn";
 
     //
     // Attributes
@@ -112,6 +99,7 @@ public class WebServer {
 
         // Configuration to serve static files
         staticFileLocation("/public");
+
         //// Setting any route (or filter) in Spark triggers initialization of the
         //// embedded Jetty web server.
 
@@ -146,23 +134,27 @@ public class WebServer {
         //// code clean; using small classes.
 
         // Shows the Checkers game Home page.
-        get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
+        get(Constants.HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
+        get(Constants.RULES_URL, new GetRulesRoute(templateEngine));
+        get(Constants.GAME_URL, new GetGameRoute(playerLobby, templateEngine));
+        get(Constants.RESULT_URL, new GetResultRoute(templateEngine));
 
-        get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
+        get(Constants.SIGN_IN, new GetSignInRoute(templateEngine));
+        get(Constants.SIGN_OUT, new GetSignOutRoute(playerLobby));
 
-        get(SIGN_IN, new GetSignInRoute(templateEngine));
-        get(SIGN_OUT, new GetSignOutRoute(playerLobby));
+        post(Constants.SIGN_IN, new PostSignInRoute(playerLobby, templateEngine));
 
-        post(SIGN_IN, new PostSignInRoute(playerLobby, templateEngine));
+        post(Constants.RESIGN_URL, new PostResignRoute(playerLobby, gson));
 
         MoveManager moveManager = new MoveManager(playerLobby, gson);
-        post(VALIDATE_MOVE, moveManager::validateMove);
+        post(Constants.VALIDATE_MOVE, moveManager::validateMove);
 
-        post(SUBMIT_TURN, moveManager::submitMove);
+        post(Constants.SUBMIT_TURN, moveManager::submitMove);
 
-        post(BACKUP_MOVE, moveManager::backupMove);
+        post(Constants.BACKUP_MOVE, moveManager::backupMove);
 
-        post(CHECK_TURN, moveManager::checkTurn);
+        post(Constants.CHECK_TURN, moveManager::checkTurn);
+
         //
         LOG.config("WebServer is initialized.");
     }

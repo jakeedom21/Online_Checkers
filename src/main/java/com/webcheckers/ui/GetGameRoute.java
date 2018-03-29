@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import static com.webcheckers.ui.GetResultRoute.GAME_WON_ATTR;
+import static com.webcheckers.ui.GetResultRoute.OPPO_FORFEIT_ATTR;
+
 
 public class GetGameRoute implements Route {
 
@@ -43,7 +46,7 @@ public class GetGameRoute implements Route {
         String currentPlayerName = currentSession.attribute("playerName");
         Player currentPlayer = playerLobby.getPlayerByUsername(currentPlayerName);
         if (currentPlayer == null) {
-            response.redirect("/");
+            response.redirect("/");   //TODO: refactor constant Strings for urls
             return null;
         }
 
@@ -64,17 +67,17 @@ public class GetGameRoute implements Route {
             } else {
                 currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, false);
             }
+            System.out.println("Hit init of game");
             game = new Game(gameId, currentPlayer, opponent);
-
-        // if player did not choose opponent (assigned a game),
-        // opponentName is null(?) since there's no request came from /home
+            System.out.println("Game init");
+            // if player did not choose opponent (assigned a game),
+            // opponentName is null(?) since there's no request came from /home
         } else {
             //opponent = playerLobby.getPlayerByUsername(currentPlayer.getOpponentName());
+            System.out.println("hit game= currentPlayer.getGame() in else | name: " + currentPlayerName);
             game = currentPlayer.getGame();
         }
 
-        // save game in session attribute map
-        currentSession.attribute(GAME_ATTR, game);
 
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(GetHomeRoute.SIGNED_IN_ATTR, playerLobby.isActiveUser(currentPlayer.getPlayerName()));
@@ -84,8 +87,17 @@ public class GetGameRoute implements Route {
         final Player player1 = game.getPlayers()[0];
         final Player player2 = game.getPlayers()[1];
 
+        // see if opponent has resigned the game
+        if (game.didPlayerResign()) {
+            currentPlayer.finishGame();
+            currentSession.attribute(GAME_WON_ATTR, true);
+            currentSession.attribute(OPPO_FORFEIT_ATTR, true);
+            response.redirect("/result");
+            return null;
+        }
+
         // Has game been won?
-        if (game.getWinner() != null) {
+        if (game.isGameWon()) {
             String winner = game.getWinner();
             attributes.put("winner", winner);
 
@@ -93,7 +105,7 @@ public class GetGameRoute implements Route {
                 if (winner.equals(player1.getPlayerName())) {
                     attributes.put("resigned", player2.getPlayerName());
                 } else {
-                    attributes.put("resigned", player1.getPlayerName());
+                    attributes.put("resigned", player1.getPlayerName());  //TODO: make use of attribute map to redirect to forfeit result page
                 }
             }
         }
