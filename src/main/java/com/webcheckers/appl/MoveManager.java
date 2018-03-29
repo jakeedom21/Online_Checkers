@@ -7,6 +7,7 @@ import spark.Response;
 import spark.Session;
 
 import static com.webcheckers.model.Message.MessageType.info;
+import static com.webcheckers.model.Message.MessageType.error;
 
 public class MoveManager {
 
@@ -32,10 +33,10 @@ public class MoveManager {
         Message message;
         boolean result = MoveValidation.validMove(jsonMove.getStart(), jsonMove.getEnd(), board);
         if (result) {
-            message = new Message(MessageType.info, "Valid Move");
+            message = new Message(info, "Valid Move");
             game.queueMove(jsonMove);
         } else {
-            message = new Message(MessageType.error, "Bad Move");
+            message = new Message(error, "Bad Move");
         }
         return gson.toJson(message);
     }
@@ -48,7 +49,7 @@ public class MoveManager {
         Space newSpace = move.getEnd();
         game.movePiece(oldSpace, newSpace, currentPlayer);
         game.finishMove();
-        return gson.toJson(new Message(MessageType.info, "Turn submitted successfully"));
+        return gson.toJson(new Message(info, "Turn submitted successfully"));
 
     }
 
@@ -56,7 +57,7 @@ public class MoveManager {
         Player currentPlayer = getPlayerFromRequest(request);
         Game game = currentPlayer.getGame();
         game.getNextMove();
-        return gson.toJson(new Message(MessageType.info, "Success"));
+        return gson.toJson(new Message(info, "Success"));
     }
 
     public String checkTurn(Request request, Response response) {
