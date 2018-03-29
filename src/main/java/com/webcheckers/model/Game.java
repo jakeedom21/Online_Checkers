@@ -12,8 +12,8 @@ public class Game {
     private Board p1Board;
     private Board p2Board;
     private String playerTurn;
-    private String winner;
-    private boolean forfeit = false;
+    private Player winner;
+    private boolean forfeit;
     private Queue<Move> moveQueue;
     private int id;
     private Player p1;
@@ -36,6 +36,8 @@ public class Game {
         System.out.println("Player 1: " + p1.getPlayerName());
         System.out.println("Player 2: " + p2.getPlayerName());
         this.playerTurn = p1.getPlayerName();
+        this.forfeit = false;
+        this.winner = null;
         this.moveQueue = new LinkedList<>();
         p1.assignGame(Player.PieceColor.RED, this,p2);
         p2.assignGame(Player.PieceColor.WHITE, this,p1);
@@ -61,19 +63,47 @@ public class Game {
         playerTurn =  playerTurn.equals(p1.getPlayerName()) ? p2.getPlayerName() : p1.getPlayerName();
     }
 
+    /**
+     * See if the game is finished
+     * @return true if there's a winner of game, false otherwise
+     */
+    public boolean isGameWon(){
+        return winner != null;
+    }
+
+    /**
+     * pre: game is finished (there is a winner)
+     * @return String username of the winning player
+     */
     public String getWinner() {
-        return this.winner;
+        return this.winner.getPlayerName();
     }
 
     public boolean isWinner() {
         if (p1Board.getP1Pieces() == 0 && p2Board.getP1Pieces() == 0) {
-            this.winner = p2.getPlayerName();
+            this.winner = p2;
             return true;
         } else if (p1Board.getP2Pieces() == 0 && p2Board.getP2Pieces() == 0){
-            this.winner = p1.getPlayerName();
+            this.winner = p1;
             return true;
         } else
             return false;
+    }
+
+    /**
+     * One of the player choose to resign the game. Player's opponent wins.
+     * @param playername username of the player who chose to resign
+      */
+    public void setForfeit(String playername){
+        String p1name = p1.getPlayerName();
+        //String p2name = p2.getPlayerName();
+        forfeit = true;
+
+        if (playername.equals(p1name)) {
+            winner = p2;
+        } else {
+            winner = p1;
+        }
     }
 
     public boolean didPlayerResign() {

@@ -6,10 +6,12 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import static com.webcheckers.model.Message.MessageType.info;
+
 public class MoveManager {
 
-    PlayerLobby playerLobby;
-    Gson gson;
+    private PlayerLobby playerLobby;
+    private Gson gson;
 
     private Player getPlayerFromRequest(Request request){
         Session currentSession = request.session();
@@ -50,15 +52,18 @@ public class MoveManager {
         game.movePiece(oldSpace, newSpace, currentPlayer);
         game.finishMove();
         return gson.toJson(new Message(MessageType.info, "Turn submitted successfully"));
+
     }
 
     public String backupMove(Request request, Response response) {
-        return "SOMETHING";
+        Player currentPlayer = getPlayerFromRequest(request);
+        Game game = currentPlayer.getGame();
+        game.getNextMove();
+        return gson.toJson(new Message(MessageType.info, "Success"));
     }
 
     public String checkTurn(Request request, Response response) {
-        return gson.toJson(new Message(MessageType.info,"true"));
+        return gson.toJson(new Message(info,"true"));
     }
-
 }
 

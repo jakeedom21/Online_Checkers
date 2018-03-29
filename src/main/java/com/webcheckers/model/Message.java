@@ -2,6 +2,10 @@ package com.webcheckers.model;
 
 public class Message {
 
+    public enum MessageType {
+        info, error
+    }
+
     private MessageType type;
     private String text;
 

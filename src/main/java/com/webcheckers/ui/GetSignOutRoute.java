@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.utils.Constants;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -53,16 +54,16 @@ public class GetSignOutRoute implements Route {
         final Session currentSession = request.session();
 
         // get the player name from the session
-        String playerName = currentSession.attribute(GetHomeRoute.PLAYER_NAME_ATTR);
+        String playerName = currentSession.attribute(Constants.PLAYER_NAME);
 
         // remove the player from the PlayerLobby and SessionStorage
         this.playerLobby.removePlayer(playerName);
 
         // set the SIGNED_IN session attribute to null
-        currentSession.attribute(GetHomeRoute.SIGNED_IN_ATTR, null);
+        currentSession.attribute(Constants.SIGNED_IN_PLAYER, null);
 
         // redirect the user back to the home page after signing out
-        response.redirect("/");
+        response.redirect(Constants.HOME_URL);
         return null;
     }
 
