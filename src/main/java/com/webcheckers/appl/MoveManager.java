@@ -30,21 +30,16 @@ public class MoveManager {
         Game game = currentPlayer.getGame();
         Move jsonMove = gson.fromJson(request.body(), Move.class);
 
-        Board board = game.getBoard(currentPlayer);
-
-        Space start = board.getSpace(jsonMove.getStart());
-        Space end = board.getSpace(jsonMove.getEnd());
-        Move move = new Move(start, end);
-
-        boolean result = true; // MoveValidation.validMove(move.getStart(), move.getEnd(), game.getBoard());
-        if (result) {
+        Message message;
+        String result = MoveValidation.validMove(jsonMove.getStart(), jsonMove.getEnd(), game.getBoard(currentPlayer));
+        if (result == "") {
             message = new Message(info, "Valid Move");
             game.queueMove(jsonMove);
         } else {
-            message = new Message(error, "Bad Move");
+            message = new Message(error, result);
         }
 
-        return gson.toJson(result);
+        return gson.toJson(message);
     }
 
     public Object submitMove(Request request, Response response) {
