@@ -33,6 +33,8 @@ public class Game {
         this.p1Board = new Board();
         this.p2Board = new Board();
         this.p2Board.flip();
+        System.out.println("Player 1: " + p1.getPlayerName());
+        System.out.println("Player 2: " + p2.getPlayerName());
         this.playerTurn = p1.getPlayerName();
         this.forfeit = false;
         this.winner = null;
@@ -51,14 +53,6 @@ public class Game {
 
     public Board getBoard(Player p) {
         return p.equals(p1) ? p1Board : p2Board;
-    }
-
-    public Board getP1Board() {
-        return p1Board;
-    }
-
-    public Board getP2Board() {
-        return p2Board;
     }
 
     public String getPlayerTurn() {

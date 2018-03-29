@@ -10,14 +10,13 @@ public class Move {
         this.end = end;
     }
 
-    public Space getStart() { return start; }
-
-    public Space getEnd() { return end; }
-
-    public String toString() {
-        return "start: " + start.getRow()  + "-" + start.getCol() + "\n end: " + end.getRow() + "-" + end.getCol();
+    public Space getStart() {
+        return start;
     }
 
+    public Space getEnd() {
+        return end;
+    }
 
     public static boolean isValid(Space space) {
         //if both col and row are even or odd is an invalid move

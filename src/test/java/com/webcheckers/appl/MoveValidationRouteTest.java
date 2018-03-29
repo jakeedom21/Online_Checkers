@@ -53,21 +53,23 @@ public class MoveValidationRouteTest {
     }
      */
 
+
     @Test
     public void testBadSpace(){
-        assertFalse(MoveValidation.validPlacement(bad));
+        assertSame("Piece's can't go into this space", MoveValidation.validPlacement(bad, board));
     }
 
 
     @Test
     public void testBadSpace2(){
-        assertFalse(MoveValidation.validPlacement(bad2));
+        assertSame("Piece's can't go into this space", MoveValidation.validPlacement(bad2, board));
     }
 
     @Test
     public void testNoSpace(){
-        assertFalse(MoveValidation.validPlacement(none));
+        assertSame("Space does not exist", MoveValidation.validPlacement(none, board));
     }
+
 
     @Test
     public void testValidBasiccMove(){
@@ -75,7 +77,7 @@ public class MoveValidationRouteTest {
         Space start = board.getSpace(2, 3);
         start.setPiece(red);
         Space end = board.getSpace(1, 4);
-        assertTrue(MoveValidation.validMove(start, end, board));
+        assertSame("", MoveValidation.validMove(start, end, board));
     }
 
     @Test
@@ -86,7 +88,7 @@ public class MoveValidationRouteTest {
         red2.setPosition(1,4);
         Space end = board.getSpace(1,4);
         end.setPiece(red2);
-        assertFalse(MoveValidation.validMove(start, end, board));
+        assertSame("There is already a piece there", MoveValidation.validMove(start, end, board));
     }
 
     @Test
@@ -98,7 +100,7 @@ public class MoveValidationRouteTest {
         Space mid = board.getSpace(1,4);
         mid.setPiece(white);
         Space end = board.getSpace(0,5);
-        assertTrue(MoveValidation.validMove(start, end, board));
+        assertSame("", MoveValidation.validMove(start, end, board));
     }
 
     @Test
@@ -112,7 +114,7 @@ public class MoveValidationRouteTest {
         white2.setPosition(0,5);
         Space end = board.getSpace(0,5);
         end.setPiece(white2);
-        assertFalse(MoveValidation.validMove(start, end, board));
+        assertSame("There is already a piece there", MoveValidation.validMove(start, end, board));
     }
 
     @Test
@@ -125,7 +127,7 @@ public class MoveValidationRouteTest {
         Space mid = board.getSpace(1,2);
         mid.setPiece(white);
         Space end = board.getSpace(2,3);
-        assertTrue(MoveValidation.validMove(start, end, board));
+        assertSame("", MoveValidation.validMove(start, end, board));
     }
 
     @Test
@@ -139,7 +141,7 @@ public class MoveValidationRouteTest {
         white2.setPosition(2,3);
         Space end = board.getSpace(2,3);
         end.setPiece(white2);
-        assertFalse(MoveValidation.validMove(start, end, board));
+        assertSame("There is already a piece there", MoveValidation.validMove(start, end, board));
     }
 
     @Test
@@ -149,7 +151,7 @@ public class MoveValidationRouteTest {
         Space start = board.getSpace(2, 3);
         start.setPiece(red);
         Space end = board.getSpace(3, 4);
-        assertTrue(MoveValidation.validMove(start, end, board));
+        assertSame("", MoveValidation.validMove(start, end, board));
     }
 
     @Test
@@ -162,7 +164,7 @@ public class MoveValidationRouteTest {
         Space mid = board.getSpace(3,4);
         mid.setPiece(white);
         Space end = board.getSpace(4, 5);
-        assertTrue(MoveValidation.validMove(start, end, board));
+        assertSame("", MoveValidation.validMove(start, end, board));
     }
 
     @Test
@@ -174,7 +176,7 @@ public class MoveValidationRouteTest {
         white.setPosition(3,4);
         Space end = board.getSpace(3, 4);
         end.setPiece(white);
-        assertFalse(MoveValidation.validMove(start, end, board));
+        assertSame("There is already a piece there", MoveValidation.validMove(start, end, board));
     }
 
     @Test
@@ -188,6 +190,6 @@ public class MoveValidationRouteTest {
         white2.setPosition(4,5);
         Space end = board.getSpace(4, 5);
         end.setPiece(white2);
-        assertFalse(MoveValidation.validMove(start, end, board));
+        assertSame("There is already a piece there", MoveValidation.validMove(start, end, board));
     }
 }

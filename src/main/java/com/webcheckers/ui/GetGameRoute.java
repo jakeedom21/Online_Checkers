@@ -135,8 +135,10 @@ public class GetGameRoute implements Route {
 
         String whoseTurn =  game.getPlayerTurn();
         String viewMode = whoseTurn.equals(currentPlayerName) ? VIEW_MODE.PLAY.name() : VIEW_MODE.SPECTATOR.name();
+        System.out.println("Player 1 in gameRoute: " + player1.getPlayerName());
         Player.PieceColor activeColor = player1.getPlayerName().equals(whoseTurn)
                 ? Player.PieceColor.RED : Player.PieceColor.WHITE ;
+        System.out.println("Active color:  " + activeColor);
 
         attributes.put("redPlayerName", player1.getPlayerName());
         attributes.put("whitePlayerName", player2.getPlayerName());
