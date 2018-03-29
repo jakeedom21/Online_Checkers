@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import spark.*;
 
 /**
- * The UI Controller to GET the Home page.
+ * The UI Controller to GET the SignIn page.
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */

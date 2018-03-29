@@ -1,9 +1,11 @@
 package com.webcheckers.ui;
 
 /**
+ * The UI Controller to GET the Game page.
+ *
  * Created by Sameen Luo <xxl2398@rit.edu> on 2/28/2018.
  */
- 
+
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
@@ -13,9 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static com.webcheckers.ui.GetResultRoute.GAME_WON_ATTR;
-import static com.webcheckers.ui.GetResultRoute.OPPO_FORFEIT_ATTR;
-
+import static com.webcheckers.utils.Constants.*;
 
 public class GetGameRoute implements Route {
 
@@ -62,11 +62,11 @@ public class GetGameRoute implements Route {
 
             //busyOpponentError, back to /home choose opponent again
             if (busyOpponent(opponentName)) {
-                currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, true);
-                response.redirect("/");
+                currentSession.attribute(BUSY_OPPONENT_ERROR, true);
+                response.redirect(HOME_URL);
                 return null;
             } else {
-                currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, false);
+                currentSession.attribute(BUSY_OPPONENT_ERROR, false);
             }
             System.out.println("Hit init of game");
             game = new Game(gameId, currentPlayer, opponent);
@@ -81,19 +81,20 @@ public class GetGameRoute implements Route {
 
 
         Map<String, Object> attributes = new HashMap<>();
-        attributes.put(GetHomeRoute.SIGNED_IN_ATTR, playerLobby.isActiveUser(currentPlayer.getPlayerName()));
-        attributes.put(PostSignInRoute.PLAYER_NAME_ATTR, currentSession.attribute(PostSignInRoute.PLAYER_NAME_ATTR));
+        attributes.put(SIGNED_IN_PLAYER, playerLobby.isActiveUser(currentPlayer.getPlayerName()));
+        attributes.put(PLAYER_NAME, currentSession.attribute(PLAYER_NAME));
 
         // Get players
-        final Player player1 = game.getPlayers()[0];
-        final Player player2 = game.getPlayers()[1];
+        final Player player1 = game.getPlayer1();
+        final Player player2 = game.getPlayer2();
 
         // see if opponent has resigned the game
         if (game.didPlayerResign()) {
             currentPlayer.finishGame();
-            currentSession.attribute(GAME_WON_ATTR, true);
-            currentSession.attribute(OPPO_FORFEIT_ATTR, true);
-            response.redirect("/result");
+            currentSession.attribute(GAME_WON, true);
+            currentSession.attribute(OPPONENT_FORFEIT, true);
+            //currentSession.attribute(BUSY_OPPONENT_ERROR, false);
+            response.redirect(RESULT_URL);
             return null;
         }
 
@@ -134,7 +135,7 @@ public class GetGameRoute implements Route {
         }
 
         Player whoseTurn;
-        if (game.getPlayerTurn().equals(game.getPlayers()[0].getPlayerName())) {
+        if (game.getPlayerTurn().equals(game.getPlayer1().getPlayerName())) {
             whoseTurn = player1;
         } else {
             whoseTurn = player2;

@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
+import com.webcheckers.utils.Constants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -76,10 +77,10 @@ public class GetHomeRouteTester {
         testHelper.assertViewModelIsaMap();
 
         //   * model contains all necessary View-Model data
-        testHelper.assertViewModelAttribute(GetHomeRoute.SIGNED_IN_ATTR, Boolean.FALSE);
-        testHelper.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE);
-        testHelper.assertViewModelAttribute(GetHomeRoute.NUM_USER_ATTR, 3);
-        testHelper.assertViewModelAttribute(GetHomeRoute.BUSY_OPPONENT_ATTR, null);
+        testHelper.assertViewModelAttribute(Constants.SIGN_IN, Boolean.FALSE);
+        testHelper.assertViewModelAttribute(Constants.TITLE, GetHomeRoute.TITLE);
+        testHelper.assertViewModelAttribute(Constants.NUM_USER, 3);
+        testHelper.assertViewModelAttribute(Constants.BUSY_OPPONENT_ERROR, null);
 
 
     }

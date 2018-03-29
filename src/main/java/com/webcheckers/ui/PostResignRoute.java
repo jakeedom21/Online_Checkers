@@ -1,7 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.sun.tools.internal.jxc.ap.Const;
+//import com.sun.tools.internal.jxc.ap.Const;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
@@ -15,7 +15,8 @@ import spark.Session;
 import java.util.logging.Logger;
 
 /**
- * The UI controller to post resign route.
+ * The UI controller to POST resign route.
+ *
  * Created by Sameen Luo <xxl2398@rit.edu> on 3/27/2018.
  */
 public class PostResignRoute implements Route{
@@ -25,7 +26,11 @@ public class PostResignRoute implements Route{
     private final PlayerLobby playerLobby;
     private final Gson gson;
 
-
+    /**
+     * Concstructor
+     * @param playerLobby The map to hold all Players
+     * @param gson
+     */
     public PostResignRoute(final PlayerLobby playerLobby, final Gson gson) {
 
         this.playerLobby = playerLobby;
@@ -35,6 +40,17 @@ public class PostResignRoute implements Route{
 
     }
 
+    /**
+     * Post gameResign.
+     *
+     * @param request
+     *   the HTTP request
+     * @param response
+     *   the HTTP response
+     *
+     * @return
+     *   the Message for gson
+     */
     public Object handle(Request request, Response response) {
 
         final Session currentSession = request.session();
@@ -48,7 +64,7 @@ public class PostResignRoute implements Route{
 
         currentGame.setForfeit(playername);
         player.finishGame();
-//        response.redirect("/");
+        currentSession.attribute(Constants.BUSY_OPPONENT_ERROR,false);
 
         return this.gson.toJson(new Message(Message.MessageType.info, "resign success."));
     }

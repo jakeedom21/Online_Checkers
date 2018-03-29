@@ -41,12 +41,20 @@ public class Game {
         p2.assignGame(Player.PieceColor.WHITE, this,p1);
     }
 
+    /**
+     * get the first player
+     * @return first player
+     */
+    public Player getPlayer1() {
+        return p1;
+    }
 
-    public Player[] getPlayers() {
-        Player[] players = new Player[2];
-        players[0] = this.p1;
-        players[1] = this.p2;
-        return players;
+    /**
+     * get the second player
+     * @return second player
+     */
+    public Player getPlayer2 () {
+        return p2;
     }
 
     public Board getBoard(Player p) {
@@ -97,6 +105,8 @@ public class Game {
 
     /**
      * One of the player choose to resign the game. Player's opponent wins.
+     * Does not set Player objects' fields to null
+     * Player.finishGame() called separately
      * @param playername username of the player who chose to resign
       */
     public void setForfeit(String playername){
@@ -111,8 +121,11 @@ public class Game {
         }
     }
 
+    /**
+     * See if either player has resigned from this game
+     * @return bool true if either forfeit
+     */
     public boolean didPlayerResign() {
-
         return this.forfeit;
     }
 
