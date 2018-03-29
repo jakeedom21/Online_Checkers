@@ -37,7 +37,17 @@ public class MoveManager {
         if (result.equals("")) {
             message = new Message(info, "Valid Move");
             game.queueMove(jsonMove);
-        } else {
+            int col_dist = (int)Math.floor(jsonMove.getStart().getCol() - jsonMove.getEnd().getCol());
+            System.out.println("col_dist is " + col_dist);
+            //is a jump and must remove jumped piece
+            if(col_dist >= 2){
+                int mid_col = (int)Math.floor((jsonMove.getStart().getCol() + jsonMove.getEnd().getCol())/2);
+                int mid_row = (int)Math.floor((jsonMove.getStart().getRow() + jsonMove.getEnd().getRow())/2);
+                game.getBoard(currentPlayer).getSpace(mid_row, mid_col).setPiece(null);
+            }
+        }
+        //invalid move
+        else {
             message = new Message(error, result);
         }
 

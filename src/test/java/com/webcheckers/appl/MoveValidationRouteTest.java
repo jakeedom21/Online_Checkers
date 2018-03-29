@@ -88,7 +88,7 @@ public class MoveValidationRouteTest {
         red2.setPosition(1,4);
         Space end = board.getSpace(1,4);
         end.setPiece(red2);
-        assertSame("There is already a piece there", MoveValidation.validMove(start, end, board));
+        assertSame("There is already a piece at the end", MoveValidation.validMove(start, end, board));
     }
 
     @Test
@@ -114,7 +114,8 @@ public class MoveValidationRouteTest {
         white2.setPosition(0,5);
         Space end = board.getSpace(0,5);
         end.setPiece(white2);
-        assertSame("There is already a piece there", MoveValidation.validMove(start, end, board));
+        System.out.println("Invalid jump move" + end.hasPiece());
+        assertSame("There is already a piece at the end", MoveValidation.validMove(start, end, board));
     }
 
     @Test
@@ -141,7 +142,7 @@ public class MoveValidationRouteTest {
         white2.setPosition(2,3);
         Space end = board.getSpace(2,3);
         end.setPiece(white2);
-        assertSame("There is already a piece there", MoveValidation.validMove(start, end, board));
+        assertSame("There is already a piece at the end", MoveValidation.validMove(start, end, board));
     }
 
     @Test
@@ -176,7 +177,7 @@ public class MoveValidationRouteTest {
         white.setPosition(3,4);
         Space end = board.getSpace(3, 4);
         end.setPiece(white);
-        assertSame("There is already a piece there", MoveValidation.validMove(start, end, board));
+        assertSame("There is already a piece at the end", MoveValidation.validMove(start, end, board));
     }
 
     @Test
@@ -190,6 +191,6 @@ public class MoveValidationRouteTest {
         white2.setPosition(4,5);
         Space end = board.getSpace(4, 5);
         end.setPiece(white2);
-        assertSame("There is already a piece there", MoveValidation.validMove(start, end, board));
+        assertSame("There is already a piece at the end", MoveValidation.validMove(start, end, board));
     }
 }

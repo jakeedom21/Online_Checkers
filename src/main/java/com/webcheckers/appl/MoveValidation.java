@@ -187,6 +187,9 @@ public class MoveValidation {
                 return "";
             }
         }
+        if(end.hasPiece()){
+            return "There is already a piece at the end";
+        }
         //This looks for errors in the jump
         int row_mid = (int)Math.floor((start.getRow() + end.getRow())/2);
         int col_mid = (int)Math.floor((start.getCol() + end.getCol())/2);
