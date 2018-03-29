@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.utils.Constants;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -33,8 +35,6 @@ public class Game {
         this.p1Board = new Board();
         this.p2Board = new Board();
         this.p2Board.flip();
-        System.out.println("Player 1: " + p1.getPlayerName());
-        System.out.println("Player 2: " + p2.getPlayerName());
         this.playerTurn = p1.getPlayerName();
         this.forfeit = false;
         this.winner = null;
@@ -135,10 +135,6 @@ public class Game {
             p1Board = newP1board;
 
         }
-
-
-
-
     }
 }
 

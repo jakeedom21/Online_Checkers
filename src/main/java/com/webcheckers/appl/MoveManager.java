@@ -28,11 +28,13 @@ public class MoveManager {
     public String validateMove(Request request, Response response) {
         Player currentPlayer = getPlayerFromRequest(request);
         Game game = currentPlayer.getGame();
+        Board board = game.getBoard(currentPlayer);
         Move jsonMove = gson.fromJson(request.body(), Move.class);
-
         Message message;
-        String result = MoveValidation.validMove(jsonMove.getStart(), jsonMove.getEnd(), game.getBoard(currentPlayer));
-        if (result == "") {
+        Space start = board.getSpace(jsonMove.getStart().getRow(), jsonMove.getStart().getCol());
+        Space end = board.getSpace(jsonMove.getEnd().getRow(), jsonMove.getEnd().getCol());
+        String result = MoveValidation.validMove(start, end, board);
+        if (result.equals("")) {
             message = new Message(info, "Valid Move");
             game.queueMove(jsonMove);
         } else {

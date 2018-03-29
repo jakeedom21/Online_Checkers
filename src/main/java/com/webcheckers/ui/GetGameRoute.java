@@ -7,14 +7,12 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.utils.Constants;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
-
-import static com.webcheckers.ui.GetResultRoute.GAME_WON_ATTR;
-import static com.webcheckers.ui.GetResultRoute.OPPO_FORFEIT_ATTR;
 
 
 public class GetGameRoute implements Route {
@@ -61,27 +59,25 @@ public class GetGameRoute implements Route {
 
             //busyOpponentError, back to /home choose opponent again
             if (busyOpponent(opponentName)) {
-                currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, true);
+                currentSession.attribute(Constants.BUSY_OPPONENT_ERROR, true);
                 response.redirect("/");
                 return null;
             } else {
-                currentSession.attribute(GetHomeRoute.BUSY_OPPONENT_ATTR, false);
+                currentSession.attribute(Constants.BUSY_OPPONENT_ERROR, false);
             }
-            System.out.println("Hit init of game");
             game = new Game(gameId, currentPlayer, opponent);
-            System.out.println("Game init");
             // if player did not choose opponent (assigned a game),
             // opponentName is null(?) since there's no request came from /home
         } else {
             //opponent = playerLobby.getPlayerByUsername(currentPlayer.getOpponentName());
-            System.out.println("hit game= currentPlayer.getGame() in else | name: " + currentPlayerName);
             game = currentPlayer.getGame();
         }
 
 
         Map<String, Object> attributes = new HashMap<>();
-        attributes.put(GetHomeRoute.SIGNED_IN_ATTR, playerLobby.isActiveUser(currentPlayer.getPlayerName()));
-        attributes.put(PostSignInRoute.PLAYER_NAME_ATTR, currentSession.attribute(PostSignInRoute.PLAYER_NAME_ATTR));
+
+        attributes.put(Constants.SIGNED_IN_PLAYER, playerLobby.isActiveUser(currentPlayer.getPlayerName()));
+        attributes.put(Constants.PLAYER_NAME, currentSession.attribute(Constants.PLAYER_NAME));
 
         // Get players
         final Player player1 = game.getPlayers()[0];
@@ -90,8 +86,8 @@ public class GetGameRoute implements Route {
         // see if opponent has resigned the game
         if (game.didPlayerResign()) {
             currentPlayer.finishGame();
-            currentSession.attribute(GAME_WON_ATTR, true);
-            currentSession.attribute(OPPO_FORFEIT_ATTR, true);
+            currentSession.attribute(Constants.GAME_WON, true);
+            currentSession.attribute(Constants.OPPONENT_FORFEIT, true);
             response.redirect("/result");
             return null;
         }
@@ -135,10 +131,10 @@ public class GetGameRoute implements Route {
 
         String whoseTurn =  game.getPlayerTurn();
         String viewMode = whoseTurn.equals(currentPlayerName) ? VIEW_MODE.PLAY.name() : VIEW_MODE.SPECTATOR.name();
-        System.out.println("Player 1 in gameRoute: " + player1.getPlayerName());
+
         Player.PieceColor activeColor = player1.getPlayerName().equals(whoseTurn)
                 ? Player.PieceColor.RED : Player.PieceColor.WHITE ;
-        System.out.println("Active color:  " + activeColor);
+
 
         attributes.put("redPlayerName", player1.getPlayerName());
         attributes.put("whitePlayerName", player2.getPlayerName());

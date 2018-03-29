@@ -75,7 +75,6 @@ public class GetHomeRoute implements Route {
 
         vm.put(Constants.FREE_PLAYERS, playerLobby.getFreePlayerNames(thisPlayerName));
         vm.put(Constants.PLAYER_NAME, thisPlayerName);
-        System.out.println(vm);
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
 

@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.utils.Constants;
+
 import java.io.Serializable;
 import java.util.HashSet;
 
@@ -91,13 +93,13 @@ public class Board implements Serializable{
     }
 
     public void movePiece(Space start, Space end) {
-        Piece piece = start.getPiece();
-        start.setPiece(null);
-        end.setPiece(piece);
-    }
-
-    public Space getSpace(Space space) {
-         return this.board[space.getRow()][space.getCol()];
+         int r = start.getRow();
+         int c = start.getCol();
+         Piece piece = board[r][c].getPiece();
+         board[r][c].setPiece(null);
+         r = end.getRow();
+         c = end.getCol();
+         board[r][c].setPiece(piece);
     }
 
     public Space getSpace(int row, int col) {
@@ -127,6 +129,11 @@ public class Board implements Serializable{
                     board[n-l-1][n-c-1] = board[c][n-l-1];
                     board[c][n-l-1] = top;
                 }
+            }
+        }
+        for (int i = 0; i < Constants.MAX_DIM; i++) {
+            for (int j = 0; j < Constants.MAX_DIM; j++) {
+                board[i][j].setCoor(i, j);
             }
         }
     }

@@ -39,6 +39,14 @@ public class Space implements Serializable{
 
     public boolean isValid() { return true; }
 
+    public void setCoor(int row, int col ) {
+        this.row = row;
+        this.cell = col;
+        if (this.piece != null) {
+            this.piece.setPosition(row, col);
+        }
+    }
+
     public String toString() {
         String returnString = "|";
         returnString += this.piece == null ?  " " : piece.toString();

@@ -148,7 +148,6 @@ public class MoveValidation {
         }
         //if finalSpace has a piece already in it
         finalSpace = gameBoard.getSpace(finalSpace.getRow(), finalSpace.getCol());
-        System.out.println(finalSpace.hasPiece());
         if(finalSpace.hasPiece()) {
             return "There is already a piece there";
         }
@@ -186,6 +185,7 @@ public class MoveValidation {
         }
         //ensures that end is at least within the board
         //gets the possible ending spots
+
         ArrayList<Space> possibleEnds = basicMoves(start.getPiece(), board);
         for (int i = 0; i < possibleEnds.size(); i++) {
             Space jump = possibleEnds.get(i);
