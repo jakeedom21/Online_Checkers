@@ -2,6 +2,7 @@ package com.webcheckers.appl;
 
 import com.google.gson.Gson;
 import com.webcheckers.model.*;
+import com.webcheckers.utils.Constants;
 import spark.Request;
 import spark.Response;
 import spark.Session;
@@ -12,7 +13,7 @@ import static com.webcheckers.model.Message.MessageType.error;
 public class MoveManager {
 
     private PlayerLobby playerLobby;
-    private Gson gson;
+    private Gson gson = Constants.gson;
 
     private Player getPlayerFromRequest(Request request){
         Session currentSession = request.session();
@@ -20,9 +21,8 @@ public class MoveManager {
         return playerLobby.getPlayerByUsername(playerName);
     }
 
-    public MoveManager(PlayerLobby playerLobby, Gson gson) {
+    public MoveManager(PlayerLobby playerLobby) {
         this.playerLobby = playerLobby;
-        this.gson = gson;
     }
 
     public String validateMove(Request request, Response response) {

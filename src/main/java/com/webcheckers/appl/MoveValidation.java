@@ -1,17 +1,12 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Space;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.webcheckers.utils.Constants;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jake on 3/2/2018.
@@ -19,7 +14,6 @@ import java.util.List;
  *
  */
 public class MoveValidation {
-    private final static int MAX_DIM = 8;
 
     /**
      *
@@ -142,8 +136,8 @@ public class MoveValidation {
         else if (finalSpace.getRow() < 0 || finalSpace.getCol() < 0) {
             return "Space does not exist";
         }
-        //for this in particular, if player can place outside board will need a get in board for MAX_DIM
-        else if (finalSpace.getCol() >= MAX_DIM || finalSpace.getRow() >= MAX_DIM) {
+        //for this in particular, if player can place outside board will need a get in board for Constants.MAX_DIM
+        else if (finalSpace.getCol() >= Constants.MAX_DIM || finalSpace.getRow() >= Constants.MAX_DIM) {
             return "Space does not exist";
         }
         //if finalSpace has a piece already in it

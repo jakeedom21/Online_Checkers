@@ -23,13 +23,11 @@ public class PostResignRoute implements Route{
     private static final Logger LOG = Logger.getLogger(PostResignRoute.class.getName());
 
     private final PlayerLobby playerLobby;
-    private final Gson gson;
+    private final Gson gson = Constants.gson;
 
 
-    public PostResignRoute(final PlayerLobby playerLobby, final Gson gson) {
-
+    public PostResignRoute(final PlayerLobby playerLobby) {
         this.playerLobby = playerLobby;
-        this.gson = gson;
         //
         LOG.config("PostResignRoute is initialized.");
 

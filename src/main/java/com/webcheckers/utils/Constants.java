@@ -1,5 +1,7 @@
 package com.webcheckers.utils;
 
+import com.google.gson.Gson;
+
 public class Constants {
   public static final String PLAYER = "player";
   public static final String MESSAGE = "message";
@@ -28,4 +30,5 @@ public class Constants {
 
   // GAME CONSTANTS
   public static final int MAX_DIM = 8;
+  public static final Gson gson = new Gson();
 }
