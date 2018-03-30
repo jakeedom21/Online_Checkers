@@ -1,7 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.sun.tools.internal.jxc.ap.Const;
+//import com.sun.tools.internal.jxc.ap.Const;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;

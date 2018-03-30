@@ -123,17 +123,55 @@ public class Game {
     }
 
     public void movePiece(Space start, Space end, Player currentPlayer) {
+        int dist = Math.abs(start.getRow() - end.getRow());
+        int mid_row = (int)Math.floor((start.getRow() + end.getRow())/2);
+        int mid_col = (int)Math.floor((start.getCol() + end.getCol())/2);
+        Space mid_point = new Space(mid_row, mid_col);
         if (currentPlayer.equals(this.p1)) {
             p1Board.movePiece(start, end);
+            //means move is a jump
+            if(dist >= 2){
+                p1Board.removePiece(mid_point);
+            }
             Board newP2board = new Board(p1Board);
             newP2board.flip();
             p2Board = newP2board;
         } else {
             p2Board.movePiece(start, end);
+            //means move is a jump
+            if(dist >= 2){
+                p2Board.removePiece(mid_point);
+            }
             Board newP1board = new Board(p2Board);
             newP1board.flip();
             p1Board = newP1board;
 
+        }
+    }
+
+    /**
+     * Takes in a space and destroy's the piece at that space
+     * Takes the space and which player is moving and destroys the piece on their board
+     * Then takes the board and flips it and makes that the other player's board
+     * @param removePiece
+     *        playerMoving
+     */
+    public void removePiece(Space removePiece, Player playerMoving){
+        int row = removePiece.getRow();
+        int col = removePiece.getCol();
+        //destroy's piece in p1Board and replaces the p2Board
+        if(playerMoving.equals(this.p1)){
+            p1Board.getSpace(row, col).setPiece(null);
+            Board newp1Board = new Board(p1Board);
+            newp1Board.flip();
+            p2Board = newp1Board;
+        }
+        //destroy's piece in p2Board and replaces the p1Board
+        else{
+            this.p2Board.getSpace(row, col).setPiece(null);
+            Board newp2Board = new Board(p2Board);
+            newp2Board.flip();
+            this.p1Board = newp2Board;
         }
     }
 }
