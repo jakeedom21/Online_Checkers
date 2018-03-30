@@ -16,13 +16,13 @@
     
     <div class="body">
       
-      <#if won>
-        <#if oppoForfeit??>
-        <p>Your opponent has resigned!</p>
+      <#if Won>
+        <#if opponentForfeit??>
+        <h2>Your opponent has resigned!</h2>
         </#if>
-        <p>You Won!</p>
+        <h2>You Won!</h2>
       <#else>
-        <p>You Lost!</p>
+        <h2>You Lost!</h2>
       </#if>
 
     </div>

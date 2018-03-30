@@ -24,7 +24,6 @@ class GetGameRouteTest {
     Player player1 = mock(Player.class);
     Player player2 = mock(Player.class);
     Game game = mock(Game.class);
-    Board board = mock(Board.class);
 
     @Test
     void renderGamePage() {
@@ -38,13 +37,15 @@ class GetGameRouteTest {
         when(currentSession.attribute("playerName")).thenReturn("player1");
         when(request.session()).thenReturn(currentSession);
         when(player1.getPieceColor()).thenReturn(Player.PieceColor.RED);
-        when(game.getPlayers()).thenReturn(new Player[] {player1, player2});
+        when(game.getPlayer1()).thenReturn(player1);
+        when(game.getPlayer2()).thenReturn(player2);
         when(player1.getGame()).thenReturn(game);
 
         getGameRoute.renderGamePage(request, response);
 
 
-        Player[] activePlayers = {player1, player2 };
-        assertArrayEquals(player1.getGame().getPlayers(), activePlayers);
+        Player[] activePlayers = {player1, player2};
+        assertEquals(game.getPlayer1(), player1);
+        assertEquals(game.getPlayer2(), player2);
     }
 }

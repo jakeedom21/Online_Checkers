@@ -84,7 +84,7 @@ Details of the components within these tiers are supplied below
 
 ### Overview of User Interface
 
-This section descrifffbes the web interface flow; this is how the user views and interacts
+This section describes the web interface flow; this is how the user views and interacts
 with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)

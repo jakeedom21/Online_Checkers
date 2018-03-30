@@ -78,6 +78,7 @@ public class GetHomeRouteTester {
 
         //   * model contains all necessary View-Model data
         testHelper.assertViewModelAttribute(Constants.SIGNED_IN_PLAYER, Boolean.FALSE);
+        testHelper.assertViewModelAttribute(Constants.SIGN_IN, Boolean.FALSE);
         testHelper.assertViewModelAttribute(Constants.TITLE, GetHomeRoute.TITLE);
         testHelper.assertViewModelAttribute(Constants.NUM_USER, 3);
         testHelper.assertViewModelAttribute(Constants.BUSY_OPPONENT_ERROR, null);

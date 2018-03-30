@@ -1,6 +1,5 @@
 package com.webcheckers.ui;
 
-//import com.sun.tools.internal.jxc.ap.Const;
 import com.webcheckers.utils.Constants;
 import spark.*;
 
@@ -10,11 +9,13 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
+ * The UI Controller to GET the Result page.
+ *
  * Created by Sameen Luo <xxl2398@rit.edu> on 3/24/2018.
  */
 public class GetResultRoute implements Route{
 
-    //result.ftl vars
+    // name of tempalte
     private static final String VIEW_NAME = "result.ftl";
 
     private final TemplateEngine templateEngine;
@@ -35,7 +36,7 @@ public class GetResultRoute implements Route{
     }
 
     /**
-     * Render the WebCheckers Sign in page.
+     * Render the WebCheckers Result page to show win/lose.
      *
      * @param request
      *   the HTTP request
@@ -43,7 +44,7 @@ public class GetResultRoute implements Route{
      *   the HTTP response
      *
      * @return
-     *   the rendered HTML for the Home page
+     *   the rendered HTML for the Result page
      */
     @Override
     public Object handle(Request request, Response response) {
@@ -51,7 +52,6 @@ public class GetResultRoute implements Route{
         final Session currentSession = request.session();
 
         LOG.finer("GetResultRoute is invoked.");
-        //
 
         // start building the View-Model
         Map<String, Object> vm = new HashMap<>();

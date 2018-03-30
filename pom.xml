@@ -37,6 +37,7 @@
     <apiguardian.version>1.0.0</apiguardian.version>
     <junit.version>5.0</junit.version>
     <mockito.verson>2.13.0</mockito.verson>
+
     
   </properties>
 
@@ -90,6 +91,18 @@
       <version>${mockito.verson}</version>
       <scope>test</scope>
     </dependency>
+      <dependency>
+          <groupId>org.powermock</groupId>
+          <artifactId>powermock-module-junit4</artifactId>
+          <version>1.7.1</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.powermock</groupId>
+          <artifactId>powermock-api-mockito2</artifactId>
+          <version>1.7.1</version>
+          <scope>test</scope>
+      </dependency>
     <!-- Only required to run tests in an IDE that bundles an older version -->
     <dependency>
       <groupId>org.junit.platform</groupId>

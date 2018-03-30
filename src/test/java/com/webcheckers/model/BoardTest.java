@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.utils.Constants;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,12 +8,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class BoardTest {
-    Board board = new Board();
-    Player player1 = mock(Player.class);
-    final int NUM_PIECES_AT_START = 12;
+    private Board board = new Board();
+    private final int NUM_PIECES_AT_START = 12;
+
+    private Space[][] rawBoard = new Space[Constants.MAX_DIM][Constants.MAX_DIM];
+
+    Space mockStartSpace = mock(Space.class);
+    Space mockEndSpace = mock(Space.class);
 
 
-    String expectedBoardSetUp =
+    private String expectedPlayer1BoardSetUp =
             "\n------------------------\n" +
                     "| ||W|| ||W|| ||W|| ||W|\n" +
                     "------------------------\n" +
@@ -30,14 +35,24 @@ class BoardTest {
                     "------------------------\n" +
                     "|R|| ||R|| ||R|| ||R|| |\n" +
                     "------------------------\n";
-
-    @Test
-    void setBoardPieces() {
-        when(player1.getPieceColor()).thenReturn(Player.PieceColor.RED);
-        // board.setWhitePiecesAtBottom();
-        assertTrue(board.toString().equals(expectedBoardSetUp));
-        when(player1.getPieceColor()).thenReturn(Player.PieceColor.RED);
-    }
+    private String expectedPlayer2BoardSetUp =
+            "\n------------------------\n" +
+                    "| ||R|| ||R|| ||R|| ||R|\n" +
+                    "------------------------\n" +
+                    "|R|| ||R|| ||R|| ||R|| |\n" +
+                    "------------------------\n" +
+                    "| ||R|| ||R|| ||R|| ||R|\n" +
+                    "------------------------\n" +
+                    "| || || || || || || || |\n" +
+                    "------------------------\n" +
+                    "| || || || || || || || |\n" +
+                    "------------------------\n" +
+                    "|W|| ||W|| ||W|| ||W|| |\n" +
+                    "------------------------\n" +
+                    "| ||W|| ||W|| ||W|| ||W|\n" +
+                    "------------------------\n" +
+                    "|W|| ||W|| ||W|| ||W|| |\n" +
+                    "------------------------\n";
 
     @Test
     void getP1Pieces() {
@@ -49,31 +64,34 @@ class BoardTest {
         assertEquals(board.getP2Pieces(), NUM_PIECES_AT_START);
     }
 
-    @Test
-    void setBoardPieces1() {
-    }
 
     @Test
     void movePiece() {
+
+        when(mockStartSpace.getRow()).thenReturn(5);
+        when(mockStartSpace.getCol()).thenReturn(0);
+
+        when(mockEndSpace.getRow()).thenReturn(4);
+        when(mockEndSpace.getCol()).thenReturn(1);
+
+        this.board.movePiece(mockStartSpace, mockEndSpace);
+
+        assertNull(board.getSpace(5,0).getPiece());
+        assertNotNull(board.getSpace(4, 1).getPiece());
     }
 
     @Test
     void getSpace() {
-    }
-
-    @Test
-    void getP1Pieces1() {
-    }
-
-    @Test
-    void getP2Pieces1() {
-    }
-
-    @Test
-    void getRaw() {
+        Board board = mock(Board.class);
+        when(board.getSpace(5, 0)).thenReturn(mockStartSpace);
+        assertEquals(board.getSpace(5, 0), mockStartSpace);
     }
 
     @Test
     void flip() {
+        this.board.flip();
+        assertEquals(this.board.toString(), expectedPlayer2BoardSetUp);
+        this.board.flip();
+        assertEquals(this.board.toString(), expectedPlayer1BoardSetUp);
     }
 }

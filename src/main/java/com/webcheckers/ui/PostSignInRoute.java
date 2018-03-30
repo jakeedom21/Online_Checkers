@@ -37,8 +37,9 @@ public class  PostSignInRoute implements Route {
     public boolean isAlpha(String name) {
         return name.matches("^[a-zA-Z][a-zA-Z0-9]*$");
     }
+
     /**
-     * Render the WebCheckers Home page.
+     * Render the WebCheckers Sign in page.
      *
      * @param request
      *   the HTTP request
@@ -46,7 +47,7 @@ public class  PostSignInRoute implements Route {
      *   the HTTP response
      *
      * @return
-     *   the rendered HTML for the Home page
+     *   the rendered HTML for the Sign in page
      */
     @Override
     public Object handle(Request request, Response response) {
