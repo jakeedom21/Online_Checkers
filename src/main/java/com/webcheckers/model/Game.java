@@ -96,7 +96,6 @@ public class Game {
       */
     public void setForfeit(String playername){
         String p1name = p1.getPlayerName();
-        //String p2name = p2.getPlayerName();
         forfeit = true;
 
         if (playername.equals(p1name)) {
