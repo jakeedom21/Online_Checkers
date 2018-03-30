@@ -14,7 +14,8 @@ import spark.Session;
 import java.util.logging.Logger;
 
 /**
- * The UI controller to post resign route.
+ * The UI controller to POST resign route.
+ *
  * Created by Sameen Luo <xxl2398@rit.edu> on 3/27/2018.
  */
 public class PostResignRoute implements Route{
@@ -24,7 +25,10 @@ public class PostResignRoute implements Route{
     private final PlayerLobby playerLobby;
     private final Gson gson = Constants.gson;
 
-
+    /**
+     * Concstructor
+     * @param playerLobby The map to hold all Players
+     */
     public PostResignRoute(final PlayerLobby playerLobby) {
         this.playerLobby = playerLobby;
         //
@@ -32,6 +36,17 @@ public class PostResignRoute implements Route{
 
     }
 
+    /**
+     * Post gameResign.
+     *
+     * @param request
+     *   the HTTP request
+     * @param response
+     *   the HTTP response
+     *
+     * @return
+     *   the Message for gson
+     */
     public Object handle(Request request, Response response) {
 
         final Session currentSession = request.session();
@@ -45,7 +60,7 @@ public class PostResignRoute implements Route{
 
         currentGame.setForfeit(playername);
         player.finishGame();
-//        response.redirect("/");
+        currentSession.attribute(Constants.BUSY_OPPONENT_ERROR,false);
 
         return this.gson.toJson(new Message(Message.MessageType.info, "resign success."));
     }

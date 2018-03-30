@@ -3,15 +3,12 @@ package com.webcheckers.appl;
 import java.util.*;
 import java.util.logging.Logger;
 
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Session;
-import spark.Route;
-import spark.TemplateEngine;
 import com.webcheckers.model.Player;
 
-
+/**
+ * A Hash map to hold all the Players.
+ * Maps String username -> Player objects.
+ */
 public class PlayerLobby {
 
 
@@ -38,6 +35,11 @@ public class PlayerLobby {
         }
     }
 
+    /**
+     * Check if the current player is signed in
+     * @param playerName username of the player to check
+     * @return true if player is signed in, false otherwise
+     */
     public boolean isActiveUser(String playerName) {
         return signedInPlayers.keySet().contains(playerName);
     }

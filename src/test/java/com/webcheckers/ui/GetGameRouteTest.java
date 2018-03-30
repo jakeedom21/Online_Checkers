@@ -38,13 +38,15 @@ class GetGameRouteTest {
         when(currentSession.attribute("playerName")).thenReturn("player1");
         when(request.session()).thenReturn(currentSession);
         when(player1.getPieceColor()).thenReturn(Player.PieceColor.RED);
-        when(game.getPlayers()).thenReturn(new Player[] {player1, player2});
+        when(game.getPlayer1()).thenReturn(player1);
+        when(game.getPlayer2()).thenReturn(player2);
         when(player1.getGame()).thenReturn(game);
 
         getGameRoute.renderGamePage(request, response);
 
 
         Player[] activePlayers = {player1, player2 };
-        assertArrayEquals(player1.getGame().getPlayers(), activePlayers);
+        assertEquals(player1.getGame().getPlayer1(), player1);
+        assertEquals(player2.getGame().getPlayer2(), player2);
     }
 }
