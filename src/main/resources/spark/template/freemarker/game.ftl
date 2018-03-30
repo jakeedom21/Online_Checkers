@@ -113,14 +113,7 @@
             </tbody>
           </table>
         </div>
-        <p>
-        <form action="./game" method="GET">
-          <input type="hidden" name="forfeit" value="forfeit" />
-          <input type="submit" value="Give up" />
-        </form>
-        </p>
       </div>
-
     </div>
   </div>
 
