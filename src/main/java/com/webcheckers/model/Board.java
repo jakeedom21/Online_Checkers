@@ -138,6 +138,18 @@ public class Board implements Serializable{
         }
     }
 
-
+    public void removePiece(Space removePiece){
+         int row = removePiece.getRow();
+         int col = removePiece.getCol();
+         if(board[row][col].hasPiece()){
+             if(board[row][col].getPiece().getColor().equals("WHITE")){
+                 this.whitePieces--;//remove 1 white piece
+             }
+             else{
+                 this.redPieces--;//removes 1 red piece
+             }
+         }
+         board[row][col].setPiece(null);//removes piece from board
+    }
 }
 

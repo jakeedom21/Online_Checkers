@@ -136,13 +136,25 @@ public class Game {
     }
 
     public void movePiece(Space start, Space end, Player currentPlayer) {
+        int dist = Math.abs(start.getRow() - end.getRow());
+        int mid_row = (int)Math.floor((start.getRow() + end.getRow())/2);
+        int mid_col = (int)Math.floor((start.getCol() + end.getCol())/2);
+        Space mid_point = new Space(mid_row, mid_col);
         if (currentPlayer.equals(this.p1)) {
             p1Board.movePiece(start, end);
+            //means move is a jump
+            if(dist >= 2){
+                p1Board.removePiece(mid_point);
+            }
             Board newP2board = new Board(p1Board);
             newP2board.flip();
             p2Board = newP2board;
         } else {
             p2Board.movePiece(start, end);
+            //means move is a jump
+            if(dist >= 2){
+                p2Board.removePiece(mid_point);
+            }
             Board newP1board = new Board(p2Board);
             newP1board.flip();
             p1Board = newP1board;
