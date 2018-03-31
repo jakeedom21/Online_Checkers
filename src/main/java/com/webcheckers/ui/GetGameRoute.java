@@ -9,6 +9,7 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.utils.Constants;
 import spark.*;
 
 import java.util.HashMap;
@@ -116,13 +117,13 @@ public class GetGameRoute implements Route {
             attributes.put("title", String.format("Game #%d (%s vs. %s)", gameId, player1.getPlayerName(), player2.getPlayerName()));
         } else {
             opponent = player2;
-            String playerColor = currentPlayer.getPieceColor() == Player.PieceColor.RED ? "RED" : "WHITE";
+            String playerColor = currentPlayer.getPieceColor() == PieceColor.RED ? "RED" : "WHITE";
             String opponentColor = playerColor.equals("RED") ? "WHITE" : "RED";
             Boolean isMyTurn = game.getPlayerTurn().equals(player1.getPlayerName());
 
             if (currentPlayer.equals(player2)) {
                 opponent = player1;
-                playerColor = currentPlayer.getPieceColor() == Player.PieceColor.WHITE ? "WHITE" : "RED";
+                playerColor = currentPlayer.getPieceColor() == PieceColor.WHITE ? "WHITE" : "RED";
                 opponentColor = playerColor.equals("WHITE") ? "WHITE" : "RED";
                 isMyTurn = game.getPlayerTurn().equals(currentPlayerName);
             }
@@ -144,7 +145,7 @@ public class GetGameRoute implements Route {
         attributes.put("redPlayerName", player1.getPlayerName());
         attributes.put("whitePlayerName", player2.getPlayerName());
         attributes.put("viewMode", VIEW_MODE.PLAY.name());
-        attributes.put("activeColor", whoseTurn.getPieceColor() == Player.PieceColor.RED ? "RED" : "WHITE");
+        attributes.put("activeColor", whoseTurn.getPieceColor() == PieceColor.RED ? "RED" : "WHITE");
         attributes.put("currentPlayerName", whoseTurn.getPlayerName());
         attributes.put("board", game.getBoard(currentPlayer).getRaw());
 

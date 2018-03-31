@@ -1,10 +1,11 @@
 package com.webcheckers.model;
 
+import com.webcheckers.utils.Constants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static com.webcheckers.model.Player.PieceColor.*;
+import static com.webcheckers.utils.Constants.PieceColor.RED;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -17,7 +18,7 @@ import static org.mockito.Mockito.when;
 @Tag("Model-tier")
 public class PlayerTester {
 
-    private static final Player.PieceColor piececolor = RED;
+    private static final Constants.PieceColor piececolor = RED;
     private static final String playername = "StormRed";
     private static final String opponentname = "MidBoss";
     private static Game currentgame;

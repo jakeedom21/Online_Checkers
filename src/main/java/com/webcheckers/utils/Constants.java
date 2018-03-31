@@ -4,6 +4,11 @@ package com.webcheckers.utils;
  * static constants (session attributes, view variables, and URLs) to use throughout the program
  */
 public class Constants {
+
+    public enum PieceColor {
+        RED, WHITE
+    }
+
     public static final String PLAYER = "player";
     public static final String MESSAGE = "message";
     public static final String PLAYER_NAME = "playerName";

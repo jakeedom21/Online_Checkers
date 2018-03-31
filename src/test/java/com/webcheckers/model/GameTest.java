@@ -28,8 +28,8 @@ public class GameTest {
 
     @Test
     void getPlayers() {
-        assertTrue(GAME.getPlayers()[0].getPlayerName().equals(PLAYER1NAME));
-        assertTrue(GAME.getPlayers()[1].getPlayerName().equals(PLAYER2NAME));
+        assertTrue(GAME.getPlayer1().getPlayerName().equals(PLAYER1NAME));
+        assertTrue(GAME.getPlayer2().getPlayerName().equals(PLAYER2NAME));
     }
 
     @Test

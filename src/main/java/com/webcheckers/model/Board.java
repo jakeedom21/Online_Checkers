@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.utils.Constants;
+
 import java.io.Serializable;
 import java.util.HashSet;
 
@@ -57,12 +59,12 @@ public class Board implements Serializable{
             if (!EMPTY_ROWS.contains(row)) { // not rows 3 or 4
                 if (row % 2 == 0) {
                     for (int col = 1; col < MAX_DIM; col += 2) {
-                        createPiece(row, col, Player.PieceColor.RED);
+                        createPiece(row, col, Constants.PieceColor.RED);
                     }
                 }
                 if (row % 2 == 1) {
                     for (int col = 0; col <  MAX_DIM; col += 2) {
-                        createPiece(row, col, Player.PieceColor.RED);
+                        createPiece(row, col, Constants.PieceColor.RED);
                     }
                 }
             }
@@ -71,9 +73,9 @@ public class Board implements Serializable{
 
 
 
-    private void createPiece(int row, int col, Player.PieceColor pieceColor) {
+    private void createPiece(int row, int col, Constants.PieceColor pieceColor) {
         String color;
-        if (pieceColor.equals(Player.PieceColor.WHITE)) {
+        if (pieceColor.equals(Constants.PieceColor.WHITE)) {
             color = (row > MAX_DIM / 2) ? PLAYER1_COLOR : PLAYER2_COLOR;
         } else { //RED
             color = (row > MAX_DIM / 2) ? PLAYER2_COLOR : PLAYER1_COLOR;

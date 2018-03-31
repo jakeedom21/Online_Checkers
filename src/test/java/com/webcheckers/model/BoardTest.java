@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.utils.Constants;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,10 +34,10 @@ class BoardTest {
 
     @Test
     void setBoardPieces() {
-        when(player1.getPieceColor()).thenReturn(Player.PieceColor.RED);
+        when(player1.getPieceColor()).thenReturn(Constants.PieceColor.RED);
         // board.setWhitePiecesAtBottom();
         assertTrue(board.toString().equals(expectedBoardSetUp));
-        when(player1.getPieceColor()).thenReturn(Player.PieceColor.RED);
+        when(player1.getPieceColor()).thenReturn(Constants.PieceColor.RED);
     }
 
     @Test

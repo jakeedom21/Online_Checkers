@@ -1,17 +1,16 @@
 package com.webcheckers.model;
 
+import com.webcheckers.utils.Constants;
+
 /**
  * Represent each signed in user
  */
 public class Player {
 
-    public enum PieceColor {
-        RED, WHITE
-    }
 
     private String playerName;
     private boolean inGame;
-    private PieceColor pieceColor;
+    private Constants.PieceColor pieceColor;
     private Game currentGame;
     private String opponentName;
 
@@ -66,7 +65,7 @@ public class Player {
      * Get the color of this player
      * @return enum RED or WHITE
      */
-    public PieceColor getPieceColor() {
+    public Constants.PieceColor getPieceColor() {
         return pieceColor;
     }
 
@@ -76,7 +75,7 @@ public class Player {
      * @param pieceColor assigned to this player, RED(1) and WHITE(2) for the playee
      * @param gameToPlay the Game object for this player and his/her opponent
      */
-    public void assignGame(PieceColor pieceColor, Game gameToPlay, Player opponent) {
+    public void assignGame(Constants.PieceColor pieceColor, Game gameToPlay, Player opponent) {
         this.inGame = true;
         this.pieceColor = pieceColor;
         this.currentGame = gameToPlay;

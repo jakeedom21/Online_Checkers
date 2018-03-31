@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.utils.Constants;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -37,8 +39,8 @@ public class Game {
         this.forfeit = false;
         this.winner = null;
         this.moveQueue = new LinkedList<>();
-        p1.assignGame(Player.PieceColor.RED, this,p2);
-        p2.assignGame(Player.PieceColor.WHITE, this,p1);
+        p1.assignGame(Constants.PieceColor.RED, this,p2);
+        p2.assignGame(Constants.PieceColor.WHITE, this,p1);
     }
 
     /**
