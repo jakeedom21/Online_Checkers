@@ -42,6 +42,7 @@ class GetSignOutRouteTest {
     // Invoke the test
     getSignOutRoute.handle(request, response);
 
+
     assertEquals(null, session.attribute(Constants.SIGNED_IN_PLAYER));
     assertEquals(false, playerLobby.getPlayers().contains("player1"));
     assertEquals(false, playerLobby.hasUserName("player1"));

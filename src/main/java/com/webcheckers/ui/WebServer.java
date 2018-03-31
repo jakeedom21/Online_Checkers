@@ -55,7 +55,6 @@ public class WebServer {
     //
 
     private final TemplateEngine templateEngine;
-    private final Gson gson;
     private final PlayerLobby playerLobby;
 
     //
@@ -66,19 +65,15 @@ public class WebServer {
      * The constructor for the Web Server.
      *
      * @param templateEngine The default {@link TemplateEngine} to render page-level HTML views.
-     * @param gson           The Google JSON parser object used to render Ajax responses.
      * @throws NullPointerException If any of the parameters are {@code null}.
      */
     public WebServer(final PlayerLobby playerLobby,
-                     final TemplateEngine templateEngine,
-                     final Gson gson) {
+                     final TemplateEngine templateEngine) {
         // validation
         Objects.requireNonNull(playerLobby, "must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
-        Objects.requireNonNull(gson, "gson must not be null");
         //
         this.templateEngine = templateEngine;
-        this.gson = gson;
         this.playerLobby = playerLobby;
     }
 
@@ -144,9 +139,9 @@ public class WebServer {
 
         post(Constants.SIGN_IN, new PostSignInRoute(playerLobby, templateEngine));
 
-        post(Constants.RESIGN_URL, new PostResignRoute(playerLobby, gson));
+        post(Constants.RESIGN_URL, new PostResignRoute(playerLobby));
 
-        MoveManager moveManager = new MoveManager(playerLobby, gson);
+        MoveManager moveManager = new MoveManager(playerLobby);
         post(Constants.VALIDATE_MOVE, moveManager::validateMove);
 
         post(Constants.SUBMIT_TURN, moveManager::submitMove);

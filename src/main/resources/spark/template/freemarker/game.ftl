@@ -3,7 +3,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
     <title>${title} | Web Checkers</title>
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/game.css"><meta http-equiv="refresh" content="5">
+    <link rel="stylesheet" href="/css/game.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script data-main="js/game/main" src="js/require.js"></script>
     <script>

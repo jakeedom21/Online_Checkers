@@ -25,7 +25,6 @@ class GetGameRouteTest {
     Player player1 = mock(Player.class);
     Player player2 = mock(Player.class);
     Game game = mock(Game.class);
-    Board board = mock(Board.class);
 
     @Test
     void renderGamePage() {
@@ -46,8 +45,8 @@ class GetGameRouteTest {
         getGameRoute.renderGamePage(request, response);
 
 
-        Player[] activePlayers = {player1, player2 };
-        assertEquals(player1.getGame().getPlayer1(), player1);
-        assertEquals(player2.getGame().getPlayer2(), player2);
+        Player[] activePlayers = {player1, player2};
+        assertEquals(game.getPlayer1(), player1);
+        assertEquals(game.getPlayer2(), player2);
     }
 }

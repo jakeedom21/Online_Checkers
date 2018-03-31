@@ -20,7 +20,6 @@ import static com.webcheckers.utils.Constants.*;
 
 public class GetGameRoute implements Route {
 
-    public static final String GAME = "/game";
     private static final String GAME_FTL = "game.ftl";
     final static String GAME_ATTR = "game";
     PlayerLobby playerLobby;
@@ -63,20 +62,18 @@ public class GetGameRoute implements Route {
 
             //busyOpponentError, back to /home choose opponent again
             if (busyOpponent(opponentName)) {
+
                 currentSession.attribute(BUSY_OPPONENT_ERROR, true);
                 response.redirect(HOME_URL);
                 return null;
             } else {
                 currentSession.attribute(BUSY_OPPONENT_ERROR, false);
             }
-            System.out.println("Hit init of game");
             game = new Game(gameId, currentPlayer, opponent);
-            System.out.println("Game init");
             // if player did not choose opponent (assigned a game),
             // opponentName is null(?) since there's no request came from /home
         } else {
             //opponent = playerLobby.getPlayerByUsername(currentPlayer.getOpponentName());
-            System.out.println("hit game= currentPlayer.getGame() in else | name: " + currentPlayerName);
             game = currentPlayer.getGame();
         }
 
@@ -84,6 +81,7 @@ public class GetGameRoute implements Route {
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(SIGNED_IN_PLAYER, playerLobby.isActiveUser(currentPlayer.getPlayerName()));
         attributes.put(PLAYER_NAME, currentSession.attribute(PLAYER_NAME));
+
 
         // Get players
         final Player player1 = game.getPlayer1();
@@ -96,6 +94,7 @@ public class GetGameRoute implements Route {
             currentSession.attribute(OPPONENT_FORFEIT, true);
             //currentSession.attribute(BUSY_OPPONENT_ERROR, false);
             response.redirect(RESULT_URL);
+
             return null;
         }
 
@@ -135,18 +134,19 @@ public class GetGameRoute implements Route {
             attributes.put("isMyTurn", isMyTurn);
         }
 
-        Player whoseTurn;
-        if (game.getPlayerTurn().equals(game.getPlayer1().getPlayerName())) {
-            whoseTurn = player1;
-        } else {
-            whoseTurn = player2;
-        }
+
+        String whoseTurn =  game.getPlayerTurn();
+        String viewMode = whoseTurn.equals(currentPlayerName) ? VIEW_MODE.PLAY.name() : VIEW_MODE.SPECTATOR.name();
+
+        Constants.PieceColor activeColor = player1.getPlayerName().equals(whoseTurn)
+                ? Constants.PieceColor.RED : Player.PieceColor.WHITE ;
+
 
         attributes.put("redPlayerName", player1.getPlayerName());
         attributes.put("whitePlayerName", player2.getPlayerName());
-        attributes.put("viewMode", VIEW_MODE.PLAY.name());
-        attributes.put("activeColor", whoseTurn.getPieceColor() == PieceColor.RED ? "RED" : "WHITE");
-        attributes.put("currentPlayerName", whoseTurn.getPlayerName());
+        attributes.put("viewMode", viewMode);
+        attributes.put("activeColor", activeColor == Player.PieceColor.RED ? "RED" : "WHITE");
+        attributes.put("currentPlayerName", currentPlayerName);
         attributes.put("board", game.getBoard(currentPlayer).getRaw());
 
         return templateEngine.render(new ModelAndView(attributes, GAME_FTL));

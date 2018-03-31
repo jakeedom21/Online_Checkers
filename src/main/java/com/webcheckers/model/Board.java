@@ -71,8 +71,6 @@ public class Board implements Serializable{
         }
     }
 
-
-
     private void createPiece(int row, int col, Constants.PieceColor pieceColor) {
         String color;
         if (pieceColor.equals(Constants.PieceColor.WHITE)) {
@@ -95,14 +93,13 @@ public class Board implements Serializable{
     }
 
     public void movePiece(Space start, Space end) {
-        Piece piece = start.getPiece();
-        start.setPiece(null);
-        end.setPiece(piece);
-        System.out.println(this);
-    }
-
-    public Space getSpace(Space space) {
-         return this.board[space.getRow()][space.getCol()];
+         int r = start.getRow();
+         int c = start.getCol();
+         Piece piece = board[r][c].getPiece();
+         board[r][c].setPiece(null);
+         r = end.getRow();
+         c = end.getCol();
+         board[r][c].setPiece(piece);
     }
 
     public Space getSpace(int row, int col) {
@@ -121,7 +118,7 @@ public class Board implements Serializable{
         return this.board;
     }
 
-    public void flip() {
+    public void flip() { // Rotates board 90 degrees twice
         int n = board.length;
         for (int i = 0; i < 2; i++) {
             for (int l = 0; l < n/2; l++) {
@@ -134,8 +131,25 @@ public class Board implements Serializable{
                 }
             }
         }
+        for (int i = 0; i < Constants.MAX_DIM; i++) {
+            for (int j = 0; j < Constants.MAX_DIM; j++) {
+                board[i][j].setCoor(i, j);
+            }
+        }
     }
 
-
+    public void removePiece(Space removePiece){
+         int row = removePiece.getRow();
+         int col = removePiece.getCol();
+         if(board[row][col].hasPiece()){
+             if(board[row][col].getPiece().getColor().equals("WHITE")){
+                 this.whitePieces--;//remove 1 white piece
+             }
+             else{
+                 this.redPieces--;//removes 1 red piece
+             }
+         }
+         board[row][col].setPiece(null);//removes piece from board
+    }
 }
 
