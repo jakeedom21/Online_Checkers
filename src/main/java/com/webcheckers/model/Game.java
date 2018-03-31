@@ -123,18 +123,36 @@ public class Game {
         return this.forfeit;
     }
 
+    /**
+     * gets the current id of the game
+     * @return int
+     */
     public int getId(){
         return this.id;
     }
 
+    /**
+     * Adds a move to the game queue
+     * @param move - move to be added
+     */
     public void queueMove(Move move){
         this.moveQueue.add(move);
     }
 
+    /**
+     * Gets and removes next move from the game queue
+     * @return move object
+     */
     public Move getNextMove() {
         return this.moveQueue.poll();
     }
 
+    /**
+     * Moves a piece and determines if a jump has been made
+     * @param start - start space
+     * @param end - end space
+     * @param currentPlayer - player making the move
+     */
     public void movePiece(Space start, Space end, Player currentPlayer) {
         int dist = Math.abs(start.getRow() - end.getRow());
         int mid_row = (int)Math.floor((start.getRow() + end.getRow())/2);

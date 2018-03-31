@@ -32,15 +32,31 @@ public class GetGameRoute implements Route {
     private static int gameId = 0;
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
+    /**
+     * GetGameRoute Constructor
+     * @param playerLobby - instantiated playerLobby
+     * @param templateEngine - instantiated templateEngine
+     */
     public GetGameRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
     }
 
+    /**
+     * Determines if an opponent is in game or not
+     * @param opponentName - opponent name from queryParams
+     * @return boolean
+     */
     private boolean busyOpponent(String opponentName) {
         return playerLobby.getPlayerByUsername(opponentName).isInGame();
     }
 
+    /**
+     * Route for rendering game page view
+     * @param request - spark request
+     * @param response - spark response
+     * @return templateEngine view Model as String
+     */
     public String renderGamePage(Request request, Response response) {
 
         Session currentSession = request.session();
