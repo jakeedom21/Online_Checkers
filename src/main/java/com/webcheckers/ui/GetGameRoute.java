@@ -139,13 +139,13 @@ public class GetGameRoute implements Route {
         String viewMode = whoseTurn.equals(currentPlayerName) ? VIEW_MODE.PLAY.name() : VIEW_MODE.SPECTATOR.name();
 
         Constants.PieceColor activeColor = player1.getPlayerName().equals(whoseTurn)
-                ? Constants.PieceColor.RED : Player.PieceColor.WHITE ;
+                ? Constants.PieceColor.RED : Constants.PieceColor.WHITE ;
 
 
         attributes.put("redPlayerName", player1.getPlayerName());
         attributes.put("whitePlayerName", player2.getPlayerName());
         attributes.put("viewMode", viewMode);
-        attributes.put("activeColor", activeColor == Player.PieceColor.RED ? "RED" : "WHITE");
+        attributes.put("activeColor", activeColor == Constants.PieceColor.RED ? "RED" : "WHITE");
         attributes.put("currentPlayerName", currentPlayerName);
         attributes.put("board", game.getBoard(currentPlayer).getRaw());
 
