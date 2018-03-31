@@ -15,11 +15,12 @@ public class Board implements Serializable{
     private static final String PLAYER1_COLOR = "W";
     private static final String PLAYER2_COLOR = "R";
     private static HashSet<Integer> EMPTY_ROWS = new HashSet<>();
-
-
     private Space[][] board = new Space[MAX_DIM][MAX_DIM];
 
-    //Picture used as reference: http://allaboutfunandgames.com/wp-content/uploads/2011/11/Checkers.jpg
+    /**
+     * Constructor for board object
+     * //Picture used as reference: http://allaboutfunandgames.com/wp-content/uploads/2011/11/Checkers.jpg
+     */
     public Board() {
         //Create each space
         for (int i = 0; i < MAX_DIM; i++) {
@@ -49,7 +50,7 @@ public class Board implements Serializable{
     }
 
     /**
-     * Call when want to flip the board orientation by passing in the owner of the session
+     * Sets the board pieces for the initial start to a game
      */
      public void setBoardPieces(){
         EMPTY_ROWS.add(3);
@@ -71,6 +72,12 @@ public class Board implements Serializable{
         }
     }
 
+    /**
+     * Initializes a piece on the board
+     * @param row - row number
+     * @param col - column number
+     * @param pieceColor - piece color
+     */
     private void createPiece(int row, int col, Player.PieceColor pieceColor) {
         String color;
         if (pieceColor.equals(Player.PieceColor.WHITE)) {
@@ -92,6 +99,11 @@ public class Board implements Serializable{
         return returnString;
     }
 
+    /**
+     * Moves a piece on the board
+     * @param start - start space
+     * @param end - end space
+     */
     public void movePiece(Space start, Space end) {
          int r = start.getRow();
          int c = start.getCol();
@@ -102,22 +114,43 @@ public class Board implements Serializable{
          board[r][c].setPiece(piece);
     }
 
+    /**
+     * Returns a space on the board
+     * @param row - row number
+     * @param col - column number
+     * @return space object
+     */
     public Space getSpace(int row, int col) {
         return board[row][col];
     }
 
+    /**
+     * Returns number of red pieces
+     * @return int
+     */
     public int getP1Pieces() {
         return this.redPieces;
     }
 
+    /**
+     * Returns number of white pieces
+     * @return int
+     */
     public int getP2Pieces() {
         return this.whitePieces;
     }
 
+    /**
+     * Returns a raw two-d array representation of the board
+     * @return two-d array of spaces
+     */
     public Space[][] getRaw() {
         return this.board;
     }
 
+    /**
+     * Rotates the board and sets every row/col to it's new location
+     */
     public void flip() { // Rotates board 90 degrees twice
         int n = board.length;
         for (int i = 0; i < 2; i++) {
@@ -138,6 +171,10 @@ public class Board implements Serializable{
         }
     }
 
+    /**
+     * Removes a piece from the board after an opponent jumped it
+     * @param removePiece - the piece being removed
+     */
     public void removePiece(Space removePiece){
          int row = removePiece.getRow();
          int col = removePiece.getCol();
