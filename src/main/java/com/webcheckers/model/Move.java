@@ -18,6 +18,10 @@ public class Move {
         return end;
     }
 
+    public String toString() {
+        return "start: " + start.getRow() + "-" + start.getCol() + "\n end: " + end.getRow() + "- " + end.getCol();
+    }
+
     public static boolean isValid(Space space) {
         //if both col and row are even or odd is an invalid move
         if(space.getCol()%2 == 0 && space.getRow()%2 == 0){

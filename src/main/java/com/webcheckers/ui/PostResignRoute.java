@@ -1,7 +1,6 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-//import com.sun.tools.internal.jxc.ap.Const;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
@@ -24,17 +23,14 @@ public class PostResignRoute implements Route{
     private static final Logger LOG = Logger.getLogger(PostResignRoute.class.getName());
 
     private final PlayerLobby playerLobby;
-    private final Gson gson;
+    private final Gson gson = Constants.gson;
 
     /**
      * Concstructor
      * @param playerLobby The map to hold all Players
-     * @param gson
      */
-    public PostResignRoute(final PlayerLobby playerLobby, final Gson gson) {
-
+    public PostResignRoute(final PlayerLobby playerLobby) {
         this.playerLobby = playerLobby;
-        this.gson = gson;
         //
         LOG.config("PostResignRoute is initialized.");
 

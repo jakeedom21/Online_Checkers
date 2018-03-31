@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.utils.Constants;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -58,10 +60,7 @@ public class Game {
     }
 
     public Board getBoard(Player p) {
-        if(p.equals(p1)){
-            return this.p1Board;
-        }
-        return this.p2Board;
+        return p.equals(p1) ? p1Board : p2Board;
     }
 
     public String getPlayerTurn() {
@@ -69,11 +68,7 @@ public class Game {
     }
 
     public void finishMove() {
-        if (this.playerTurn.equals(p1.getPlayerName())) {
-            playerTurn = p2.getPlayerName();
-        } else {
-            playerTurn = p1.getPlayerName();
-        }
+        playerTurn =  playerTurn.equals(p1.getPlayerName()) ? p2.getPlayerName() : p1.getPlayerName();
     }
 
     /**
@@ -111,7 +106,6 @@ public class Game {
       */
     public void setForfeit(String playername){
         String p1name = p1.getPlayerName();
-        //String p2name = p2.getPlayerName();
         forfeit = true;
 
         if (playername.equals(p1name)) {
@@ -142,26 +136,30 @@ public class Game {
     }
 
     public void movePiece(Space start, Space end, Player currentPlayer) {
+        int dist = Math.abs(start.getRow() - end.getRow());
+        int mid_row = (int)Math.floor((start.getRow() + end.getRow())/2);
+        int mid_col = (int)Math.floor((start.getCol() + end.getCol())/2);
+        Space mid_point = new Space(mid_row, mid_col);
         if (currentPlayer.equals(this.p1)) {
             p1Board.movePiece(start, end);
+            //means move is a jump
+            if(dist >= 2){
+                p1Board.removePiece(mid_point);
+            }
             Board newP2board = new Board(p1Board);
-            System.out.println("New player2 board before flip");
-            System.out.println(newP2board);
             newP2board.flip();
-            System.out.println("New player2 board after flip");
-            System.out.println(newP2board);
             p2Board = newP2board;
         } else {
             p2Board.movePiece(start, end);
+            //means move is a jump
+            if(dist >= 2){
+                p2Board.removePiece(mid_point);
+            }
             Board newP1board = new Board(p2Board);
             newP1board.flip();
             p1Board = newP1board;
 
         }
-
-
-
-
     }
 }
 

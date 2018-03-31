@@ -2,16 +2,18 @@ package com.webcheckers.appl;
 
 import com.google.gson.Gson;
 import com.webcheckers.model.*;
+import com.webcheckers.utils.Constants;
 import spark.Request;
 import spark.Response;
 import spark.Session;
 
 import static com.webcheckers.model.Message.MessageType.info;
+import static com.webcheckers.model.Message.MessageType.error;
 
 public class MoveManager {
 
-    PlayerLobby playerLobby;
-    Gson gson;
+    private PlayerLobby playerLobby;
+    private Gson gson = Constants.gson;
 
     private Player getPlayerFromRequest(Request request){
         Session currentSession = request.session();
@@ -19,29 +21,29 @@ public class MoveManager {
         return playerLobby.getPlayerByUsername(playerName);
     }
 
-    public MoveManager(PlayerLobby playerLobby, Gson gson) {
+    public MoveManager(PlayerLobby playerLobby) {
         this.playerLobby = playerLobby;
-        this.gson = gson;
     }
 
     public String validateMove(Request request, Response response) {
         Player currentPlayer = getPlayerFromRequest(request);
         Game game = currentPlayer.getGame();
-        Move jsonMove = gson.fromJson(request.body(), Move.class);
-
         Board board = game.getBoard(currentPlayer);
-
-        Space start = board.getSpace(jsonMove.getStart());
-        Space end = board.getSpace(jsonMove.getEnd());
-        Move move = new Move(start, end);
-
-        boolean result = true; // MoveValidation.validMove(move.getStart(), move.getEnd(), game.getBoard());
-        if (result) {
-            game.queueMove(move);
+        Move jsonMove = gson.fromJson(request.body(), Move.class);
+        Message message;
+        Space start = board.getSpace(jsonMove.getStart().getRow(), jsonMove.getStart().getCol());
+        Space end = board.getSpace(jsonMove.getEnd().getRow(), jsonMove.getEnd().getCol());
+        String result = MoveValidation.validMove(start, end, board);
+        if (result.equals("")) {
+            message = new Message(info, "Valid Move");
+            game.queueMove(jsonMove);
+        }
+        //invalid move
+        else {
+            message = new Message(error, result);
         }
 
-        String resultJson = gson.toJson(result);
-        return resultJson;
+        return gson.toJson(message);
     }
 
     public Object submitMove(Request request, Response response) {
@@ -52,17 +54,18 @@ public class MoveManager {
         Space newSpace = move.getEnd();
         game.movePiece(oldSpace, newSpace, currentPlayer);
         game.finishMove();
-        System.out.println(gson.toJson(new Message(info, "Turn submitted successfully")));
-        return  gson.toJson(new Message(info, "Turn submitted successfully"));
+        return gson.toJson(new Message(info, "Turn submitted successfully"));
+
     }
 
     public String backupMove(Request request, Response response) {
-        return "SOMETHING";
+        Player currentPlayer = getPlayerFromRequest(request);
+        Game game = currentPlayer.getGame();
+        game.getNextMove();
+        return gson.toJson(new Message(info, "Success"));
     }
 
     public String checkTurn(Request request, Response response) {
         return gson.toJson(new Message(info,"true"));
     }
-
 }
-

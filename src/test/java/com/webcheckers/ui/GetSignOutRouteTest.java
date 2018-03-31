@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.utils.Constants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import spark.Request;
@@ -30,7 +31,7 @@ class GetSignOutRouteTest {
 
     playerLobby.addPlayer("player1");
     when(request.session()).thenReturn(session);
-    when(session.attribute(GetHomeRoute.PLAYER_NAME_ATTR)).thenReturn("player1");
+    when(session.attribute(Constants.PLAYER_NAME)).thenReturn("player1");
 
     getSignOutRoute = new GetSignOutRoute(playerLobby);
   }
@@ -41,7 +42,8 @@ class GetSignOutRouteTest {
     // Invoke the test
     getSignOutRoute.handle(request, response);
 
-    assertEquals(null, session.attribute(GetHomeRoute.SIGNED_IN_ATTR));
+
+    assertEquals(null, session.attribute(Constants.SIGNED_IN_PLAYER));
     assertEquals(false, playerLobby.getPlayers().contains("player1"));
     assertEquals(false, playerLobby.hasUserName("player1"));
   }

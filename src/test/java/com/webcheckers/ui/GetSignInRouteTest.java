@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.utils.Constants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -61,12 +62,11 @@ public class GetSignInRouteTest {
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
         //   * model contains all necessary View-Model data
-        testHelper.assertViewModelAttribute(GetSignInRoute.TITLE_ATTR, GetSignInRoute.TITLE);
+        testHelper.assertViewModelAttribute(Constants.TITLE, GetSignInRoute.TITLE);
 
         //   * test view name
         testHelper.assertViewName(GetSignInRoute.VIEW_NAME);
 
 
     }
-
 }

@@ -1,6 +1,5 @@
 package com.webcheckers.ui;
 
-//import com.sun.tools.internal.jxc.ap.Const;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import com.webcheckers.utils.Constants;
@@ -75,7 +74,6 @@ public class GetHomeRoute implements Route {
 
         vm.put(Constants.FREE_PLAYERS, playerLobby.getFreePlayerNames(thisPlayerName));
         vm.put(Constants.PLAYER_NAME, thisPlayerName);
-        System.out.println(vm);
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
 

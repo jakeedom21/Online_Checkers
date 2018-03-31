@@ -64,7 +64,7 @@ public class GetHomeRouteTester {
 
     /**
      * Test that CuT shows the Home view when the session is brand new.
-     */
+    */
     @Test
     public void new_default_session() {
         final TemplateEngineTester testHelper = new TemplateEngineTester();
@@ -77,6 +77,7 @@ public class GetHomeRouteTester {
         testHelper.assertViewModelIsaMap();
 
         //   * model contains all necessary View-Model data
+        testHelper.assertViewModelAttribute(Constants.SIGNED_IN_PLAYER, Boolean.FALSE);
         testHelper.assertViewModelAttribute(Constants.SIGN_IN, Boolean.FALSE);
         testHelper.assertViewModelAttribute(Constants.TITLE, GetHomeRoute.TITLE);
         testHelper.assertViewModelAttribute(Constants.NUM_USER, 3);
@@ -84,7 +85,6 @@ public class GetHomeRouteTester {
 
 
     }
-
 //    public void signed_in_session(){
 //        final TemplateEngineTester testHelper = new TemplateEngineTester();
 //        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
