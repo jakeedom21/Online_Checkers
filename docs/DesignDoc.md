@@ -116,8 +116,10 @@ to be notified win/lose status.
 ![PostSignIn Sequence Diagram](UI_SignIn_sequenceDiagram.png)
 
 ### Application Tier
-> Provide a summary of the Application tier of your architecture.
-> Describe the types of components in the tier and describe their responsibilities.
+![Application Tier Sequence Diagram](Application-Tier-Sequence-Diagram.png)
+
+The application tier of the project handles all the move, validation, and player storage. The application diagram above
+shows how the different components of the application tier communicate between each other. 
 
 #### Static models
 ![Application Tier Class Diagram](Application-Tier-class-diagram.png)
@@ -125,7 +127,7 @@ to be notified win/lose status.
 #### Dynamic models
 > Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
 
-Add dynamic models here and then they decribe the dynamic  ehavior over time of different objrcts and how they wor togehrer.
+Add dynamic models here and then they describe the dynamic  behavior over time of different objrcts and how they wor togehrer.
 ### Model Tier
 > Provide a summary of the Model tier of your architecture.
 > Describe the types of components in the tier and describe their responsibilities.
