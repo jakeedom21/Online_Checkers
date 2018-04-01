@@ -120,7 +120,7 @@ to be notified win/lose status.
 > Describe the types of components in the tier and describe their responsibilities.
 
 #### Static models
-![Application Tier Class Diagram](Application-Tier-class.diagram.png)
+![Application Tier Class Diagram](Application-Tier-class-diagram.png)
 
 #### Dynamic models
 > Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
