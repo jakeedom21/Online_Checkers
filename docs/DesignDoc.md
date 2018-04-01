@@ -52,7 +52,7 @@ As a player, I want to resign my game at any point so that I can forfeit.
 
 ### Roadmap of Enhancements
 
-* Extend the Game View to support the ability for player to request for the next move.
+* Extend the Game View to support the ability for player to request help for the next move.
 
 * Games can be stored and viewed later as how it was played before.
 
@@ -109,7 +109,7 @@ or resigned, the winner and loser are both redirected to result page through **P
 to be notified win/lose status.
 
 #### Static models
-> Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
+![UI Tier Class Diagram](UI-Tier-class-diagram.png)
 
 #### Dynamic models
 ![GetGameRoute Sequence Diagram](UI_GameRoute_sequenceDiagram.png)
