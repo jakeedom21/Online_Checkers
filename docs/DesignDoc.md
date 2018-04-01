@@ -125,13 +125,17 @@ to be notified win/lose status.
 #### Dynamic models
 > Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
 
-Add dynamic models here and then they decribe the dynamic  ehavior over time of different objrcts and how they wor togehrer.
+Add dynamic models here and then they decribe the dynamic  ehavior over time of different objrcts and how they work together.
 ### Model Tier
-> Provide a summary of the Model tier of your architecture.
-> Describe the types of components in the tier and describe their responsibilities.
+The model tier holds multiple objects to emulate a game of checkers including a Game object that hold everything needed
+for the game overall holding the board. This board class acts as the board itself and makes any adjustments to the board
+as they become needed, an 8x8 board holds 64 Spaces which hold pieces. Pieces represent the pieces on the game board and
+the color they belong to either red or white. Piece are controlled by Players classes who in an 8x8 board each start
+with 12 pieces at the start of the game. The game plays out until a win condition is meet where then game determines the
+winner and brings each player to an appropriate win/lose screen.
 
 #### Static models
-> Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
+![Model tier class diagragm](Model-tier-class-diagragm.png)
 
 #### Dynamic models
 > Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
