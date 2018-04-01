@@ -2,7 +2,6 @@ package com.webcheckers.ui;
 
 /**
  * The UI Controller to GET the Game page.
- *
  * Created by Sameen Luo <xxl2398@rit.edu> on 2/28/2018.
  */
 
@@ -18,6 +17,9 @@ import java.util.logging.Logger;
 
 import static com.webcheckers.utils.Constants.*;
 
+/**
+ * The UI Controller to GET the Game page.
+ */
 public class GetGameRoute implements Route {
 
     private static final String GAME_FTL = "game.ftl";

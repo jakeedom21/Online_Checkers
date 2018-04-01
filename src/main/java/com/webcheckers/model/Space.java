@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import java.io.Serializable;
 
 /**
+ * Represent the spaces on board to place pieces on.
  * Created by qadirhaqq on 2/27/18.
  */
 public class Space implements Serializable{
