@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 
+import com.webcheckers.utils.Constants;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -9,12 +10,11 @@ import java.util.logging.Logger;
 import spark.*;
 
 /**
- * The UI Controller to GET the Home page.
+ * The UI Controller to GET the SignIn page.
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public class  GetSignInRoute implements Route {
-    static final String TITLE_ATTR = "title";
     static final String TITLE = "Welcome!";
     static final String VIEW_NAME = "signin.ftl";
 
@@ -46,7 +46,7 @@ public class  GetSignInRoute implements Route {
     }
 
     /**
-     * Render the WebCheckers Home page.
+     * Render the WebCheckers Sign in page.
      *
      * @param request
      *   the HTTP request
@@ -66,7 +66,7 @@ public class  GetSignInRoute implements Route {
 
         // start building the View-Model
         Map<String, Object> vm = new HashMap<>();
-        vm.put(TITLE_ATTR, TITLE);
+        vm.put(Constants.TITLE, TITLE);
 
         return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
     }

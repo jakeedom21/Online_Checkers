@@ -1,21 +1,23 @@
 package com.webcheckers.model;
 
+import com.webcheckers.utils.Constants;
+
+/**
+ * Represent each signed in user
+ */
 public class Player {
 
-    public enum PieceColor {
-        RED, WHITE
-    }
 
     private String playerName;
     private boolean inGame;
-    private PieceColor pieceColor;
+    private Constants.PieceColor pieceColor;
     private Game currentGame;
     private String opponentName;
 
     /**
      * Constructor for Player
      *
-     * @param playerName
+     * @param playerName username of this player
      */
     public Player(String playerName){
         this.playerName = playerName;
@@ -25,32 +27,45 @@ public class Player {
         this.opponentName = null;
     }
 
+    /**
+     * Get the username of this player
+     * @return username
+     */
     public String getPlayerName(){
         return playerName;
     }
 
 
+    /**
+     * Get the opponent's username of this Player
+     * @return opponent's username
+     */
     public String getOpponentName(){
         return opponentName;
     }
 
-//    public void setGame(Game game){
-//        this.currentGame = game;
-//    }
-
+    /**
+     * pre: Player is in game
+     * Get the game this Player is currently in
+     * @return The current game, null if not currently in game
+     */
     public Game getGame() {
         return this.currentGame;
     }
 
+    /**
+     * Check if this player is in a game
+     * @return true is in game, false otherwise
+     */
     public boolean isInGame() {
         return inGame;
     }
 
-//    public void setInGame(boolean inGame) {
-//        this.inGame = inGame;
-//    }
-
-    public PieceColor getPieceColor() {
+    /**
+     * Get the color of this player
+     * @return enum RED or WHITE
+     */
+    public Constants.PieceColor getPieceColor() {
         return pieceColor;
     }
 
@@ -60,7 +75,7 @@ public class Player {
      * @param pieceColor assigned to this player, RED(1) and WHITE(2) for the playee
      * @param gameToPlay the Game object for this player and his/her opponent
      */
-    public void assignGame(PieceColor pieceColor, Game gameToPlay, Player opponent) {
+    public void assignGame(Constants.PieceColor pieceColor, Game gameToPlay, Player opponent) {
         this.inGame = true;
         this.pieceColor = pieceColor;
         this.currentGame = gameToPlay;
@@ -77,6 +92,11 @@ public class Player {
         this.opponentName = null;
     }
 
+    /**
+     * Check equality on only playerName field because it's the only immutable field
+     * @param playerObject the other object to compare to
+     * @return true if equal, false otherwise
+     */
     @Override
     public boolean equals(Object playerObject){
         if(playerObject == null) {
@@ -89,6 +109,10 @@ public class Player {
         return false;
     }
 
+    /**
+     * hash on only playerName field because it's the only immutable field
+     * @return hashcode of this player
+     */
     @Override
     public int hashCode(){
         return playerName.hashCode();

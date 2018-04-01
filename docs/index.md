@@ -4,8 +4,11 @@ Welcome to the WebCheckers Project!
 
 ## Team
 
-* MEMBER1
-* MEMBER2
+* Joel Margolis
+* Brandon Dossantos
+* Jake Edom
+* Qadir Haqq
+* Sameen Luo
 
 ## [Design Documentation](DesignDoc)
 

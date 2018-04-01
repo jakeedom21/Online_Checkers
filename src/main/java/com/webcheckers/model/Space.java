@@ -3,67 +3,82 @@ package com.webcheckers.model;
 import java.io.Serializable;
 
 /**
+ * Represent the spaces on board to place pieces on.
  * Created by qadirhaqq on 2/27/18.
  */
 public class Space implements Serializable{
     private int row;
-    private int col;
-    private Piece piece = null;
-    private int MAX_DIM = 8;
+    private int cell;
 
-    public Space(int row, int col) {
+    private Piece piece = null;
+
+    /**
+     * Constructor for space object
+     * @param row - row number
+     * @param cell - cell number
+     */
+    public Space(int row, int cell) {
         this.row = row;
-        this.col = col;
+        this.cell = cell;
     }
 
+    /**
+     * Returns the row of the space
+     * @return int
+     */
     public int getRow() {
         return row;
     }
 
+    /**
+     * Returns the column of the space
+     * @return int
+     */
     public int getCol() {
-        return col;
+        return cell;
     }
 
+    /**
+     * Sets a piece to a space
+     * @param p - piece object
+     */
     public void setPiece(Piece p) {
         piece = p;
     }
 
+    /**
+     * Returns piece object at space
+     * @return piece object
+     */
     public Piece getPiece() {
         return piece;
     }
 
-    public boolean isValid() {
-        //if both col and row are even or odd is an invalid move
-        if(this.getCol()%2 == 0 && this.getRow()%2 == 0){
-//            throw new IllegalArgumentException("Invalid Move: Row and Col are both even");
-            return false;
-        }
-        else if(this.getCol()%2 == 1 && this.getRow()%2 == 1){
-//            throw new IllegalArgumentException("Invalid Move: Row and Col are both odd");
-            return false;
-        }
-        //if space has a piece already in it
-        else if(this.hasPiece()){
-//            throw new IllegalArgumentException("Invalid Move: Space already has piece");
-            return false;
-        }
-        //not sure if actually needed as don't know if player actually can place outside board
-        else if(this.getRow() < 0 || this.getCol() < 0){
-//            throw new IllegalArgumentException("Invalid Move: Cannot place outside board");
-            return false;
-        }
-        //for this in particular, if player can place outside board will need a get in board for MAX_DIM
-        else if(this.getCol() >= MAX_DIM || this.getRow() >= MAX_DIM){
-//            throw new IllegalArgumentException("Invalid Move: Cannot place outside board");
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-
+    /**
+     * Determines if a space has a piece or not
+     * @return boolean
+     */
     public boolean hasPiece() {
         return this.piece != null;
+    }
+
+    /**
+     * Returns true if a space is a valid space
+     * @return boolean
+     */
+    public boolean isValid() { return true; }
+
+    /**
+     * Set coordinate of space after flipping
+     * @param row - new row number
+     * @param col - new col number
+     */
+    public void setCoor(int row, int col ) {
+        this.row = row;
+        this.cell = col;
+        if (this.piece != null) {
+            this.piece.setPosition(row, col);
+        }
     }
 
     public String toString() {

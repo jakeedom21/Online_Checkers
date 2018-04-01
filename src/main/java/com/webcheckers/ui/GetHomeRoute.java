@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
+import com.webcheckers.utils.Constants;
 import spark.*;
 
 import java.util.HashMap;
@@ -15,16 +16,9 @@ import java.util.logging.Logger;
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public class GetHomeRoute implements Route {
-
-    static final String TITLE_ATTR = "title";
-    static final String TITLE = "Welcome!";
-    static final String NUM_USER_ATTR = "numUsers";
-    static final String SIGNED_IN_ATTR = "signedInPlayer";
-    static final String FREE_PLAYERS_ATTR = "freePlayers";
-    static final String PLAYER_NAME_ATTR = "playerName";
-    static final String BUSY_OPPONENT_ATTR = "busyOpponentError";
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
+    public static final String TITLE = "Welcome!";
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
@@ -57,30 +51,29 @@ public class GetHomeRoute implements Route {
         LOG.finer("GetHomeRoute is invoked.");
 
         Map<String, Object> vm = new HashMap<>();
-        vm.put(TITLE_ATTR, TITLE);
-        vm.put(NUM_USER_ATTR, playerLobby.getPlayers().size());
+        vm.put(Constants.TITLE, TITLE);
+        vm.put(Constants.NUM_USER, playerLobby.getPlayers().size());
 
         final Session currentSession = request.session();
-        if (currentSession.attribute(SIGNED_IN_ATTR) != null ) {
-            String myUserName = currentSession.attribute(PLAYER_NAME_ATTR);
+        if (currentSession.attribute(Constants.SIGNED_IN_PLAYER) != null ) {
+            String myUserName = currentSession.attribute(Constants.PLAYER_NAME);
             Player player = playerLobby.getPlayerByUsername(myUserName);
             if(player != null && player.isInGame()){
-                response.redirect("/game");
+                response.redirect(Constants.GAME_URL);
             }
         }
 
-        if (currentSession.attribute(BUSY_OPPONENT_ATTR)==null){
-            currentSession.attribute(BUSY_OPPONENT_ATTR, false);
+        if (currentSession.attribute(Constants.BUSY_OPPONENT_ERROR) == null){
+            currentSession.attribute(Constants.BUSY_OPPONENT_ERROR, false);
         }
 
-        String thisPlayerName = currentSession.attribute(PLAYER_NAME_ATTR);
-        vm.put(SIGNED_IN_ATTR, playerLobby.isActiveUser(thisPlayerName));
+        String thisPlayerName = currentSession.attribute(Constants.PLAYER_NAME);
+        vm.put(Constants.SIGNED_IN_PLAYER, playerLobby.isActiveUser(thisPlayerName));
 
-        vm.put(BUSY_OPPONENT_ATTR, currentSession.attribute(BUSY_OPPONENT_ATTR));
+        vm.put(Constants.BUSY_OPPONENT_ERROR, currentSession.attribute(Constants.BUSY_OPPONENT_ERROR));
 
-        vm.put(FREE_PLAYERS_ATTR, playerLobby.getFreePlayerNames(thisPlayerName));
-        vm.put(PLAYER_NAME_ATTR, thisPlayerName);
-        System.out.println(vm);
+        vm.put(Constants.FREE_PLAYERS, playerLobby.getFreePlayerNames(thisPlayerName));
+        vm.put(Constants.PLAYER_NAME, thisPlayerName);
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
 

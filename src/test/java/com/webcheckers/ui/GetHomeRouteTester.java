@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
+import com.webcheckers.utils.Constants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -63,7 +64,7 @@ public class GetHomeRouteTester {
 
     /**
      * Test that CuT shows the Home view when the session is brand new.
-     */
+    */
     @Test
     public void new_default_session() {
         final TemplateEngineTester testHelper = new TemplateEngineTester();
@@ -76,14 +77,14 @@ public class GetHomeRouteTester {
         testHelper.assertViewModelIsaMap();
 
         //   * model contains all necessary View-Model data
-        testHelper.assertViewModelAttribute(GetHomeRoute.SIGNED_IN_ATTR, Boolean.FALSE);
-        testHelper.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE);
-        testHelper.assertViewModelAttribute(GetHomeRoute.NUM_USER_ATTR, 3);
-        testHelper.assertViewModelAttribute(GetHomeRoute.BUSY_OPPONENT_ATTR, null);
+        testHelper.assertViewModelAttribute(Constants.SIGNED_IN_PLAYER, Boolean.FALSE);
+        testHelper.assertViewModelAttribute(Constants.SIGN_IN, Boolean.FALSE);
+        testHelper.assertViewModelAttribute(Constants.TITLE, GetHomeRoute.TITLE);
+        testHelper.assertViewModelAttribute(Constants.NUM_USER, 3);
+        testHelper.assertViewModelAttribute(Constants.BUSY_OPPONENT_ERROR, null);
 
 
     }
-
 //    public void signed_in_session(){
 //        final TemplateEngineTester testHelper = new TemplateEngineTester();
 //        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());

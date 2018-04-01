@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-  <title>${title} | Web Checkers</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/game.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script data-main="js/game/main" src="js/require.js"></script>
-  <script>
-  window.gameState = {
-    "currentPlayer" : "${currentPlayerName}",
-    "redPlayer" : "${redPlayerName}",
-    "whitePlayer" : "${whitePlayerName}",
-    "activeColor" : "${activeColor}",
-    "viewMode": "PLAY"
-  };
-  </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <title>${title} | Web Checkers</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/game.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script data-main="js/game/main" src="js/require.js"></script>
+    <script>
+        window.gameState = {
+            "currentPlayer" : "${currentPlayerName}",
+            "redPlayer" : "${redPlayerName}",
+            "whitePlayer" : "${whitePlayerName}",
+            "activeColor" : "${activeColor}",
+            "viewMode": "PLAY"
+        };
+    </script>
 </head>
 <body>
   <div class="page">
@@ -69,13 +69,13 @@
               <table data-color='RED'>
                 <tr>
                   <td><img src="../img/single-piece-red.svg" /></td>
-                  <td class="name">Red</td>
+                  <td class="name">RED</td>
                 </tr>
               </table>
               <table data-color='WHITE'>
                 <tr>
                   <td><img src="../img/single-piece-white.svg" /></td>
-                  <td class="name">White</td>
+                  <td class="name">WHITE</td>
                 </tr>
               </table>
             </div>
@@ -114,7 +114,6 @@
           </table>
         </div>
       </div>
-
     </div>
   </div>
 

@@ -4,6 +4,7 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.utils.Constants;
 import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
@@ -24,7 +25,6 @@ class GetGameRouteTest {
     Player player1 = mock(Player.class);
     Player player2 = mock(Player.class);
     Game game = mock(Game.class);
-    Board board = mock(Board.class);
 
     @Test
     void renderGamePage() {
@@ -37,15 +37,16 @@ class GetGameRouteTest {
         when(playerLobby.getPlayerByUsername("player2")).thenReturn(player2);
         when(currentSession.attribute("playerName")).thenReturn("player1");
         when(request.session()).thenReturn(currentSession);
-        when(player1.getPieceColor()).thenReturn(Player.PieceColor.RED);
-        when(game.getPlayers()).thenReturn(new Player[] {player1, player2});
+        when(player1.getPieceColor()).thenReturn(Constants.PieceColor.RED);
+        when(game.getPlayer1()).thenReturn(player1);
+        when(game.getPlayer2()).thenReturn(player2);
         when(player1.getGame()).thenReturn(game);
 
         getGameRoute.renderGamePage(request, response);
 
 
-        Player[] activePlayers = {player1, player2 };
-        System.out.println("Players: " + player1.getGame());
-        assertArrayEquals(player1.getGame().getPlayers(), activePlayers);
+        Player[] activePlayers = {player1, player2};
+        assertEquals(game.getPlayer1(), player1);
+        assertEquals(game.getPlayer2(), player2);
     }
 }

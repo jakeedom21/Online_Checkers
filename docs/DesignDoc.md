@@ -32,8 +32,6 @@ Allow players to play checker games in their browsers.
 
 This section describes the features of the application.
 
-> In this section you do not need to be exhaustive and list every story.  Focus on top-level features from the Vision document and maybe Epics and critical Stories.
-
 ### Definition of MVP
 
 Every player must sign-in before playing a game, and be able to sign-out when finished playing.
@@ -41,14 +39,22 @@ Two players must be able to play a game of checkers based upon the American rule
 Either player of a game may choose to resign, at any point, which ends the game.
 
 ### MVP Features
-> Provide a list of top-level Epics and/or Stories of the MVP.
 
 Start a Game
 As a Player I want to start a game so that I can play checkers with an opponent.
 
-### Roadmap of Enhancements
-> Provide a list of top-level features in the order you plan to consider them.
+Validate Moves
+As a player I want to be able to drag and drop valid checker pieces so that I can make a move during a game.
 
+Game Forfeit
+As a player, I want to resign my game at any point so that I can forfeit.
+
+
+### Roadmap of Enhancements
+
+* Extend the Game View to support the ability for player to request for the next move.
+
+* Games can be stored and viewed later as how it was played before.
 
 ## Application Domain
 
@@ -96,28 +102,30 @@ After the user clicks on an opponent to start a game, they are brought to the ga
 red/white pieces are shown. On the board, they can drag and drop their own pieces to make moves. 
 
 ### UI Tier
-> Provide a summary of the Server-side UI tier of your architecture.
-> Describe the types of components in the tier and describe their responsibilities.
+The **GetHomeRoute** renders home page that lists all main functions of the project (sign-in/sign-out button,
+list of opponents to choose from). Once a user signs in, the opponent is picked and **GetGameRoute** renders
+the game page with oriented checkers board with pieces for the user to drag and drop. Once game is finished
+or resigned, the winner and loser are both redirected to result page through **PostResignRoute** and **GetResultRoute**
+to be notified win/lose status.
 
 #### Static models
 > Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
 
 #### Dynamic models
-> Provide any dynamic models, such as state and sequence diagrams, as is relevant to a particularly significant user story.
-> For example, in WebCheckers you might create a sequence diagram of the `POST /validateMove` HTTP request processing or you might use a state diagram if the Game component uses a state machine to manage the game.
-
+![GetGameRoute Sequence Diagram](UI_GameRoute_sequenceDiagram.png)
+![PostSignIn Sequence Diagram](UI_SignIn_sequenceDiagram.png)
 
 ### Application Tier
 > Provide a summary of the Application tier of your architecture.
 > Describe the types of components in the tier and describe their responsibilities.
 
 #### Static models
-> Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
+![Application Tier Class Diagram](Application-Tier-class-diagram.png)
 
 #### Dynamic models
 > Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
 
-
+Add dynamic models here and then they decribe the dynamic  ehavior over time of different objrcts and how they wor togehrer.
 ### Model Tier
 > Provide a summary of the Model tier of your architecture.
 > Describe the types of components in the tier and describe their responsibilities.

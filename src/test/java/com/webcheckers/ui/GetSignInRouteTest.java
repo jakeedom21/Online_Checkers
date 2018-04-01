@@ -1,13 +1,11 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.utils.Constants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-
-
-import com.webcheckers.appl.GameCenter;
 
 import spark.ModelAndView;
 import spark.Request;
@@ -20,7 +18,7 @@ public class GetSignInRouteTest {
     private GetSignInRoute CuT;
 
     // friendly objects
-    private GameCenter gameCenter;
+
 
     // mock objects
     private Request request;
@@ -39,7 +37,7 @@ public class GetSignInRouteTest {
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
 
-        gameCenter = new GameCenter();
+
         CuT = new GetSignInRoute(engine);
 
     }
@@ -64,12 +62,11 @@ public class GetSignInRouteTest {
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
         //   * model contains all necessary View-Model data
-        testHelper.assertViewModelAttribute(GetSignInRoute.TITLE_ATTR, GetSignInRoute.TITLE);
+        testHelper.assertViewModelAttribute(Constants.TITLE, GetSignInRoute.TITLE);
 
         //   * test view name
         testHelper.assertViewName(GetSignInRoute.VIEW_NAME);
 
 
     }
-
 }
