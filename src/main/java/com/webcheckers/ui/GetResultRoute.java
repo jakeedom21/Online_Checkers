@@ -15,8 +15,8 @@ import java.util.logging.Logger;
  */
 public class GetResultRoute implements Route{
 
-    // name of tempalte
-    private static final String VIEW_NAME = "result.ftl";
+    // name of template
+    static final String VIEW_NAME = "result.ftl";
 
     private final TemplateEngine templateEngine;
     private static final Logger LOG = Logger.getLogger(GetResultRoute.class.getName());
@@ -61,6 +61,7 @@ public class GetResultRoute implements Route{
         }
 
         boolean gameWon = currentSession.attribute(Constants.GAME_WON);
+
         if (gameWon) {
             vm.put(Constants.GAME_WON, true);
         } else {
