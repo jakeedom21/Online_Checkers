@@ -78,18 +78,12 @@ public class GetHomeRouteTester {
 
         //   * model contains all necessary View-Model data
         testHelper.assertViewModelAttribute(Constants.SIGNED_IN_PLAYER, Boolean.FALSE);
-        testHelper.assertViewModelAttribute(Constants.SIGN_IN, Boolean.FALSE);
+        testHelper.assertViewModelAttribute(Constants.SIGN_IN, null);
         testHelper.assertViewModelAttribute(Constants.TITLE, GetHomeRoute.TITLE);
         testHelper.assertViewModelAttribute(Constants.NUM_USER, 3);
         testHelper.assertViewModelAttribute(Constants.BUSY_OPPONENT_ERROR, null);
 
 
     }
-//    public void signed_in_session(){
-//        final TemplateEngineTester testHelper = new TemplateEngineTester();
-//        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
-//    }
-
-
 
 }

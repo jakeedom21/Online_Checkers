@@ -23,9 +23,8 @@ import static com.webcheckers.utils.Constants.*;
 public class GetGameRoute implements Route {
 
     private static final String GAME_FTL = "game.ftl";
-    final static String GAME_ATTR = "game";
-    PlayerLobby playerLobby;
-    TemplateEngine templateEngine;
+    private PlayerLobby playerLobby;
+    private TemplateEngine templateEngine;
 
     public enum VIEW_MODE {
         PLAY, REPLAY, SPECTATOR
@@ -65,7 +64,7 @@ public class GetGameRoute implements Route {
         String currentPlayerName = currentSession.attribute("playerName");
         Player currentPlayer = playerLobby.getPlayerByUsername(currentPlayerName);
         if (currentPlayer == null) {
-            response.redirect("/");   //TODO: refactor constant Strings for urls
+            response.redirect(HOME_URL);
             return null;
         }
 

@@ -52,7 +52,7 @@ As a player, I want to resign my game at any point so that I can forfeit.
 
 ### Roadmap of Enhancements
 
-* Extend the Game View to support the ability for player to request for the next move.
+* Extend the Game View to support the ability for player to request help for the next move.
 
 * Games can be stored and viewed later as how it was played before.
 
@@ -109,7 +109,7 @@ or resigned, the winner and loser are both redirected to result page through **P
 to be notified win/lose status.
 
 #### Static models
-> Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
+![UI Tier Class Diagram](UI-Tier-class-diagram.png)
 
 #### Dynamic models
 ![GetGameRoute Sequence Diagram](UI_GameRoute_sequenceDiagram.png)
@@ -129,11 +129,19 @@ shows how the different components of the application tier communicate between e
 
 Add dynamic models here and then they describe the dynamic  behavior over time of different objrcts and how they wor togehrer.
 ### Model Tier
-> Provide a summary of the Model tier of your architecture.
-> Describe the types of components in the tier and describe their responsibilities.
+The model tier works to emulate the various pieces that make up a game of checkers including a Game object which
+emulates the game overall holding the board and players and determining a winner once one of the win conditions has
+been achieved. Moving to the Board object which works as the board of the game responsible for holding spaces and moving
+pieces around when needed. A Space is the object which fills up the board object and holds pieces in place their places
+as well. Next is the piece object which acts as the pieces on a checkers board which which have their own color and
+location, additionally know if they are a king piece or not. Next is the Player object which holds the total amount
+of pieces left, as well as keep track if they are in a game for the server's sake. Finally are the Move and Message
+objects, which act as helper functions with Move it helps place moves into a readable notation and Message works to send
+string info to wherever it is needed.
 
 #### Static models
-> Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
+![Model Tier Class Diagram](Model_tier_class_diagram.png)
 
 #### Dynamic models
-> Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
+![Model Tier Board Sequence Diagram](Model_tier_Board_sequence_diagram.png)
+![Model Tier Game Sequence Diagram](Model_tier_Game_sequence_diagram.png)
