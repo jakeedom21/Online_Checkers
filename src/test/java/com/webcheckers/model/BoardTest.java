@@ -54,6 +54,7 @@ class BoardTest {
                     "|W|| ||W|| ||W|| ||W|| |\n" +
                     "------------------------\n";
 
+
     @Test
     void getP1Pieces() {
         assertEquals(board.getP1Pieces(), NUM_PIECES_AT_START);

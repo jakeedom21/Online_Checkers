@@ -5,6 +5,11 @@ import com.google.gson.Gson;
  */
 
 public class Constants {
+
+    public enum PieceColor {
+        RED, WHITE
+    }
+
     public static final String PLAYER = "player";
     public static final String MESSAGE = "message";
     public static final String PLAYER_NAME = "playerName";

@@ -3,6 +3,9 @@ package com.webcheckers.model;
 
 import java.io.Serializable;
 
+/**
+ * Represent each movable piece on the board.
+ */
 public class Piece implements Serializable {
 
     private int row;

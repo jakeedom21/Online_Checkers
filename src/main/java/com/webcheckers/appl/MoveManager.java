@@ -15,6 +15,11 @@ public class MoveManager {
     private PlayerLobby playerLobby;
     private Gson gson = Constants.gson;
 
+    /**
+     * Returns a player object given a session object
+     * @param request - spark request
+     * @return Player object
+     */
     private Player getPlayerFromRequest(Request request){
         Session currentSession = request.session();
         String playerName = currentSession.attribute("playerName");
@@ -25,6 +30,12 @@ public class MoveManager {
         this.playerLobby = playerLobby;
     }
 
+    /**
+     * Handles the validate move request from the server
+     * @param request - spark request
+     * @param response - spark response
+     * @return Message object converted to Json
+     */
     public String validateMove(Request request, Response response) {
         Player currentPlayer = getPlayerFromRequest(request);
         Game game = currentPlayer.getGame();
@@ -46,6 +57,12 @@ public class MoveManager {
         return gson.toJson(message);
     }
 
+    /**
+     * Handles the submit move request from the server
+     * @param request - spark request
+     * @param response - spark response
+     * @return Message object converted to Json
+     */
     public Object submitMove(Request request, Response response) {
         Player currentPlayer = getPlayerFromRequest(request);
         Game game = currentPlayer.getGame();
@@ -58,6 +75,12 @@ public class MoveManager {
 
     }
 
+    /**
+     * Handles the back up move request from the server
+     * @param request - spark request
+     * @param response - spark response
+     * @return Message object converted to Json
+     */
     public String backupMove(Request request, Response response) {
         Player currentPlayer = getPlayerFromRequest(request);
         Game game = currentPlayer.getGame();
@@ -65,6 +88,12 @@ public class MoveManager {
         return gson.toJson(new Message(info, "Success"));
     }
 
+    /**
+     * Handles the check turn move request from the server
+     * @param request - spark request
+     * @param response - spark response
+     * @return Message object converted to Json
+     */
     public String checkTurn(Request request, Response response) {
         return gson.toJson(new Message(info,"true"));
     }

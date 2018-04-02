@@ -2,13 +2,13 @@ package com.webcheckers.ui;
 
 /**
  * The UI Controller to GET the Game page.
- *
  * Created by Sameen Luo <xxl2398@rit.edu> on 2/28/2018.
  */
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.utils.Constants;
 import spark.*;
 
 import java.util.HashMap;
@@ -17,12 +17,14 @@ import java.util.logging.Logger;
 
 import static com.webcheckers.utils.Constants.*;
 
+/**
+ * The UI Controller to GET the Game page.
+ */
 public class GetGameRoute implements Route {
 
     private static final String GAME_FTL = "game.ftl";
-    final static String GAME_ATTR = "game";
-    PlayerLobby playerLobby;
-    TemplateEngine templateEngine;
+    private PlayerLobby playerLobby;
+    private TemplateEngine templateEngine;
 
     public enum VIEW_MODE {
         PLAY, REPLAY, SPECTATOR
@@ -31,22 +33,38 @@ public class GetGameRoute implements Route {
     private static int gameId = 0;
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
+    /**
+     * GetGameRoute Constructor
+     * @param playerLobby - instantiated playerLobby
+     * @param templateEngine - instantiated templateEngine
+     */
     public GetGameRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
     }
 
+    /**
+     * Determines if an opponent is in game or not
+     * @param opponentName - opponent name from queryParams
+     * @return boolean
+     */
     private boolean busyOpponent(String opponentName) {
         return playerLobby.getPlayerByUsername(opponentName).isInGame();
     }
 
+    /**
+     * Route for rendering game page view
+     * @param request - spark request
+     * @param response - spark response
+     * @return templateEngine view Model as String
+     */
     public String renderGamePage(Request request, Response response) {
 
         Session currentSession = request.session();
         String currentPlayerName = currentSession.attribute("playerName");
         Player currentPlayer = playerLobby.getPlayerByUsername(currentPlayerName);
         if (currentPlayer == null) {
-            response.redirect("/");   //TODO: refactor constant Strings for urls
+            response.redirect(HOME_URL);
             return null;
         }
 
@@ -115,13 +133,13 @@ public class GetGameRoute implements Route {
             attributes.put("title", String.format("Game #%d (%s vs. %s)", gameId, player1.getPlayerName(), player2.getPlayerName()));
         } else {
             opponent = player2;
-            String playerColor = currentPlayer.getPieceColor() == Player.PieceColor.RED ? "RED" : "WHITE";
+            String playerColor = currentPlayer.getPieceColor() == PieceColor.RED ? "RED" : "WHITE";
             String opponentColor = playerColor.equals("RED") ? "WHITE" : "RED";
             Boolean isMyTurn = game.getPlayerTurn().equals(player1.getPlayerName());
 
             if (currentPlayer.equals(player2)) {
                 opponent = player1;
-                playerColor = currentPlayer.getPieceColor() == Player.PieceColor.WHITE ? "WHITE" : "RED";
+                playerColor = currentPlayer.getPieceColor() == PieceColor.WHITE ? "WHITE" : "RED";
                 opponentColor = playerColor.equals("WHITE") ? "WHITE" : "RED";
                 isMyTurn = game.getPlayerTurn().equals(currentPlayerName);
             }
@@ -137,14 +155,14 @@ public class GetGameRoute implements Route {
         String whoseTurn =  game.getPlayerTurn();
         String viewMode = whoseTurn.equals(currentPlayerName) ? VIEW_MODE.PLAY.name() : VIEW_MODE.SPECTATOR.name();
 
-        Player.PieceColor activeColor = player1.getPlayerName().equals(whoseTurn)
-                ? Player.PieceColor.RED : Player.PieceColor.WHITE ;
+        Constants.PieceColor activeColor = player1.getPlayerName().equals(whoseTurn)
+                ? Constants.PieceColor.RED : Constants.PieceColor.WHITE ;
 
 
         attributes.put("redPlayerName", player1.getPlayerName());
         attributes.put("whitePlayerName", player2.getPlayerName());
         attributes.put("viewMode", viewMode);
-        attributes.put("activeColor", activeColor == Player.PieceColor.RED ? "RED" : "WHITE");
+        attributes.put("activeColor", activeColor == Constants.PieceColor.RED ? "RED" : "WHITE");
         attributes.put("currentPlayerName", currentPlayerName);
         attributes.put("board", game.getBoard(currentPlayer).getRaw());
 
