@@ -129,11 +129,17 @@ shows how the different components of the application tier communicate between e
 
 Add dynamic models here and then they describe the dynamic  behavior over time of different objrcts and how they wor togehrer.
 ### Model Tier
-> Provide a summary of the Model tier of your architecture.
-> Describe the types of components in the tier and describe their responsibilities.
+The model tier works to emulate the various pieces that make up a game of checkers including a Game object which
+emulates the game overall holding the board and players and determining a winner once one of the win conditions has
+been achieved. Moving to the Board object which works as the board of the game responsible for holding spaces and moving
+pieces around when needed. A Space is the object which fills up the board object and holds pieces in place their places
+as well. Next is the piece object which acts as the pieces on a checkers board which which have their own color and
+location, additionally know if they are a king piece or not. Next is the Player object which holds the total amount
+of pieces left, as well as keep track if they are in a game for the server's sake. Finally are the Move and Message
+objects, which act as helper functions with Move it helps place moves into a readable notation and Message works to send
+string info to wherever it is needed.
 
 #### Static models
-> Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
-
+![Model Tier Class diagram] (Model-tier-class-diagragm.png)
 #### Dynamic models
 > Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
