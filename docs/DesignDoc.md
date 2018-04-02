@@ -140,6 +140,8 @@ objects, which act as helper functions with Move it helps place moves into a rea
 string info to wherever it is needed.
 
 #### Static models
-![Model Tier Class diagram] (Model-tier-class-diagragm.png)
+![Model Tier Class Diagram](Model_tier_class_diagram.png)
+
 #### Dynamic models
-> Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
+![Model Tier Board Sequence Diagram](Model_tier_Board_sequence_diagram.png)
+![Model Tier Board Sequence Diagram](Model_tier_Game_sequence_diagram.png)
