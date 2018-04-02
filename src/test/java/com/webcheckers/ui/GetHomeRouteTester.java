@@ -85,11 +85,5 @@ public class GetHomeRouteTester {
 
 
     }
-//    public void signed_in_session(){
-//        final TemplateEngineTester testHelper = new TemplateEngineTester();
-//        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
-//    }
-
-
 
 }
