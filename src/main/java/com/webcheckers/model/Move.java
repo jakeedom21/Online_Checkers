@@ -5,15 +5,29 @@ public class Move {
     private Space start;
     private Space end;
 
+    /**
+     * Constructor for a move
+     * @param start - start space
+     * @param end - end space
+     */
     public Move(Space start, Space end) {
         this.start = start;
         this.end = end;
     }
 
+    /**
+     * Return start space
+     * @return space object
+     */
     public Space getStart() {
         return start;
     }
 
+
+    /**
+     * Return end space
+     * @return end object
+     */
     public Space getEnd() {
         return end;
     }
@@ -22,6 +36,11 @@ public class Move {
         return "start: " + start.getRow() + "-" + start.getCol() + "\n end: " + end.getRow() + "- " + end.getCol();
     }
 
+    /**
+     * Determines if a space is valid
+     * @param space - end space
+     * @return boolean
+     */
     public static boolean isValid(Space space) {
         //if both col and row are even or odd is an invalid move
         if(space.getCol()%2 == 0 && space.getRow()%2 == 0){
