@@ -111,7 +111,6 @@ public class Board implements Serializable{
          board[r][c].setPiece(null);
          r = end.getRow();
          c = end.getCol();
-         System.out.println("R: " + r + "-C: " + c);
          if (r == 0 && !piece.isKing()) {
              piece.setKing();
          }

@@ -160,7 +160,6 @@ public class Game {
         Space mid_point = new Space(mid_row, mid_col);
         Board b = p.equals(p1) ? p1Board : p2Board;
         b.movePiece(start, end);
-        System.out.println("End: " + end.getRow() + "-" + end.getCol());
         if (dist >= 2)
             b.removePiece(mid_point);
         Board newOpponentBoard = new Board(b);
@@ -170,26 +169,6 @@ public class Game {
         else
             p1Board = newOpponentBoard;
         System.gc();
-//        if (currentPlayer.equals(this.p1)) {
-//            p1Board.movePiece(start, end);
-//            //means move is a jump
-//            if(dist >= 2){
-//                p1Board.removePiece(mid_point);
-//            }
-//            Board newP2board = new Board(p1Board);
-//            newP2board.flip();
-//            p2Board = newP2board;
-//        } else {
-//            p2Board.movePiece(start, end);
-//            //means move is a jump
-//            if(dist >= 2){
-//                p2Board.removePiece(mid_point);
-//            }
-//            Board newP1board = new Board(p2Board);
-//            newP1board.flip();
-//            p1Board = newP1board;
-//
-//        }
     }
 }
 
