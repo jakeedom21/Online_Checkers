@@ -17,6 +17,7 @@ public class Board implements Serializable{
     private static HashSet<Integer> EMPTY_ROWS = new HashSet<>();
     private Space[][] board = new Space[MAX_DIM][MAX_DIM];
 
+
     /**
      * Constructor for board object
      * //Picture used as reference: http://allaboutfunandgames.com/wp-content/uploads/2011/11/Checkers.jpg
@@ -41,10 +42,9 @@ public class Board implements Serializable{
         for (int i = 0; i < MAX_DIM; i++) {
             for (int j = 0; j < MAX_DIM; j++) {
                 if (b.getSpace(i, j).getPiece() != null){
-                    String color = b.getSpace(i, j).getPiece().getColor();
-                    board[i][j].setPiece(new Piece(i, j, color.equals("WHITE") ? "W" : "R"));
+                    Piece p = b.getSpace(i, j).getPiece();
+                    board[i][j].setPiece(p);
                 }
-
             }
         }
     }
@@ -111,6 +111,10 @@ public class Board implements Serializable{
          board[r][c].setPiece(null);
          r = end.getRow();
          c = end.getCol();
+         System.out.println("R: " + r + "-C: " + c);
+         if (r == 0 && !piece.isKing()) {
+             piece.setKing();
+         }
          board[r][c].setPiece(piece);
     }
 

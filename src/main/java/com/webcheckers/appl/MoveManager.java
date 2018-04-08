@@ -69,6 +69,8 @@ public class MoveManager {
         Move move = game.getNextMove();
         Space oldSpace =  move.getStart();
         Space newSpace = move.getEnd();
+        System.out.println("Oldspace: " + oldSpace);
+        System.out.println("new space: " + newSpace);
         game.movePiece(oldSpace, newSpace, currentPlayer);
         game.finishMove();
         return gson.toJson(new Message(info, "Turn submitted successfully"));
