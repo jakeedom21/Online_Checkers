@@ -16,8 +16,7 @@ public class Board implements Serializable{
     private static final String PLAYER2_COLOR = "R";
     private static HashSet<Integer> EMPTY_ROWS = new HashSet<>();
     private Space[][] board = new Space[MAX_DIM][MAX_DIM];
-
-
+    
     /**
      * Constructor for board object
      * //Picture used as reference: http://allaboutfunandgames.com/wp-content/uploads/2011/11/Checkers.jpg
