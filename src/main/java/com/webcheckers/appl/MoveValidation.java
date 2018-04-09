@@ -1,9 +1,6 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Move;
-import com.webcheckers.model.Piece;
-import com.webcheckers.model.Space;
+import com.webcheckers.model.*;
 import com.webcheckers.utils.Constants;
 
 import java.util.ArrayList;
@@ -118,12 +115,15 @@ public class MoveValidation {
         }
     }
 
-    public static HashSet<Space> getMustJump(String color, Board board){
-        HashSet<Space> mustJump = new HashSet<>();
-        for(int r = 0; r < Constants.MAX_DIM; r += 2){
+    public static ArrayList<Space> getMustJump(Player player, Board board){
+        Player.PieceColor color = player.getPieceColor();
+        ArrayList<Space> mustJump = new ArrayList<>();
+        for(int r = 0; r < Constants.MAX_DIM; r++){
+            boolean fixed_even = false;
             for(int c = 0; c < Constants.MAX_DIM; c += 2){
-                if(r%2 == 0){
+                if(r%2 == 0 && !fixed_even){
                     c = 1;
+                    fixed_even = true;
                 }
                 //gets piece of same color needed
                 Space curr_space = board.getSpace(r, c);
@@ -207,12 +207,20 @@ public class MoveValidation {
         }
         //ensures that end is at least within the board
         //gets the possible ending spots
-        HashSet<Space> mustJump = getMustJump(start.getPiece().getColor(), board);
-        if(!mustJump.isEmpty()){
-            if(!mustJump.contains(start)){
+
+        ArrayList<Space> mustJump = getMustJump(start.getPiece().getColor(), board);
+        if(mustJump.size() > 0){
+            boolean isThere = false;
+            for(int i = 0; i < mustJump.size(); i++){
+                if (mustJump.get(i).getCol() == start.getCol() && mustJump.get(i).getRow() == start.getRow()){
+                    isThere = true;
+                }
+            }
+            if(!isThere){
                 return("Must use a piece that can jump");
             }
         }
+
         ArrayList<Space> possibleEnds = basicMoves(start.getPiece(), board);
         for (int i = 0; i < possibleEnds.size(); i++) {
             Space jump = possibleEnds.get(i);
