@@ -16,7 +16,7 @@ public class Board implements Serializable{
     private static final String PLAYER2_COLOR = "R";
     private static HashSet<Integer> EMPTY_ROWS = new HashSet<>();
     private Space[][] board = new Space[MAX_DIM][MAX_DIM];
-    
+
     /**
      * Constructor for board object
      * //Picture used as reference: http://allaboutfunandgames.com/wp-content/uploads/2011/11/Checkers.jpg
@@ -189,6 +189,20 @@ public class Board implements Serializable{
              }
          }
          board[row][col].setPiece(null);//removes piece from board
+    }
+
+    /**
+     *
+     * @param addSpace
+     * @param playerColor
+     */
+    public void addPiece(Space addSpace, Constants.PieceColor playerColor) {
+        int row = addSpace.getRow();
+        int col = addSpace.getCol();
+        String pieceColor = playerColor == Constants.PieceColor.RED ? PLAYER2_COLOR : PLAYER1_COLOR ;
+        if(!board[row][col].hasPiece()) { // double-chekcing
+            board[row][col].setPiece(new Piece(row, col, pieceColor));
+        }
     }
 }
 

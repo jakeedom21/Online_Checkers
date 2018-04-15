@@ -47,7 +47,7 @@ public class MoveManager {
         String result = MoveValidation.validMove(start, end, board);
         if (result.equals("")) {
             message = new Message(info, "Valid Move");
-            game.queueMove(jsonMove);
+            game.queueMove(new Move(start, end, currentPlayer));
         }
         //invalid move
         else {
@@ -67,9 +67,7 @@ public class MoveManager {
         Player currentPlayer = getPlayerFromRequest(request);
         Game game = currentPlayer.getGame();
         Move move = game.getNextMove();
-        Space oldSpace =  move.getStart();
-        Space newSpace = move.getEnd();
-        game.movePiece(oldSpace, newSpace, currentPlayer);
+        game.commitMove(move);
         game.finishMove();
         return gson.toJson(new Message(info, "Turn submitted successfully"));
 
