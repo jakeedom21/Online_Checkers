@@ -11,6 +11,7 @@ define(function(require){
   
   // imports
   var PlayModeConstants = require('./PlayModeConstants');
+  var AjaxUtils = require('../../util/AjaxUtils');
 
   /**
    * Constructor function.
@@ -64,6 +65,56 @@ define(function(require){
     this._controller.setPendingMove(pendingMove);
     // and change the data to Pending
     this._controller.setState(PlayModeConstants.VALIDATING_MOVE);
+  };
+
+  /**
+  jQuery.post('/submitTurn', '')
+    // HTTP success handler
+    .done(handleResponse.bind(this))
+    // HTTP error handler
+    .fail(AjaxUtils.handleErrorResponse)
+    // always display a message that the Ajax call has completed.
+    .always(() => console.debug('SubmitTurn response complete.'));
+
+    // helper function (Ajax success callback)
+    function handleResponse(message) {
+      this._controller.displayMessage(message);
+      if (message.type === 'info') {
+        window.location = '/game';
+      }
+      // handle error message
+      else {
+        // There are valid error conditions, such as not completing
+        // a jump sequence.
+        this._controller.displayMessage(message);
+      }
+    }
+   */
+
+  EmptyTurnState.prototype.replay = function replay() {
+    console.log("replay message handler");
+    var replayModal = document.getElementById('replayModal');
+    replayModal.style.display = 'block';
+    replayModal.onsubmit = function() {
+      var replayValue = replayModal.value("replayValue");
+      jQuery.post('/replay', {'replayValue': replayValue})
+          .done(handleResponse.bind(this))
+          .fail(AjaxUtils.handleErrorResponse)
+          .always(() => console.debug('SubmitTurn response complete.'));
+    }
+
+    function handleResponse(message) {
+        this._controller.displayMessage(message);
+        if (message.type === 'info') {
+
+            window.location = '/game';
+        }
+        else {
+            // There are valid error conditions, such as not completing
+            // a jump sequence.
+            this._controller.displayMessage(message);
+        }
+    }
   };
 
   /**

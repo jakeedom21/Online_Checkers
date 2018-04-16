@@ -192,9 +192,10 @@ public class Game {
         this.movePiece(m, true);
     }
 
-    public void replay(int replayValue){
+    public void replay(int replayValue) {
         int replayQueueSize = replayQueue.size();
-        replayValue = replayValue > this.replayQueue.size() ? replayQueue.size() : replayValue;
+        replayValue = replayValue > replayQueueSize ? replayQueueSize : replayValue;
+        replayValue = replayValue < 0 ? 0 : replayValue;
         for (int i = 0; i < replayValue; i++) {
             int moveIndex = replayQueueSize - replayValue;
             this.undoMove(replayQueue.get(moveIndex));

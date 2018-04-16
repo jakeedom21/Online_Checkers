@@ -52,6 +52,15 @@
           </div>
 
         </div>
+
+        <div id="replayModal" class="modal">
+            <div class="modal-content">
+                <form>
+                    <input type="number" name="replayValue" />
+                    <input type="submit" />
+                </form>
+            </div>
+        </div>
         <div id="game-controls">
         
           <fieldset id="game-info">
@@ -139,6 +148,12 @@
           modal.css('display', 'none');
         }
       };
+
+      $('#replayModal').onsubmit = function() {
+          $('#replayModal').css('display', 'none');
+          window.location = '/game';
+      }
+
     })
   </script>
 </body>

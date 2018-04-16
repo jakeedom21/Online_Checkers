@@ -72,6 +72,8 @@ define(function(require){
             PlayModeConstants.SUBMIT_BUTTON_TOOLTIP, this.submitTurn);
     this.addButton(PlayModeConstants.RESIGN_BUTTON_ID, 'Resign', true,
             PlayModeConstants.RESIGN_BUTTON_TOOLTIP, this.resignGame);
+    this.addButton(PlayModeConstants.REPLAY_BUTTON_ID, 'Replay', true,
+            PlayModeConstants.REPLAY_BUTTON_TOOLTIP, this.replay);
 
     // Public (internal) methods
 
@@ -128,6 +130,13 @@ define(function(require){
    */
   PlayController.prototype.submitTurn = function submitTurn() {
     this._delegateStateMessage('submitTurn', arguments);
+  }
+
+    /**
+     *  This user action submits a replay request to the server.
+     */
+  PlayController.prototype.replay = function replayMove() {
+      this._delegateStateMessage('replay', arguments);
   }
 
   /**

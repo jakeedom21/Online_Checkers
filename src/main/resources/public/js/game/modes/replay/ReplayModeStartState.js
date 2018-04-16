@@ -42,6 +42,7 @@ define(function(require){
    */
   ReplayModeStartState.prototype.onEntry = function onEntry() {
     alert('View mode not yet implemented: REPLAY');
+    console.log('uh oh');
   };
   
   // export class constructor

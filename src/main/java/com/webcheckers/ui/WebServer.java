@@ -150,6 +150,7 @@ public class WebServer {
 
         post(Constants.CHECK_TURN, moveManager::checkTurn);
 
+        post(Constants.REPLAY, moveManager::handleReplay);
         //
         LOG.config("WebServer is initialized.");
     }

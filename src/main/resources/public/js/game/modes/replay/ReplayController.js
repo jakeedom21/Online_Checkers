@@ -28,6 +28,7 @@ define(function(require){
     ControlsToolbarMixin.call(this);
     // TODO: create mode control buttons
 
+
     // Public (internal) methods
 
     /**
@@ -36,6 +37,7 @@ define(function(require){
     this.startup = function startup() {
       // start Replay mode
       this.setState(ReplayModeConstants.REPLAY_MODE_STARTING);
+
     }
     
   };
