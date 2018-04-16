@@ -11,11 +11,8 @@ import java.util.HashSet;
 public class Board implements Serializable{
     private int redPieces = 12;
     private int whitePieces = 12;
-    private static final int MAX_DIM = 8;
-    private static final String PLAYER1_COLOR = "W";
-    private static final String PLAYER2_COLOR = "R";
     private static HashSet<Integer> EMPTY_ROWS = new HashSet<>();
-    private Space[][] board = new Space[MAX_DIM][MAX_DIM];
+    private Space[][] board = new Space[Constants.MAX_DIM][Constants.MAX_DIM];
     
     /**
      * Constructor for board object
@@ -23,8 +20,8 @@ public class Board implements Serializable{
      */
     public Board() {
         //Create each space
-        for (int i = 0; i < MAX_DIM; i++) {
-            for (int j = 0; j < MAX_DIM; j++) {
+        for (int i = 0; i < Constants.MAX_DIM; i++) {
+            for (int j = 0; j < Constants.MAX_DIM; j++) {
                 board[i][j] = new Space(i, j);
             }
         }
@@ -33,13 +30,13 @@ public class Board implements Serializable{
 
     // copy constructor
     public Board(Board b) {
-        for (int i = 0; i < MAX_DIM; i++) {
-            for (int j = 0; j < MAX_DIM; j++) {
+        for (int i = 0; i < Constants.MAX_DIM; i++) {
+            for (int j = 0; j < Constants.MAX_DIM; j++) {
                 board[i][j] = new Space(i, j);
             }
         }
-        for (int i = 0; i < MAX_DIM; i++) {
-            for (int j = 0; j < MAX_DIM; j++) {
+        for (int i = 0; i < Constants.MAX_DIM; i++) {
+            for (int j = 0; j < Constants.MAX_DIM; j++) {
                 if (b.getSpace(i, j).getPiece() != null){
                     Piece p = b.getSpace(i, j).getPiece();
                     board[i][j].setPiece(p);
@@ -55,15 +52,15 @@ public class Board implements Serializable{
         EMPTY_ROWS.add(3);
         EMPTY_ROWS.add(4);
         // Populate the board from top to bottom
-        for (int row = 0; row < MAX_DIM; row++) {
+        for (int row = 0; row < Constants.MAX_DIM; row++) {
             if (!EMPTY_ROWS.contains(row)) { // not rows 3 or 4
                 if (row % 2 == 0) {
-                    for (int col = 1; col < MAX_DIM; col += 2) {
+                    for (int col = 1; col < Constants.MAX_DIM; col += 2) {
                         createPiece(row, col, Constants.PieceColor.RED);
                     }
                 }
                 if (row % 2 == 1) {
-                    for (int col = 0; col <  MAX_DIM; col += 2) {
+                    for (int col = 0; col <  Constants.MAX_DIM; col += 2) {
                         createPiece(row, col, Constants.PieceColor.RED);
                     }
                 }
@@ -80,17 +77,17 @@ public class Board implements Serializable{
     private void createPiece(int row, int col, Constants.PieceColor pieceColor) {
         String color;
         if (pieceColor.equals(Constants.PieceColor.WHITE)) {
-            color = (row > MAX_DIM / 2) ? PLAYER1_COLOR : PLAYER2_COLOR;
+            color = (row > Constants.MAX_DIM / 2) ? Constants.PLAYER1_COLOR : Constants.PLAYER2_COLOR;
         } else { //RED
-            color = (row > MAX_DIM / 2) ? PLAYER2_COLOR : PLAYER1_COLOR;
+            color = (row > Constants.MAX_DIM / 2) ? Constants.PLAYER2_COLOR : Constants.PLAYER1_COLOR;
         }
         board[row][col].setPiece(new Piece(row, col, color));
     }
 
     public String toString() {
         String returnString = "\n------------------------\n";
-        for(int i = 0; i < MAX_DIM; i++) {
-            for (int j = 0; j < MAX_DIM; j++) {
+        for(int i = 0; i < Constants.MAX_DIM; i++) {
+            for (int j = 0; j < Constants.MAX_DIM; j++) {
                 returnString += board[i][j];
             }
             returnString += "\n------------------------\n";
