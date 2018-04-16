@@ -115,27 +115,29 @@ public class MoveValidation {
         }
     }
 
-    public static ArrayList<Space> getMustJump(Player player, Board board){
-        Player.PieceColor color = player.getPieceColor();
-        ArrayList<Space> mustJump = new ArrayList<>();
+    public static HashSet<Space> getMustJump(Space space, Board board){
+        String color = space.getPiece().getColor();
+        HashSet<Space> mustJump = new HashSet<>();
         for(int r = 0; r < Constants.MAX_DIM; r++){
             boolean fixed_even = false;
-            for(int c = 0; c < Constants.MAX_DIM; c += 2){
-                if(r%2 == 0 && !fixed_even){
+            for(int c = 0; c < Constants.MAX_DIM; c += 2) {
+                if (r % 2 == 0 && !fixed_even) {
                     c = 1;
                     fixed_even = true;
                 }
                 //gets piece of same color needed
                 Space curr_space = board.getSpace(r, c);
-                Piece curr_piece = curr_space.getPiece();
-                if(curr_piece.getColor().equals(color)){
-                    ArrayList<Space> curr_piece_moves = basicMoves(curr_piece, board);
-                    //has moves
-                    if(curr_piece_moves.size() != 0){
-                        Space end_jump = curr_piece_moves.get(0);
-                        //has at least one jump
-                        if(Math.abs(curr_space.getCol() - end_jump.getCol()) == 2){
-                            mustJump.add(curr_space);
+                if (curr_space.hasPiece()) {
+                    Piece curr_piece = curr_space.getPiece();
+                    if (curr_piece.getColor().equals(color)) {
+                        ArrayList<Space> curr_piece_moves = basicMoves(curr_piece, board);
+                        //has moves
+                        if (curr_piece_moves.size() != 0) {
+                            Space end_jump = curr_piece_moves.get(0);
+                            //has at least one jump
+                            if (Math.abs(curr_space.getCol() - end_jump.getCol()) == 2) {
+                                mustJump.add(curr_space);
+                            }
                         }
                     }
                 }
@@ -208,19 +210,19 @@ public class MoveValidation {
         //ensures that end is at least within the board
         //gets the possible ending spots
 
-        ArrayList<Space> mustJump = getMustJump(start.getPiece().getColor(), board);
-        if(mustJump.size() > 0){
-            boolean isThere = false;
-            for(int i = 0; i < mustJump.size(); i++){
-                if (mustJump.get(i).getCol() == start.getCol() && mustJump.get(i).getRow() == start.getRow()){
-                    isThere = true;
-                }
-            }
-            if(!isThere){
-                return("Must use a piece that can jump");
+        Player.PieceColor pieceColor;
+        if(start.getPiece().getColor().equals("RED")){
+            pieceColor = Player.PieceColor.RED;
+        }
+        else{
+            pieceColor = Player.PieceColor.WHITE;
+        }
+        HashSet<Space> mustJump = getMustJump(start, board);
+        if(!mustJump.isEmpty()) {
+            if (!mustJump.contains(start)) {
+                return "Must use piece that can jump";
             }
         }
-
         ArrayList<Space> possibleEnds = basicMoves(start.getPiece(), board);
         for (int i = 0; i < possibleEnds.size(); i++) {
             Space jump = possibleEnds.get(i);
