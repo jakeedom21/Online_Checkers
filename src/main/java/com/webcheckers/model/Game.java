@@ -76,6 +76,10 @@ public class Game {
      * @return true if there's a winner of game, false otherwise
      */
     public boolean isGameWon(){
+        if (winner != null) {
+            p1.finishGame();
+            p2.finishGame();
+        }
         return winner != null;
     }
 

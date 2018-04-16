@@ -141,6 +141,7 @@ public class GameTest {
         when(GAME.getBoard(PLAYER2)).thenReturn(board);
         doReturn(true).when(GAME).isWinner();
         assertEquals(GAME.isWinner(), true);
+
     }
 
     @Test
