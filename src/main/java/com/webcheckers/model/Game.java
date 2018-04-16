@@ -151,33 +151,24 @@ public class Game {
      * Moves a piece and determines if a jump has been made
      * @param start - start space
      * @param end - end space
-     * @param currentPlayer - player making the move
+     * @param p - player making the move
      */
-    public void movePiece(Space start, Space end, Player currentPlayer) {
+    public void movePiece(Space start, Space end, Player p) {
         int dist = Math.abs(start.getRow() - end.getRow());
         int mid_row = (int)Math.floor((start.getRow() + end.getRow())/2);
         int mid_col = (int)Math.floor((start.getCol() + end.getCol())/2);
         Space mid_point = new Space(mid_row, mid_col);
-        if (currentPlayer.equals(this.p1)) {
-            p1Board.movePiece(start, end);
-            //means move is a jump
-            if(dist >= 2){
-                p1Board.removePiece(mid_point);
-            }
-            Board newP2board = new Board(p1Board);
-            newP2board.flip();
-            p2Board = newP2board;
-        } else {
-            p2Board.movePiece(start, end);
-            //means move is a jump
-            if(dist >= 2){
-                p2Board.removePiece(mid_point);
-            }
-            Board newP1board = new Board(p2Board);
-            newP1board.flip();
-            p1Board = newP1board;
-
-        }
+        Board b = p.equals(p1) ? p1Board : p2Board;
+        b.movePiece(start, end);
+        if (dist >= 2)
+            b.removePiece(mid_point);
+        Board newOpponentBoard = new Board(b);
+        newOpponentBoard.flip();
+        if (p.equals(p1))
+            p2Board = newOpponentBoard;
+        else
+            p1Board = newOpponentBoard;
+        System.gc();
     }
 }
 
