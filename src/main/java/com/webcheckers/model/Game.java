@@ -69,9 +69,9 @@ public class Game {
 
     public void finishMove() {
         playerTurn =  playerTurn.equals(p1.getPlayerName()) ? p2.getPlayerName() : p1.getPlayerName();
-        if ( p2Board.getP1Pieces() == 0) {
+        if ( p1Board.getP1Pieces() == 0 && p2Board.getP1Pieces() == 0) {
             this.winner = p2;
-        } else if (p1Board.getP2Pieces() == 0 ){
+        } else if (p1Board.getP2Pieces() == 0 && p2Board.getP2Pieces()==0 ){
             this.winner = p1;
         }
     }
@@ -92,16 +92,6 @@ public class Game {
         return this.winner.getPlayerName();
     }
 
-//    public boolean isWinner() {
-//        if (p1Board.getP1Pieces() == 0 && p2Board.getP1Pieces() == 0) {
-//            this.winner = p2;
-//            return true;
-//        } else if (p1Board.getP2Pieces() == 0 && p2Board.getP2Pieces() == 0){
-//            this.winner = p1;
-//            return true;
-//        } else
-//            return false;
-//    }
 
     /**
      * One of the player choose to resign the game. Player's opponent wins.

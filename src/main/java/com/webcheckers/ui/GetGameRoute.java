@@ -102,6 +102,8 @@ public class GetGameRoute implements Route {
         // Get players
         final Player player1 = game.getPlayer1();
         final Player player2 = game.getPlayer2();
+
+        //comment out these two prints when testing resign and win/lose status
         //System.out.println("p1 pieces: " + player1.getGame().getBoard(player1).getP1Pieces());
         //System.out.println("p2 pieces: " + player2.getGame().getBoard(player1).getP1Pieces());
 
