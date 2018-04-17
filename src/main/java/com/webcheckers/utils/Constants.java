@@ -36,6 +36,8 @@ public class Constants {
     public static final String RESIGN_URL = HOME_URL + "resignGame";
     public static final String RESULT_URL = HOME_URL + "result";
     public static final String RULES_URL = HOME_URL + "rules";
+    public static final String OLD_GAMES_URL  = HOME_URL + "oldGames";
+    public static final String REPLAY_URL = HOME_URL + "replay";
 
     // GAME CONSTANTS
     public static final int MAX_DIM = 8;

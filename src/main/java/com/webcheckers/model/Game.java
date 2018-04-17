@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import com.webcheckers.utils.Constants;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -17,6 +18,8 @@ public class Game {
     private Player winner;
     private boolean forfeit;
     private Queue<Move> moveQueue;
+    private ArrayList<Move> replayQueue;
+    private Queue<Move> copyQueue;
     private int id;
     private Player p1;
     private Player p2;
@@ -39,6 +42,7 @@ public class Game {
         this.forfeit = false;
         this.winner = null;
         this.moveQueue = new LinkedList<>();
+        this.replayQueue = new ArrayList<>();
         p1.assignGame(Constants.PieceColor.RED, this,p2);
         p2.assignGame(Constants.PieceColor.WHITE, this,p1);
     }
@@ -92,6 +96,16 @@ public class Game {
         return this.winner.getPlayerName();
     }
 
+//    public boolean isWinner() {
+//        if (p1Board.getP1Pieces() == 0 && p2Board.getP1Pieces() == 0) {
+//            this.winner = p2;
+//            return true;
+//        } else if (p1Board.getP2Pieces() == 0 && p2Board.getP2Pieces() == 0){
+//            this.winner = p1;
+//            return true;
+//        } else
+//            return false;
+//    }
 
     /**
      * One of the player choose to resign the game. Player's opponent wins.
@@ -141,31 +155,68 @@ public class Game {
         return this.moveQueue.poll();
     }
 
+    public void commitMove(Move m) {
+        this.movePiece(m);
+        this.replayQueue.add(m);
+    }
+
     /**
      * Moves a piece and determines if a jump has been made
-     * @param start - start space
-     * @param end - end space
-     * @param p - player making the move
+     * @param m the move itself
      */
-    public void movePiece(Space start, Space end, Player p) {
+    public void movePiece(Move m) {
+        Space start = m.getStart();
+        Space end = m.getEnd();
+        Player p = m.getPlayer();
+        Board b = p.equals(p1) ? p1Board : p2Board;
+        b.movePiece(start, end);
         int dist = Math.abs(start.getRow() - end.getRow());
         int mid_row = (int)Math.floor((start.getRow() + end.getRow())/2);
         int mid_col = (int)Math.floor((start.getCol() + end.getCol())/2);
         Space mid_point = new Space(mid_row, mid_col);
-        Board b = p.equals(p1) ? p1Board : p2Board;
-        b.movePiece(start, end);
-        System.out.println("Moving pieces for "+p.getPlayerName()+" from "+start.getRow()+","+start.getCol()+" to "+end.getRow()+","+end.getCol());
-        if (dist >= 2) {
+        if (dist >= 2)
             b.removePiece(mid_point);
-            System.out.println("--Removing "+p.getOpponentName()+"'s pieces at "+mid_row+","+mid_col);
-        }
         Board newOpponentBoard = new Board(b);
         newOpponentBoard.flip();
         if (p.equals(p1))
             p2Board = newOpponentBoard;
         else
             p1Board = newOpponentBoard;
-        System.gc();
     }
+
+    /**
+     * Copy references from the moves in the replayQueue to those into the copyQueue
+     */
+    public void copyReplayIntoQueue(){
+        copyQueue = new LinkedList<>(replayQueue);
+    }
+
+    /**
+     * Reset the board, primarily used for replay functionality
+     */
+    public void resetBoard() {
+        this.p1Board = new Board();
+        this.p2Board = new Board();
+        this.p2Board.flip();
+    }
+
+    /**
+     * Replays the game move by move from the copyQueue
+     */
+    public void replayGame() {
+        Move m = copyQueue.poll();
+        if(m != null)
+            this.movePiece(m);
+    }
+
+    /**
+     * Returns the size of the copyQueue
+     * @return int size of the copyQueue
+     */
+    public int getCopyQueueSize() {
+        return this.copyQueue.size();
+    }
+
+
 }
 

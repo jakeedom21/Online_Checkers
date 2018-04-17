@@ -4,15 +4,18 @@ public class Move {
     private static final int MAX_DIM = 8;
     private Space start;
     private Space end;
+    private Player player;
+    private boolean pieceTaken = false;
 
     /**
      * Constructor for a move
      * @param start - start space
      * @param end - end space
      */
-    public Move(Space start, Space end) {
+    public Move(Space start, Space end, Player player) {
         this.start = start;
         this.end = end;
+        this.player = player;
     }
 
     /**
@@ -34,6 +37,14 @@ public class Move {
 
     public String toString() {
         return "start: " + start.getRow() + "-" + start.getCol() + "\n end: " + end.getRow() + "- " + end.getCol();
+    }
+
+    /**
+     * Return the player who made the move
+     * @return player object
+     */
+    public Player getPlayer() {
+        return this.player;
     }
 
     /**
