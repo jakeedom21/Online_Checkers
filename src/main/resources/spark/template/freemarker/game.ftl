@@ -57,14 +57,16 @@
 
       <div>
 
-        <div id="showHelp" class="modal">
+        <div id="helpModal" class="modal">
           <!-- Modal content -->
           <div class="modal-content">
            <div class="modal-header">
              <span class="close">&times;</span>
-             <h1>SUCC</h1>
+             <h1>Player Help</h1>
            </div>
            <div class="modal-body">
+
+
               <#include "player_help_tip.ftl">
            </div>
           </div>
@@ -164,7 +166,7 @@
 
   <script type="text/javascript">
       $(document).ready(function() {
-        var modalElem = document.getElementById('rulesModal');
+        var modalElem = document.getElementById('helpModal');
         var modal = $(modalElem);
 
         $('#showHelp').on('click', function() {

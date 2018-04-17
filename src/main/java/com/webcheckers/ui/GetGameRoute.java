@@ -149,6 +149,7 @@ public class GetGameRoute implements Route {
             attributes.put("name", opponent.getPlayerName());
             attributes.put("opponentColor", opponentColor);
             attributes.put("isMyTurn", isMyTurn);
+
         }
 
 
