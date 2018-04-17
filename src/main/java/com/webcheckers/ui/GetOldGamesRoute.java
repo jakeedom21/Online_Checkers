@@ -50,7 +50,8 @@ public class GetOldGamesRoute implements Route {
         }
 
         vm.put("oldOpponentGames", names);
-        vm.put("playerName", player.getPlayerName());
+        vm.put("playerName", playerName);
+
         return templateEngine.render(new ModelAndView(vm, "oldGames.ftl"));
     }
 }
