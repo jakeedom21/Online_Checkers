@@ -5,13 +5,17 @@ package com.webcheckers.ui;
  * Created by Sameen Luo <xxl2398@rit.edu> on 2/28/2018.
  */
 
+import com.webcheckers.appl.MoveValidation;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Space;
 import com.webcheckers.utils.Constants;
 import spark.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -144,6 +148,9 @@ public class GetGameRoute implements Route {
                 isMyTurn = game.getPlayerTurn().equals(currentPlayerName);
             }
 
+            //list for the spaces and possible moves
+            attributes.put("spaceMoveHash", spaceMovesList);
+
             attributes.put("title", String.format("Game #%d (Opponent: %s)", gameId, opponent.getPlayerName()));
             attributes.put("playerColor", playerColor);
             attributes.put("name", opponent.getPlayerName());
@@ -151,7 +158,6 @@ public class GetGameRoute implements Route {
             attributes.put("isMyTurn", isMyTurn);
 
         }
-
 
         String whoseTurn =  game.getPlayerTurn();
 

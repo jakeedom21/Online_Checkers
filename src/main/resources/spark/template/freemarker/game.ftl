@@ -65,8 +65,9 @@
              <h1>Player Help</h1>
            </div>
            <div class="modal-body">
-
-
+                <#list spaceMoveHash as space, move>
+                    <li>${space}: ${move}</li>
+                </#list>
               <#include "player_help_tip.ftl">
            </div>
           </div>
