@@ -8,7 +8,8 @@ import static org.mockito.Mockito.mock;
 class MoveTest {
     private static Space mockStart = mock(Space.class);
     private static Space mockEnd = mock(Space.class);
-    private static Move move = new Move(mockStart, mockEnd);
+    private static Player player = mock(Player.class);
+    private static Move move = new Move(mockStart, mockEnd, player);
 
     @Test
     void getStart() {

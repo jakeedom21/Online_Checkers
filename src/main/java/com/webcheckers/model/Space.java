@@ -9,7 +9,6 @@ import java.io.Serializable;
 public class Space implements Serializable{
     private int row;
     private int cell;
-
     private Piece piece = null;
 
     /**
@@ -44,6 +43,8 @@ public class Space implements Serializable{
      */
     public void setPiece(Piece p) {
         piece = p;
+        if (p != null)
+            p.setPosition(this.row, this.cell);
     }
 
     /**
