@@ -179,5 +179,14 @@ public class Game {
 
         }
     }
+
+    public boolean moveQueueEmpty(){
+        if(this.moveQueue.size() == 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
 
