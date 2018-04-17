@@ -4,7 +4,6 @@ import com.webcheckers.model.*;
 import com.webcheckers.utils.Constants;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -115,9 +114,9 @@ public class MoveValidation {
         }
     }
 
-    public static HashSet<Space> getMustJump(Space space, Board board){
+    public static ArrayList<Space> getMustJump(Space space, Board board){
         String color = space.getPiece().getColor();
-        HashSet<Space> mustJump = new HashSet<>();
+        ArrayList<Space> mustJump = new ArrayList<>();
         for(int r = 0; r < Constants.MAX_DIM; r++){
             boolean fixed_even = false;
             for(int c = 0; c < Constants.MAX_DIM; c += 2) {
@@ -217,7 +216,7 @@ public class MoveValidation {
         else{
             pieceColor = Player.PieceColor.WHITE;
         }
-        HashSet<Space> mustJump = getMustJump(start, board);
+        ArrayList<Space> mustJump = getMustJump(start, board);
         if(!mustJump.isEmpty()) {
             if (!mustJump.contains(start)) {
                 return "Must use piece that can jump";

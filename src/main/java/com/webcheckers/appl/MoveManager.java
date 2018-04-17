@@ -72,15 +72,6 @@ public class MoveManager {
         Space oldSpace = move.getStart();
         Space newSpace = move.getEnd();
         game.movePiece(oldSpace, newSpace, currentPlayer);
-        if(Math.abs(oldSpace.getRow() - newSpace.getRow()) == 2){
-            ArrayList<Space> pos_jumps = MoveValidation.basicMoves(newSpace.getPiece(), game.getBoard(currentPlayer));
-            if(!pos_jumps.isEmpty()){
-                Space pos_end = pos_jumps.get(0);
-                if(Math.abs(pos_end.getRow() - newSpace.getRow()) == 2){
-                    validateMove(request, response);
-                }
-            }
-        }
         game.finishMove();
         return gson.toJson(new Message(info, "Turn submitted successfully"));
 
