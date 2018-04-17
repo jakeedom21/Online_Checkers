@@ -119,8 +119,10 @@ public class GetGameRoute implements Route {
             attributes.put("winner", winner);
             if (winner.equals(currentSession.attribute(PLAYER_NAME))){
                 currentSession.attribute(GAME_WON, true);
+                currentSession.attribute(OPPONENT_FORFEIT, false);
             } else {
                 currentSession.attribute(GAME_WON,false);
+                currentSession.attribute(OPPONENT_FORFEIT, false);
             }
             response.redirect(RESULT_URL);
             return null;
