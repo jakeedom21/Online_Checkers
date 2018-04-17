@@ -20,6 +20,9 @@ public class Constants {
     public static final String BUSY_OPPONENT_ERROR = "busyOpponentError";
     public static final String GAME_WON = "Won";
     public static final String OPPONENT_FORFEIT = "opponentForfeit";
+    public static final String PLAYER1_COLOR = "W";
+    public static final String PLAYER2_COLOR = "R";
+
 
     // URL Constants
     public static final String HOME_URL = "/";
@@ -38,5 +41,6 @@ public class Constants {
 
     // GAME CONSTANTS
     public static final int MAX_DIM = 8;
+
     public static final Gson gson = new Gson();
 }
