@@ -42,8 +42,8 @@ public class Game {
         this.winner = null;
         this.moveQueue = new LinkedList<>();
         this.replayQueue = new ArrayList<>();
-        p1.assignGame(Constants.PieceColor.RED, this,p2);
-        p2.assignGame(Constants.PieceColor.WHITE, this,p1);
+        p1.assignGame(Constants.PieceColor.RED, this, p2);
+        p2.assignGame(Constants.PieceColor.WHITE, this, p1);
     }
 
     /**
