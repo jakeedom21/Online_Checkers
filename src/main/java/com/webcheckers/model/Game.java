@@ -69,9 +69,9 @@ public class Game {
 
     public void finishMove() {
         playerTurn =  playerTurn.equals(p1.getPlayerName()) ? p2.getPlayerName() : p1.getPlayerName();
-        if (p1Board.getP1Pieces() == 0 && p2Board.getP1Pieces() == 0) {
+        if ( p2Board.getP1Pieces() == 0) {
             this.winner = p2;
-        } else if (p1Board.getP2Pieces() == 0 && p2Board.getP2Pieces() == 0){
+        } else if (p1Board.getP2Pieces() == 0 ){
             this.winner = p1;
         }
     }
@@ -81,10 +81,6 @@ public class Game {
      * @return true if there's a winner of game, false otherwise
      */
     public boolean isGameWon(){
-        if (winner != null) {
-            p1.finishGame();
-            p2.finishGame();
-        }
         return winner != null;
     }
 
@@ -115,8 +111,7 @@ public class Game {
       */
     public void setForfeit(String playername){
         String p1name = p1.getPlayerName();
-        forfeit = true;
-
+        this.forfeit = true;
         if (playername.equals(p1name)) {
             winner = p2;
         } else {

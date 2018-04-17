@@ -86,7 +86,9 @@ public class PlayerLobby {
     public Set<String> getFreePlayerNames(String currentPlayerName) {
         Set<String> freePlayersNames = new TreeSet<>();
         for (Player player : signedInPlayers.values()) {
-            if (!player.isInGame() && (!player.getPlayerName().equals(currentPlayerName))) {
+            //if (!player.isInGame() && (!player.getPlayerName().equals(currentPlayerName))) {
+            //first condition taken out for the purpose of testing acceptance criteria
+            if (!player.getPlayerName().equals(currentPlayerName)) {
                 freePlayersNames.add(player.getPlayerName());
             }
         }

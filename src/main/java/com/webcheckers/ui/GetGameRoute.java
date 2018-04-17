@@ -108,7 +108,7 @@ public class GetGameRoute implements Route {
             currentPlayer.finishGame();
             currentSession.attribute(GAME_WON, true);
             currentSession.attribute(OPPONENT_FORFEIT, true);
-            //currentSession.attribute(BUSY_OPPONENT_ERROR, false);
+            currentSession.attribute(BUSY_OPPONENT_ERROR, false);
             response.redirect(RESULT_URL);
             return null;    //stop rendering game page
         }
