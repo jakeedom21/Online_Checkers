@@ -70,7 +70,6 @@ public class MoveManager {
         game.commitMove(move);
         game.finishMove();
         return gson.toJson(new Message(info, "Turn submitted successfully"));
-
     }
 
     /**
@@ -94,15 +93,6 @@ public class MoveManager {
      */
     public String checkTurn(Request request, Response response) {
         return gson.toJson(new Message(info,"true"));
-    }
-
-    public String handleReplay(Request request, Response response) {
-        Player currentPlayer = getPlayerFromRequest(request);
-        int replayValue = Integer.parseInt(request.queryParams("replayValue"));
-        Game game = currentPlayer.getGame();
-        game.replay(replayValue);
-        System.out.println("Replay Value: " + replayValue);
-        return gson.toJson(new Message(info, "Fulfilling replay request of " + replayValue));
     }
 
 }

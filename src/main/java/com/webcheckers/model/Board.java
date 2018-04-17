@@ -191,18 +191,5 @@ public class Board implements Serializable{
          board[row][col].setPiece(null);//removes piece from board
     }
 
-    /**
-     *
-     * @param addSpace
-     * @param playerColor
-     */
-    public void addPiece(Space addSpace, Constants.PieceColor playerColor) {
-        int row = addSpace.getRow();
-        int col = addSpace.getCol();
-        String pieceColor = playerColor == Constants.PieceColor.RED ? PLAYER2_COLOR : PLAYER1_COLOR ;
-        if(!board[row][col].hasPiece()) { // double-chekcing
-            board[row][col].setPiece(new Piece(row, col, pieceColor));
-        }
-    }
 }
 

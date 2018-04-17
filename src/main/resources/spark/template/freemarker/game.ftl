@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>${title} | Web Checkers</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/game.css">
@@ -12,7 +12,7 @@
             "redPlayer" : "${redPlayerName}",
             "whitePlayer" : "${whitePlayerName}",
             "activeColor" : "${activeColor}",
-            "viewMode": "PLAY"
+            "viewMode": "${viewMode}"
         };
     </script>
 </head>
@@ -51,15 +51,6 @@
             </div>
           </div>
 
-        </div>
-
-        <div id="replayModal" class="modal">
-            <div class="modal-content">
-                <form>
-                    <input type="number" name="replayValue" />
-                    <input type="submit" />
-                </form>
-            </div>
         </div>
         <div id="game-controls">
         
@@ -148,11 +139,6 @@
           modal.css('display', 'none');
         }
       };
-
-      $('#replayModal').onsubmit = function() {
-          $('#replayModal').css('display', 'none');
-          window.location = '/game';
-      }
 
     })
   </script>

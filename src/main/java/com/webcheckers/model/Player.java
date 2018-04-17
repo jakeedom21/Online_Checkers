@@ -2,6 +2,8 @@ package com.webcheckers.model;
 
 import com.webcheckers.utils.Constants;
 
+import java.util.ArrayList;
+
 /**
  * Represent each signed in user
  */
@@ -13,6 +15,7 @@ public class Player {
     private Constants.PieceColor pieceColor;
     private Game currentGame;
     private String opponentName;
+    private ArrayList<Game> oldGames = new ArrayList<>();
 
     /**
      * Constructor for Player
@@ -88,8 +91,17 @@ public class Player {
     public void finishGame(){
         this.inGame = false;
         this.pieceColor = null;
+        this.oldGames.add(currentGame);
         this.currentGame = null;
         this.opponentName = null;
+    }
+
+    /**
+     * Get old games for a player
+     * @return ArrayList object
+     */
+    public ArrayList<Game> getOldGames() {
+        return this.oldGames;
     }
 
     /**

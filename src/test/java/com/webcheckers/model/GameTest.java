@@ -185,7 +185,7 @@ public class GameTest {
         when(end.getRow()).thenReturn(4);
         when(end.getCol()).thenReturn(1);
 
-        GAME.movePiece(move, false);
+        GAME.movePiece(move);
 
         assertEquals(GAME.getBoard(PLAYER1).toString(), expectedPlayer1BoardSetUpAfterOneMove);
         assertEquals(GAME.getBoard(PLAYER2).toString(), expectedPlayer2BoardSetUpAfterOneMove);

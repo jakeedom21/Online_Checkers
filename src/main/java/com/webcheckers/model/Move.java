@@ -47,14 +47,6 @@ public class Move {
         return this.player;
     }
 
-    public void setPieceTaken() {
-        this.pieceTaken = true;
-    }
-
-    public boolean getPieceTaken() {
-        return this.pieceTaken;
-    }
-
     /**
      * Determines if a space is valid
      * @param space - end space

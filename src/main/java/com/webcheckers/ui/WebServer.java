@@ -133,6 +133,8 @@ public class WebServer {
         get(Constants.RULES_URL, new GetRulesRoute(templateEngine));
         get(Constants.GAME_URL, new GetGameRoute(playerLobby, templateEngine));
         get(Constants.RESULT_URL, new GetResultRoute(templateEngine));
+        get(Constants.OLD_GAMES_URL, new GetOldGamesRoute(playerLobby, templateEngine));
+        get(Constants.REPLAY_URL, new ReplayGamesRoute(playerLobby, templateEngine));
 
         get(Constants.SIGN_IN, new GetSignInRoute(templateEngine));
         get(Constants.SIGN_OUT, new GetSignOutRoute(playerLobby));
@@ -150,7 +152,7 @@ public class WebServer {
 
         post(Constants.CHECK_TURN, moveManager::checkTurn);
 
-        post(Constants.REPLAY, moveManager::handleReplay);
+
         //
         LOG.config("WebServer is initialized.");
     }

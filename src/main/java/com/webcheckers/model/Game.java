@@ -11,7 +11,6 @@ import java.util.Queue;
  */
 public class Game {
 
-
     private Board p1Board;
     private Board p2Board;
     private String playerTurn;
@@ -19,6 +18,7 @@ public class Game {
     private boolean forfeit;
     private Queue<Move> moveQueue;
     private ArrayList<Move> replayQueue;
+    private Queue<Move> copyQueue;
     private int id;
     private Player p1;
     private Player p2;
@@ -71,7 +71,7 @@ public class Game {
     }
 
     public void finishMove() {
-        playerTurn =  playerTurn.equals(p1.getPlayerName()) ? p2.getPlayerName() : p1.getPlayerName();
+        playerTurn = playerTurn.equals(p1.getPlayerName()) ? p2.getPlayerName() : p1.getPlayerName();
     }
 
     /**
@@ -151,7 +151,7 @@ public class Game {
     }
 
     public void commitMove(Move m) {
-        this.movePiece(m, false);
+        this.movePiece(m);
         this.replayQueue.add(m);
     }
 
@@ -159,27 +159,18 @@ public class Game {
      * Moves a piece and determines if a jump has been made
      * @param m the move itself
      */
-    public void movePiece(Move m, boolean replay) {
+    public void movePiece(Move m) {
         Space start = m.getStart();
         Space end = m.getEnd();
         Player p = m.getPlayer();
-
         Board b = p.equals(p1) ? p1Board : p2Board;
         b.movePiece(start, end);
         int dist = Math.abs(start.getRow() - end.getRow());
         int mid_row = (int)Math.floor((start.getRow() + end.getRow())/2);
         int mid_col = (int)Math.floor((start.getCol() + end.getCol())/2);
         Space mid_point = new Space(mid_row, mid_col);
-        if (dist >= 2) {
-            if (replay && m.getPieceTaken()) {
-                b.addPiece(mid_point, m.getPlayer().getPieceColor());
-            } else {
-                b.removePiece(mid_point);
-                m.setPieceTaken();
-            }
-
-        }
-
+        if (dist >= 2)
+            b.removePiece(mid_point);
         Board newOpponentBoard = new Board(b);
         newOpponentBoard.flip();
         if (p.equals(p1))
@@ -188,19 +179,37 @@ public class Game {
             p1Board = newOpponentBoard;
     }
 
-    public void undoMove(Move m) {
-        this.movePiece(m, true);
+    /**
+     * Copy references from the moves in the replayQueue to those into the copyQueue
+     */
+    public void copyReplayIntoQueue(){
+        copyQueue = new LinkedList<>(replayQueue);
     }
 
-    public void replay(int replayValue) {
-        int replayQueueSize = replayQueue.size();
-        replayValue = replayValue > replayQueueSize ? replayQueueSize : replayValue;
-        replayValue = replayValue < 0 ? 0 : replayValue;
-        for (int i = 0; i < replayValue; i++) {
-            int moveIndex = replayQueueSize - replayValue;
-            this.undoMove(replayQueue.get(moveIndex));
-        }
+    /**
+     * Reset the board, primarily used for replay functionality
+     */
+    public void resetBoard() {
+        this.p1Board = new Board();
+        this.p2Board = new Board();
+        this.p2Board.flip();
+    }
 
+    /**
+     * Replays the game move by move from the copyQueue
+     */
+    public void replayGame() {
+        Move m = copyQueue.poll();
+        if(m != null)
+            this.movePiece(m);
+    }
+
+    /**
+     * Returns the size of the copyQueue
+     * @return int size of the copyQueue
+     */
+    public int getCopyQueueSize() {
+        return this.copyQueue.size();
     }
 
 
