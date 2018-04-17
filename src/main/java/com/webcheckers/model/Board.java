@@ -13,7 +13,7 @@ public class Board implements Serializable{
     private int whitePieces = 12;
     private static HashSet<Integer> EMPTY_ROWS = new HashSet<>();
     private Space[][] board = new Space[Constants.MAX_DIM][Constants.MAX_DIM];
-    
+
     /**
      * Constructor for board object
      * //Picture used as reference: http://allaboutfunandgames.com/wp-content/uploads/2011/11/Checkers.jpg
@@ -187,5 +187,6 @@ public class Board implements Serializable{
          }
          board[row][col].setPiece(null);//removes piece from board
     }
+
 }
 

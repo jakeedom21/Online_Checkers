@@ -178,16 +178,107 @@ public class GameTest {
         Space start = mock(Space.class);
         Space end = mock(Space.class);
 
+
         when(move.getStart()).thenReturn(start);
         when(move.getEnd()).thenReturn(end);
+        when(move.getPlayer()).thenReturn(PLAYER1);
         when(start.getRow()).thenReturn(5);
         when(start.getCol()).thenReturn(0);
         when(end.getRow()).thenReturn(4);
         when(end.getCol()).thenReturn(1);
 
-        GAME.movePiece(start, end, PLAYER1);
+
+        GAME.movePiece(move);
 
         assertEquals(GAME.getBoard(PLAYER1).toString(), expectedPlayer1BoardSetUpAfterOneMove);
         assertEquals(GAME.getBoard(PLAYER2).toString(), expectedPlayer2BoardSetUpAfterOneMove);
+    }
+
+    @Test
+    void copyReplayIntoQueue() {
+        Move move = mock(Move.class);
+        Space start = mock(Space.class);
+        Space end = mock(Space.class);
+
+        when(move.getStart()).thenReturn(start);
+        when(move.getEnd()).thenReturn(end);
+        when(move.getPlayer()).thenReturn(PLAYER1);
+        when(start.getRow()).thenReturn(5);
+        when(start.getCol()).thenReturn(0);
+        when(end.getRow()).thenReturn(4);
+        when(end.getCol()).thenReturn(1);
+
+        GAME.commitMove(move);
+        GAME.copyReplayIntoQueue();
+        assertEquals(GAME.getCopyQueueSize(), 1);
+    }
+
+    @Test
+    void resetBoard() {
+        GAME.resetBoard();
+        assertEquals(GAME.getBoard(PLAYER1).toString(), expectedPlayer1BoardSetUp);
+        assertEquals(GAME.getBoard(PLAYER2).toString(), expectedPlayer2BoardSetUp);
+    }
+
+    @Test
+    void commitMove() {
+        Move move = mock(Move.class);
+        Space start = mock(Space.class);
+        Space end = mock(Space.class);
+
+        when(move.getStart()).thenReturn(start);
+        when(move.getEnd()).thenReturn(end);
+        when(move.getPlayer()).thenReturn(PLAYER1);
+        when(start.getRow()).thenReturn(5);
+        when(start.getCol()).thenReturn(0);
+        when(end.getRow()).thenReturn(4);
+        when(end.getCol()).thenReturn(1);
+
+
+        GAME.commitMove(move);
+        GAME.copyReplayIntoQueue();
+        assertEquals(GAME.getCopyQueueSize(), 1);
+
+    }
+
+    @Test
+    void replayGame() {
+        Move move = mock(Move.class);
+        Space start = mock(Space.class);
+        Space end = mock(Space.class);
+
+        when(move.getStart()).thenReturn(start);
+        when(move.getEnd()).thenReturn(end);
+        when(move.getPlayer()).thenReturn(PLAYER1);
+        when(start.getRow()).thenReturn(5);
+        when(start.getCol()).thenReturn(0);
+        when(end.getRow()).thenReturn(4);
+        when(end.getCol()).thenReturn(1);
+
+        GAME.commitMove(move);
+        GAME.copyReplayIntoQueue();
+        GAME.replayGame();
+        assertEquals(GAME.getCopyQueueSize(), 0);
+    }
+
+    @Test
+    void getCopyQueueSize() {
+        Move move = mock(Move.class);
+        Space start = mock(Space.class);
+        Space end = mock(Space.class);
+
+        when(move.getStart()).thenReturn(start);
+        when(move.getEnd()).thenReturn(end);
+        when(move.getPlayer()).thenReturn(PLAYER1);
+        when(start.getRow()).thenReturn(5);
+        when(start.getCol()).thenReturn(0);
+        when(end.getRow()).thenReturn(4);
+        when(end.getCol()).thenReturn(1);
+
+        GAME.commitMove(move);
+        GAME.copyReplayIntoQueue();
+        assertEquals(GAME.getCopyQueueSize(), 1);
+        GAME.replayGame();
+        assertEquals(GAME.getCopyQueueSize(), 0);
     }
 }
