@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>${title} | Web Checkers</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/game.css">
@@ -12,7 +12,7 @@
             "redPlayer" : "${redPlayerName}",
             "whitePlayer" : "${whitePlayerName}",
             "activeColor" : "${activeColor}",
-            "viewMode": "PLAY"
+            "viewMode": "${viewMode}"
         };
     </script>
 </head>
@@ -161,6 +161,7 @@
           modal.css('display', 'none');
         }
       };
+
     })
   </script>
 

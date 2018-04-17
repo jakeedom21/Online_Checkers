@@ -47,6 +47,7 @@ public class PostResignRoute implements Route{
      * @return
      *   the Message for gson
      */
+    @Override
     public Object handle(Request request, Response response) {
 
         final Session currentSession = request.session();

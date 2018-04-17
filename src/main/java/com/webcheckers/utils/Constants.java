@@ -20,6 +20,9 @@ public class Constants {
     public static final String BUSY_OPPONENT_ERROR = "busyOpponentError";
     public static final String GAME_WON = "Won";
     public static final String OPPONENT_FORFEIT = "opponentForfeit";
+    public static final String PLAYER1_COLOR = "W";
+    public static final String PLAYER2_COLOR = "R";
+
 
     // URL Constants
     public static final String HOME_URL = "/";
@@ -33,9 +36,11 @@ public class Constants {
     public static final String RESIGN_URL = HOME_URL + "resignGame";
     public static final String RESULT_URL = HOME_URL + "result";
     public static final String RULES_URL = HOME_URL + "rules";
-    public static final String HELP_URL = HOME_URL + "help";
+    public static final String OLD_GAMES_URL  = HOME_URL + "oldGames";
+    public static final String REPLAY_URL = HOME_URL + "replay";
 
     // GAME CONSTANTS
     public static final int MAX_DIM = 8;
+
     public static final Gson gson = new Gson();
 }

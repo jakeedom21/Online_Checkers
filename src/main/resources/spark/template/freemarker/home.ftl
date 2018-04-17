@@ -11,6 +11,7 @@
     <div class="navigation">
     <#if signedInPlayer>
       <a href="/">my home</a> |
+      <a href="/oldGames">replay game | </a>
     </#if>
       <a href="/rules">rules</a> |
     <#if signedInPlayer>
