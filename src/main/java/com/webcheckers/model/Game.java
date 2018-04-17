@@ -164,8 +164,11 @@ public class Game {
         Space mid_point = new Space(mid_row, mid_col);
         Board b = p.equals(p1) ? p1Board : p2Board;
         b.movePiece(start, end);
-        if (dist >= 2)
+        System.out.println("Moving pieces for "+p.getPlayerName()+" from "+start.getRow()+","+start.getCol()+" to "+end.getRow()+","+end.getCol());
+        if (dist >= 2) {
             b.removePiece(mid_point);
+            System.out.println("--Removing "+p.getOpponentName()+"'s pieces at "+mid_row+","+mid_col);
+        }
         Board newOpponentBoard = new Board(b);
         newOpponentBoard.flip();
         if (p.equals(p1))
