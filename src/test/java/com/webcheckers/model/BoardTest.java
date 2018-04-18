@@ -95,4 +95,13 @@ class BoardTest {
         this.board.flip();
         assertEquals(this.board.toString(), expectedPlayer1BoardSetUp);
     }
+
+    @Test
+    void removePiece() {
+        Space space = mock(Space.class);
+        when(space.getRow()).thenReturn(0);
+        when(space.getCol()).thenReturn(0);
+        this.board.removePiece(space);
+        assertNull(board.getSpace(0, 0).getPiece());
+    }
 }
