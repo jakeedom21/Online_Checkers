@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class MoveTest {
     private static Space mockStart = mock(Space.class);
@@ -23,5 +24,9 @@ class MoveTest {
 
     @Test
     void isValid() {
+        Space space = mock(Space.class);
+        when(space.getRow()).thenReturn(0);
+        when(space.getCol()).thenReturn(5);
+        assertTrue(move.isValid(space));
     }
 }

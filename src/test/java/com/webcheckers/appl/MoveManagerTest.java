@@ -16,13 +16,15 @@ import spark.Response;
 import spark.Request;
 import spark.Session;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PowerMockRunnerDelegate(JUnit4.class)
-@PrepareForTest( { MoveValidation.class} )
+@PrepareForTest(MoveValidation.class)
 class MoveManagerTest {
 
     private Game GAME;
@@ -61,6 +63,7 @@ class MoveManagerTest {
 //        Space end = mock(Space.class);
 //        Game game = mock(Game.class);
 //        Board board = mock(Board.class);
+//        Piece piece = mock(Piece.class);
 //
 //        Player player1 = mock(Player.class);
 //        when(playerLobby.getPlayerByUsername(PLAYER1NAME)).thenReturn(player1);
@@ -71,14 +74,16 @@ class MoveManagerTest {
 //        when(move.getStart()).thenReturn(start);
 //        when(move.getEnd()).thenReturn(end);
 //
-//        PowerMockito.mockStatic(MoveValidation.class);
-//        // BDDMockito.given(MoveValidation.validMove(start, end, board)).willReturn("");
-//        when(MoveValidation.validMove(start, end, board)).thenReturn("");
+//        ArrayList<Space> moves = mock(ArrayList.class);
+//
+//        // PowerMockito.mockStatic(MoveValidation.class);
+//        BDDMockito.given(MoveValidation.basicMoves(piece, board)).willReturn(moves);
+//        when(MoveValidation.basicMoves(piece, board)).thenReturn(moves);
 //
 //        assertEquals(moveManager.validateMove(request, response),
 //                gson.toJson(new Message(Message.MessageType.info, "")));
-
-        // Tried everything to make this test work, 2 hour mark, I'm calling it here
+//
+//        // Tried everything to make this test work, 2 hour mark, I'm calling it here
 
     }
 

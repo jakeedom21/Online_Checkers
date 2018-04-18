@@ -102,7 +102,7 @@ public class GetGameRoute implements Route {
         // Get players
         final Player player1 = game.getPlayer1();
         final Player player2 = game.getPlayer2();
-        
+
 
         // see if opponent has resigned the game
         if (game.didPlayerResign()) {
