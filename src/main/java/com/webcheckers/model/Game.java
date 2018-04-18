@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.MoveValidation;
 import com.webcheckers.utils.Constants;
 
 import java.util.ArrayList;
@@ -71,6 +72,9 @@ public class Game {
     }
 
     public void finishMove() {
+        // check the board again here
+        // if the playerTurn
+        MoveValidation.
         playerTurn = playerTurn.equals(p1.getPlayerName()) ? p2.getPlayerName() : p1.getPlayerName();
     }
 
