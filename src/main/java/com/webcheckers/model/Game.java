@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.MoveValidation;
 import com.webcheckers.utils.Constants;
 
 import java.util.ArrayList;
@@ -43,8 +44,8 @@ public class Game {
         this.winner = null;
         this.moveQueue = new LinkedList<>();
         this.replayQueue = new ArrayList<>();
-        p1.assignGame(Constants.PieceColor.RED, this,p2);
-        p2.assignGame(Constants.PieceColor.WHITE, this,p1);
+        p1.assignGame(Constants.PieceColor.RED, this, p2);
+        p2.assignGame(Constants.PieceColor.WHITE, this, p1);
     }
 
     /**
@@ -72,12 +73,19 @@ public class Game {
     }
 
     public void finishMove() {
+<<<<<<< HEAD
         playerTurn =  playerTurn.equals(p1.getPlayerName()) ? p2.getPlayerName() : p1.getPlayerName();
         if ( p1Board.getP1Pieces() == 0 && p2Board.getP1Pieces() == 0) {
             this.winner = p2;
         } else if (p1Board.getP2Pieces() == 0 && p2Board.getP2Pieces()==0 ){
             this.winner = p1;
         }
+=======
+        // check the board again here
+        // if the playerTurn
+        // MoveValidation.
+        playerTurn = playerTurn.equals(p1.getPlayerName()) ? p2.getPlayerName() : p1.getPlayerName();
+>>>>>>> development_branch
     }
 
     /**
@@ -188,7 +196,10 @@ public class Game {
      * Copy references from the moves in the replayQueue to those into the copyQueue
      */
     public void copyReplayIntoQueue(){
-        copyQueue = new LinkedList<>(replayQueue);
+        copyQueue = new LinkedList<>();
+        copyQueue.add(null);
+        copyQueue.addAll(replayQueue);
+        copyQueue.add(null);
     }
 
     /**
