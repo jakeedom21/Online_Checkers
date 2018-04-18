@@ -82,7 +82,7 @@ public class Player {
         this.inGame = true;
         this.pieceColor = pieceColor;
         this.currentGame = gameToPlay;
-        this.opponentName = opponent.getOpponentName();
+        this.opponentName = opponent.getPlayerName();
     }
 
     /**

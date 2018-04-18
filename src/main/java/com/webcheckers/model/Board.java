@@ -43,6 +43,8 @@ public class Board implements Serializable{
                 }
             }
         }
+        this.redPieces = b.redPieces;
+        this.whitePieces = b.whitePieces;
     }
 
     /**

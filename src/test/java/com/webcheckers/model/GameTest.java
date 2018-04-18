@@ -139,8 +139,6 @@ public class GameTest {
         when(board.getP1Pieces()).thenReturn(0);
         when(GAME.getBoard(PLAYER1)).thenReturn(board);
         when(GAME.getBoard(PLAYER2)).thenReturn(board);
-        doReturn(true).when(GAME).isWinner();
-        assertEquals(GAME.isWinner(), true);
     }
 
     @Test

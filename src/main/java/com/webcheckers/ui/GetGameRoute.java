@@ -94,7 +94,6 @@ public class GetGameRoute implements Route {
             game = currentPlayer.getGame();
         }
 
-
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(SIGNED_IN_PLAYER, playerLobby.isActiveUser(currentPlayer.getPlayerName()));
         attributes.put(PLAYER_NAME, currentSession.attribute(PLAYER_NAME));
@@ -103,30 +102,31 @@ public class GetGameRoute implements Route {
         // Get players
         final Player player1 = game.getPlayer1();
         final Player player2 = game.getPlayer2();
+        
 
         // see if opponent has resigned the game
         if (game.didPlayerResign()) {
             currentPlayer.finishGame();
             currentSession.attribute(GAME_WON, true);
             currentSession.attribute(OPPONENT_FORFEIT, true);
-            //currentSession.attribute(BUSY_OPPONENT_ERROR, false);
+            currentSession.attribute(BUSY_OPPONENT_ERROR, false);
             response.redirect(RESULT_URL);
-
-            return null;
+            return null;    //stop rendering game page
         }
 
         // Has game been won?
         if (game.isGameWon()) {
             String winner = game.getWinner();
             attributes.put("winner", winner);
-
-            if (game.didPlayerResign()) {
-                if (winner.equals(player1.getPlayerName())) {
-                    attributes.put("resigned", player2.getPlayerName());
-                } else {
-                    attributes.put("resigned", player1.getPlayerName());  //TODO: make use of attribute map to redirect to forfeit result page
-                }
+            if (winner.equals(currentSession.attribute(PLAYER_NAME))){
+                currentSession.attribute(GAME_WON, true);
+                currentSession.attribute(OPPONENT_FORFEIT, false);
+            } else {
+                currentSession.attribute(GAME_WON,false);
+                currentSession.attribute(OPPONENT_FORFEIT, false);
             }
+            response.redirect(RESULT_URL);
+            return null;
         }
 
         if (player1 != currentPlayer && player2 != currentPlayer) {
