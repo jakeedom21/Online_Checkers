@@ -143,3 +143,7 @@ string info to wherever it is needed.
 #### Dynamic models
 ![Model Tier Board Sequence Diagram](Model_tier_Board_sequence_diagram.png)
 ![Model Tier Game Sequence Diagram](Model_tier_Game_sequence_diagram.png)
+
+
+### Test Coverage
+![Project Test Coverage Chart](test_coverage.png)
