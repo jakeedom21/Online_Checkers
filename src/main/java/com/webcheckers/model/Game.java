@@ -12,6 +12,7 @@ import java.util.Queue;
  */
 public class Game {
 
+
     private Board p1Board;
     private Board p2Board;
     private String playerTurn;
@@ -72,10 +73,12 @@ public class Game {
     }
 
     public void finishMove() {
-        // check the board again here
-        // if the playerTurn
-        // MoveValidation.
-        playerTurn = playerTurn.equals(p1.getPlayerName()) ? p2.getPlayerName() : p1.getPlayerName();
+        playerTurn =  playerTurn.equals(p1.getPlayerName()) ? p2.getPlayerName() : p1.getPlayerName();
+        if ( p1Board.getP1Pieces() == 0 && p2Board.getP1Pieces() == 0) {
+            this.winner = p2;
+        } else if (p1Board.getP2Pieces() == 0 && p2Board.getP2Pieces()==0 ){
+            this.winner = p1;
+        }
     }
 
     /**
@@ -94,17 +97,6 @@ public class Game {
         return this.winner.getPlayerName();
     }
 
-    public boolean isWinner() {
-        if (p1Board.getP1Pieces() == 0 && p2Board.getP1Pieces() == 0) {
-            this.winner = p2;
-            return true;
-        } else if (p1Board.getP2Pieces() == 0 && p2Board.getP2Pieces() == 0){
-            this.winner = p1;
-            return true;
-        } else
-            return false;
-    }
-
     /**
      * One of the player choose to resign the game. Player's opponent wins.
      * Does not set Player objects' fields to null
@@ -113,8 +105,7 @@ public class Game {
       */
     public void setForfeit(String playername){
         String p1name = p1.getPlayerName();
-        forfeit = true;
-
+        this.forfeit = true;
         if (playername.equals(p1name)) {
             winner = p2;
         } else {
