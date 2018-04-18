@@ -74,7 +74,7 @@ public class Game {
     public void finishMove() {
         // check the board again here
         // if the playerTurn
-        MoveValidation.
+        // MoveValidation.
         playerTurn = playerTurn.equals(p1.getPlayerName()) ? p2.getPlayerName() : p1.getPlayerName();
     }
 
@@ -187,7 +187,10 @@ public class Game {
      * Copy references from the moves in the replayQueue to those into the copyQueue
      */
     public void copyReplayIntoQueue(){
-        copyQueue = new LinkedList<>(replayQueue);
+        copyQueue = new LinkedList<>();
+        copyQueue.add(null);
+        copyQueue.addAll(replayQueue);
+        copyQueue.add(null);
     }
 
     /**
