@@ -25,6 +25,7 @@
       <a href="/">my home</a> |
     </#if>
       <a href="#rules" id="showRules">rules</a> |
+      <a href="#playerHelp" id ="showHelp">player help</a> |
     <#if signedInPlayer>
       <a href="/signout">sign out [${playerName}]</a>
     <#else>
@@ -50,8 +51,31 @@
               <#include "rules_body.ftl">
             </div>
           </div>
-
         </div>
+
+      </div>
+
+      <div>
+
+        <div id="helpModal" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+           <div class="modal-header">
+             <span class="close">&times;</span>
+             <h1>Player Help</h1>
+           </div>
+           <div class="modal-body">
+                The following pieces can be moved
+                <#list spaceMoveList as space>
+                    <li>${space}</li>
+                </#list>
+              <#include "player_help_tip.ftl">
+           </div>
+          </div>
+        </div>
+
+      </div>
+
         <div id="game-controls">
         
           <fieldset id="game-info">
@@ -142,5 +166,27 @@
 
     })
   </script>
+
+  <script type="text/javascript">
+      $(document).ready(function() {
+        var modalElem = document.getElementById('helpModal');
+        var modal = $(modalElem);
+
+        $('#showHelp').on('click', function() {
+          modal.css('display', 'block');
+        });
+
+        $('.close').on('click', function() {
+          modal.css('display', 'none');
+        });
+
+        window.onclick = function(event) {
+          if (event.target === modalElem) {
+            modal.css('display', 'none');
+          }
+        };
+      })
+    </script>
+
 </body>
 </html>

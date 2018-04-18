@@ -1,9 +1,13 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.*;
+import com.webcheckers.model.Board;
+import com.webcheckers.model.Move;
+import com.webcheckers.model.Piece;
+import com.webcheckers.model.Space;
 import com.webcheckers.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -114,8 +118,7 @@ public class MoveValidation {
         }
     }
 
-    public static ArrayList<Space> getMustJump(Space space, Board board){
-        String color = space.getPiece().getColor();
+    public static ArrayList<Space> getMustJump(String color, Board board){
         ArrayList<Space> mustJump = new ArrayList<>();
         for(int r = 0; r < Constants.MAX_DIM; r++){
             boolean fixed_even = false;
@@ -179,6 +182,41 @@ public class MoveValidation {
         }
     }
 
+    public static HashMap<Space, Space> moveJumpList(String playerColor, Board board) {
+        HashMap<Space, Space> spaceMovesList = new HashMap<>();
+        ArrayList<Space> jumpSpaces = MoveValidation.getMustJump(playerColor, board);
+        if (jumpSpaces.isEmpty()) {
+            for (int r = 0; r < Constants.MAX_DIM; r++) {
+                boolean adjusted = false;
+                for (int c = 0; c < Constants.MAX_DIM; c += 2) {
+                    if (r % 2 == 0 && !adjusted) {
+                        c = 1;
+                        adjusted = true;
+                    }
+                    Space checking = board.getSpace(r, c);
+                    if (checking.hasPiece()) {
+                        if (checking.getPiece().getColor().equals(playerColor)) {
+                            ArrayList<Space> moveList = MoveValidation.basicMoves(checking.getPiece(), board);
+                            //moveList is not empty
+                            if (!moveList.isEmpty()) {
+                                spaceMovesList.put(checking, moveList.get(0));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < jumpSpaces.size(); i++) {
+                ArrayList<Space> moveList = MoveValidation.basicMoves(jumpSpaces.get(i).getPiece(), board);
+                //has a possible move
+                if (!moveList.isEmpty()) {
+                    spaceMovesList.put(jumpSpaces.get(i), moveList.get(0));
+                }
+            }
+        }
+        return spaceMovesList;
+    }
 
     /**
      * Will determine if its a validMove using the distance
@@ -209,19 +247,6 @@ public class MoveValidation {
         //ensures that end is at least within the board
         //gets the possible ending spots
 
-        Player.PieceColor pieceColor;
-        if(start.getPiece().getColor().equals("RED")){
-            pieceColor = Player.PieceColor.RED;
-        }
-        else{
-            pieceColor = Player.PieceColor.WHITE;
-        }
-        ArrayList<Space> mustJump = getMustJump(start, board);
-        if(!mustJump.isEmpty()) {
-            if (!mustJump.contains(start)) {
-                return "Must use piece that can jump";
-            }
-        }
         ArrayList<Space> possibleEnds = basicMoves(start.getPiece(), board);
         for (int i = 0; i < possibleEnds.size(); i++) {
             Space jump = possibleEnds.get(i);
