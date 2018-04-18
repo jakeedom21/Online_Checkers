@@ -8,15 +8,14 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.MoveValidation;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Space;
 import com.webcheckers.utils.Constants;
 import spark.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.logging.Logger;
 
 import static com.webcheckers.utils.Constants.*;
@@ -148,9 +147,21 @@ public class GetGameRoute implements Route {
                 isMyTurn = game.getPlayerTurn().equals(currentPlayerName);
             }
 
+            HashMap<Space, Space> map = MoveValidation.moveJumpList(playerColor, game.getBoard(currentPlayer));
+            String[] translate = new String[map.size()];
+            Iterator it = map.entrySet().iterator();
+            int count = 0;
+            while(it.hasNext()){
+                Map.Entry pair = (Map.Entry)it.next();
+                Space place = ((Space) pair.getKey());
+                Space end = ((Space) pair.getValue());
+                String entry = "Piece at " + place.getRow() + ", " + place.getCol() + " can go to " + end.getRow() + ", " + end.getCol();
+                translate[count] = entry;
+                count++;
+            }
             //list for the spaces and possible moves
-            attributes.put("spaceMoveHash", spaceMovesList);
 
+            attributes.put("spaceMoveList", translate);
             attributes.put("title", String.format("Game #%d (Opponent: %s)", gameId, opponent.getPlayerName()));
             attributes.put("playerColor", playerColor);
             attributes.put("name", opponent.getPlayerName());

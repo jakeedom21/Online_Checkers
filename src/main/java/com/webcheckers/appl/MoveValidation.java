@@ -181,38 +181,41 @@ public class MoveValidation {
             return "";
         }
     }
-    public HashMap<Space, Space> moveJumpList(String playerColor, )
-    HashMap<Space, Space> spaceMovesList = new HashMap<>();
-    ArrayList<Space> jumpSpaces = MoveValidation.getMustJump(playerColor, game.getBoard(currentPlayer));
-            if(jumpSpaces.isEmpty()){
-        for(int r = 0; r < Constants.MAX_DIM; r++){
-            boolean adjusted = false;
-            System.out.println("TEST");
-            for(int c = 0; c < Constants.MAX_DIM; c+=2){
-                if(r%2 == 0 && !adjusted){
-                    c = 1;
-                }
-                Space checking = game.getBoard(currentPlayer).getSpace(r, c);
-                if(checking.hasPiece()){
-                    if(checking.getPiece().getColor().equals(playerColor)){
-                        ArrayList<Space> moveList = MoveValidation.basicMoves(checking.getPiece(), game.getBoard(currentPlayer));
-                        //moveList is not empty
-                        if(!moveList.isEmpty()){
-                            spaceMovesList.put(checking, moveList.get(0));
+
+    public static HashMap<Space, Space> moveJumpList(String playerColor, Board board) {
+        HashMap<Space, Space> spaceMovesList = new HashMap<>();
+        ArrayList<Space> jumpSpaces = MoveValidation.getMustJump(playerColor, board);
+        if (jumpSpaces.isEmpty()) {
+            for (int r = 0; r < Constants.MAX_DIM; r++) {
+                boolean adjusted = false;
+                for (int c = 0; c < Constants.MAX_DIM; c += 2) {
+                    if (r % 2 == 0 && !adjusted) {
+                        c = 1;
+                        adjusted = true;
+                    }
+                    Space checking = board.getSpace(r, c);
+                    if (checking.hasPiece()) {
+                        if (checking.getPiece().getColor().equals(playerColor)) {
+                            ArrayList<Space> moveList = MoveValidation.basicMoves(checking.getPiece(), board);
+                            //moveList is not empty
+                            if (!moveList.isEmpty()) {
+                                spaceMovesList.put(checking, moveList.get(0));
+                            }
                         }
                     }
                 }
             }
         }
-    }
-            else{
-        for(int i = 0; i < jumpSpaces.size(); i++){
-            ArrayList<Space> moveList = MoveValidation.basicMoves(jumpSpaces.get(i).getPiece(), game.getBoard(currentPlayer));
-            //has a possible move
-            if(!moveList.isEmpty()){
-                spaceMovesList.put(jumpSpaces.get(i), moveList.get(0));
+        else {
+            for (int i = 0; i < jumpSpaces.size(); i++) {
+                ArrayList<Space> moveList = MoveValidation.basicMoves(jumpSpaces.get(i).getPiece(), board);
+                //has a possible move
+                if (!moveList.isEmpty()) {
+                    spaceMovesList.put(jumpSpaces.get(i), moveList.get(0));
+                }
             }
         }
+        return spaceMovesList;
     }
 
     /**
