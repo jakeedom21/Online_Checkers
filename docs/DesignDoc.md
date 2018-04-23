@@ -145,5 +145,18 @@ string info to wherever it is needed.
 ![Model Tier Game Sequence Diagram](Model_tier_Game_sequence_diagram.png)
 
 
-### Test Coverage
+## Test Coverage
 ![Project Test Coverage Chart](test_coverage.png)
+
+
+## Future Refactoring and Improvements
+### Design Principles
+
+
+### Code Metrics 
+
+![Complexity Metrics on Methods](complexity_method.png)
+
+![Complexity Metrics on Methods](complexity_classes.png)
+
+No warnings found in other metrics.
