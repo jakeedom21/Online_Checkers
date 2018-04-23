@@ -169,7 +169,20 @@ string info to wherever it is needed.
 ### Code Metrics 
 
 ![Complexity Metrics on Methods](complexity_method.png)
-
 ![Complexity Metrics on Methods](complexity_classes.png)
 
-No warnings found in other metrics categories.
+The more cyclomatic-complex methods are located in MoveValidation class, Move class, and GetGameRoute class.
+
+For MoveValidation and Move class, the number of switch cases (if statements, for and while loop, and/or conditions) 
+are necessarily larger because there are a lot of different formations of the board that must be considered, and there 
+are a lot of rules that goes into checking if a move is valid. Modularising the rules into different parent classes 
+would increase the cohesion but could potentially increase the coupling because moves have to be tested against the rules
+eventually. 
+
+For GetGameRoutes's render method, it has a lot of cases because the busy opponent error handling and 
+win/lose/resign redirection are all in the same method. A better way would be to refactor busy opponent error handling 
+and redirection into different classes, and separate different redirect cases into smaller methods also. This would 
+increase WMC (weighted methods per class) but it would still be under the threshold.  
+
+No warnings found in the other metrics categories (Chidamber-Kemerer metrics, Complexity metrics, 
+Javadoc coverage metrics, Lines of code metrics, and Martin package metrics).
