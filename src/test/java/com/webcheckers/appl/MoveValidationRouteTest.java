@@ -181,6 +181,21 @@ public class MoveValidationRouteTest {
     }
 
     @Test
+    public void testInvalidMustJump(){
+        red.setPosition(2, 3);
+        Space start = board.getSpace(2,3);
+        start.setPiece(red);
+        white.setPosition(3,4);
+        Space mid = board.getSpace(3, 4);
+        mid.setPiece(white);
+        red2.setPosition(5, 2);
+        Space other = board.getSpace(5, 2);
+        other.setPiece(red2);
+        Space end = board.getSpace(6, 3);
+        assertSame("Must use a piece that can jump", MoveValidation.validMove(other, end, board));
+    }
+
+    @Test
     public void testInvalidJumpKing(){
         red.setPosition(2, 3);
         Space start = board.getSpace(2,3);
