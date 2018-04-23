@@ -112,8 +112,22 @@ to be notified win/lose status.
 ![UI Tier Class Diagram](UI-Tier-class-diagram.png)
 
 #### Dynamic models
-![GetGameRoute Sequence Diagram](UI_GameRoute_sequenceDiagram.png)
 ![PostSignIn Sequence Diagram](UI_SignIn_sequenceDiagram.png)
+
+Jim opens up the home page of web checkers. He sees that there are 3 other users logged in 
+on the page. To play a game with them, he clicks the sign in button and gets redirected to the 
+sign in page. There he sees a box to enter his username and a button to submit. He enters the 
+username "SuperDuperJim" (without the quotation marks) and hits submit button. His username is verified, 
+and he got redirected back to home page with a list of users to start a game with.
+
+
+![GetGameRoute Sequence Diagram](UI_GameRoute_sequenceDiagram.png)
+
+
+
+
+
+
 
 ### Application Tier
 The application tier of the project handles all the move, validation, and player storage. The application diagram above
@@ -159,4 +173,4 @@ string info to wherever it is needed.
 
 ![Complexity Metrics on Methods](complexity_classes.png)
 
-No warnings found in other metrics.
+No warnings found in other metrics categories.
