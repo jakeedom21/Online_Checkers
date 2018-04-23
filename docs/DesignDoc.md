@@ -120,14 +120,13 @@ sign in page. There he sees a box to enter his username and a button to submit. 
 username "SuperDuperJim" (without the quotation marks) and hits submit button. His username is verified, 
 and he got redirected back to home page with a list of users to start a game with.
 
-
 ![GetGameRoute Sequence Diagram](UI_GameRoute_sequenceDiagram.png)
 
-
-
-
-
-
+Also Jim, whose username is "NoChillJim" is on the home page after signed in. He picks a player 
+named "SuperLameJim" to start a game with, so he clicks on the "Start a game with SuperLameJim" button. 
+User SuperLameJim is not in a game with anyone at this point so both NoChillJim and SuperLameJim gets 
+redirected to game page. The view NoChillJim gets is with 12 red pieces at the bottom, and the view SuperLameJim
+gets is with 12 white pieces at the bottom. They are given the same board.
 
 ### Application Tier
 The application tier of the project handles all the move, validation, and player storage. The application diagram above
