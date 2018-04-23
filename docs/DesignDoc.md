@@ -150,6 +150,11 @@ string info to wherever it is needed.
 
 
 ## Future Refactoring and Improvements
+One major improvement would be the final debugging of multijump as that was unable to be fully completed by the team.
+Other improvements could be fully going through the code to ensure that everything that can be in the Constants file is
+in there and is being used in all applicable places, ensuring consistancy within the code.
+
+
 ### Design Principles
 
 
