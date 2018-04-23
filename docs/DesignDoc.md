@@ -112,8 +112,21 @@ to be notified win/lose status.
 ![UI Tier Class Diagram](UI-Tier-class-diagram.png)
 
 #### Dynamic models
-![GetGameRoute Sequence Diagram](UI_GameRoute_sequenceDiagram.png)
 ![PostSignIn Sequence Diagram](UI_SignIn_sequenceDiagram.png)
+
+Jim opens up the home page of web checkers. He sees that there are 3 other users logged in 
+on the page. To play a game with them, he clicks the sign in button and gets redirected to the 
+sign in page. There he sees a box to enter his username and a button to submit. He enters the 
+username "SuperDuperJim" (without the quotation marks) and hits submit button. His username is verified, 
+and he got redirected back to home page with a list of users to start a game with.
+
+![GetGameRoute Sequence Diagram](UI_GameRoute_sequenceDiagram.png)
+
+Also Jim, whose username is "NoChillJim" is on the home page after signed in. He picks a player 
+named "SuperLameJim" to start a game with, so he clicks on the "Start a game with SuperLameJim" button. 
+User SuperLameJim is not in a game with anyone at this point so both NoChillJim and SuperLameJim gets 
+redirected to game page. The view NoChillJim gets is with 12 red pieces at the bottom, and the view SuperLameJim
+gets is with 12 white pieces at the bottom. They are given the same board.
 
 ### Application Tier
 The application tier of the project handles all the move, validation, and player storage. The application diagram above
@@ -161,7 +174,20 @@ in there and is being used in all applicable places, ensuring consistancy within
 ### Code Metrics 
 
 ![Complexity Metrics on Methods](complexity_method.png)
-
 ![Complexity Metrics on Methods](complexity_classes.png)
 
-No warnings found in other metrics.
+The more cyclomatic-complex methods are located in MoveValidation class, Move class, and GetGameRoute class.
+
+For MoveValidation and Move class, the number of switch cases (if statements, for and while loop, and/or conditions) 
+are necessarily larger because there are a lot of different formations of the board that must be considered, and there 
+are a lot of rules that goes into checking if a move is valid. Modularising the rules into different parent classes 
+would increase the cohesion but could potentially increase the coupling because moves have to be tested against the rules
+eventually. 
+
+For GetGameRoutes's render method, it has a lot of cases because the busy opponent error handling and 
+win/lose/resign redirection are all in the same method. A better way would be to refactor busy opponent error handling 
+and redirection into different classes, and separate different redirect cases into smaller methods also. This would 
+increase WMC (weighted methods per class) but it would still be under the threshold.  
+
+No warnings found in the other metrics categories (Chidamber-Kemerer metrics, Complexity metrics, 
+Javadoc coverage metrics, Lines of code metrics, and Martin package metrics).
