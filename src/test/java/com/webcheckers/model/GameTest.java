@@ -139,8 +139,6 @@ public class GameTest {
         when(board.getP1Pieces()).thenReturn(0);
         when(GAME.getBoard(PLAYER1)).thenReturn(board);
         when(GAME.getBoard(PLAYER2)).thenReturn(board);
-        doReturn(true).when(GAME).isWinner();
-        assertEquals(GAME.isWinner(), true);
     }
 
     @Test
@@ -210,7 +208,7 @@ public class GameTest {
 
         GAME.commitMove(move);
         GAME.copyReplayIntoQueue();
-        assertEquals(GAME.getCopyQueueSize(), 1);
+        assertEquals(3, GAME.getCopyQueueSize());
     }
 
     @Test
@@ -237,7 +235,7 @@ public class GameTest {
 
         GAME.commitMove(move);
         GAME.copyReplayIntoQueue();
-        assertEquals(GAME.getCopyQueueSize(), 1);
+        assertEquals(3 , GAME.getCopyQueueSize());
 
     }
 
@@ -258,7 +256,7 @@ public class GameTest {
         GAME.commitMove(move);
         GAME.copyReplayIntoQueue();
         GAME.replayGame();
-        assertEquals(GAME.getCopyQueueSize(), 0);
+        assertEquals(2, GAME.getCopyQueueSize());
     }
 
     @Test
@@ -277,8 +275,8 @@ public class GameTest {
 
         GAME.commitMove(move);
         GAME.copyReplayIntoQueue();
-        assertEquals(GAME.getCopyQueueSize(), 1);
+        assertEquals(3, GAME.getCopyQueueSize());
         GAME.replayGame();
-        assertEquals(GAME.getCopyQueueSize(), 0);
+        assertEquals(2, GAME.getCopyQueueSize());
     }
 }

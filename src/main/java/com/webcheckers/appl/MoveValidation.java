@@ -267,7 +267,7 @@ public class MoveValidation {
                 return "Can't jump over your own piece";
             }
         }
-        return "Can't jump over nothing";
+        return "Invalid move";
         //other errors are for basic moves
     }
 }

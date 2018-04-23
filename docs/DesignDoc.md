@@ -116,8 +116,6 @@ to be notified win/lose status.
 ![PostSignIn Sequence Diagram](UI_SignIn_sequenceDiagram.png)
 
 ### Application Tier
-![Application Tier Sequence Diagram](Application-Tier-Sequence-Diagram.png)
-
 The application tier of the project handles all the move, validation, and player storage. The application diagram above
 shows how the different components of the application tier communicate between each other. 
 
@@ -125,7 +123,7 @@ shows how the different components of the application tier communicate between e
 ![Application Tier Class Diagram](Application-Tier-class-diagram.png)
 
 #### Dynamic models
-> Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
+![Application Tier Sequence Diagram](Application-Tier-Sequence-Diagram.png)
 
 Add dynamic models here and then they describe the dynamic  behavior over time of different objrcts and how they wor togehrer.
 ### Model Tier
@@ -145,3 +143,20 @@ string info to wherever it is needed.
 #### Dynamic models
 ![Model Tier Board Sequence Diagram](Model_tier_Board_sequence_diagram.png)
 ![Model Tier Game Sequence Diagram](Model_tier_Game_sequence_diagram.png)
+
+
+## Test Coverage
+![Project Test Coverage Chart](test_coverage.png)
+
+
+## Future Refactoring and Improvements
+### Design Principles
+
+
+### Code Metrics 
+
+![Complexity Metrics on Methods](complexity_method.png)
+
+![Complexity Metrics on Methods](complexity_classes.png)
+
+No warnings found in other metrics.
