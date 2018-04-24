@@ -163,10 +163,13 @@ string info to wherever it is needed.
 
 
 ## Future Refactoring and Improvements
-One major improvement would be the final debugging of multijump as that was unable to be fully completed by the team.
+One major improvement would be the final debugging of multi-jump as that was unable to be fully completed by the team.
 Other improvements could be fully going through the code to ensure that everything that can be in the Constants file is
-in there and is being used in all applicable places, ensuring consistancy within the code.
-
+in there and is being used in all applicable places, ensuring consistancy within the code. We could use more through
+unit tests as while there were enough to sufficiently cover the code more would definitely improve the quality of the
+code especially in the application tier which out of the 3 tiers has the lowest amount of coverage. Additionally given
+more time we would have implemented player help more so how we originally wanted, displaying a little board that
+highlights the pieces that can move and highlighting the places that those pieces can move too.
 
 ### Design Principles
 
