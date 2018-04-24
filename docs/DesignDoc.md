@@ -163,8 +163,6 @@ string info to wherever it is needed.
 
 
 ## Future Refactoring and Improvements
-### Design Principles
-
 
 ### Code Metrics 
 
@@ -186,3 +184,143 @@ increase WMC (weighted methods per class) but it would still be under the thresh
 
 No warnings found in the other metrics categories (Chidamber-Kemerer metrics, Complexity metrics, 
 Javadoc coverage metrics, Lines of code metrics, and Martin package metrics).
+
+### Design Principles
+
+Discuss the quality of your design along with recommending future refactoring and other design improvements based on 
+your metric analysis and review of the design against the object-oriented design principles covered in class.
+
+#### Single Responsibility
+
+The first and most important SOLID principle is Single Responsibility (SRP).
+
+SRP suggests "there should never be more than one reason for a class to change."
+             
+Here I provide an example within our design where we could fault to adhering to SRP.
+The Game class is too congested with methods that add responsibility to a game object. 
+For example, the game class focuses on managing objects and has methods to check the 
+state of the game. Through the addition of the Player Replay enhancement, there has been 
+additions to the game class that skew its single responsibility and add responsibility to 
+modify, commit, and get moves. A new class that manages all game queue actions should be implemented
+to adhere to SRP. 
+
+
+    public class Game {
+
+        public Game(Integer id, Player p1, Player p2);
+    
+        public Player getPlayer1(); 
+    
+        public Player getPlayer2 (); 
+    
+        public Board getBoard(Player p);
+    
+        public String getPlayerTurn();
+    
+        public void finishMove(); 
+    
+        public boolean isGameWon();
+    
+        public String getWinner(); 
+    
+        public void setForfeit(String playername);
+    
+        public boolean didPlayerResign(); 
+
+        public int getId();
+    
+        public void queueMove(Move move);
+
+        public Move getNextMove(); 
+    
+        public void commitMove(Move m); 
+    
+        public void movePiece(Move m);
+    } 
+
+#### Bloated Controller
+
+We can make an object a Controller in this case if the object represents a 
+use case, handling a sequence of operations. The benefit of doing so is to, 
+reuse the controller class, maintain the state of the use case, and control
+the sequence of the activities. Though a controller can easily become bloated 
+if the class is overloaded with too many responsibilities. In the GetOldGamesRoute
+below, the route is responsible for initializing the old game object and performing
+modifications and checks. The controller could instead be delegating these tasks
+to another class, that could be the intermediary between the route and the game objects.
+
+A solution would be to create a class that is responsible for querying an old game
+performing actions against it. In this case, it would be simple to fix since there are
+not many objects affected by the code smell, but for future development, the team 
+seeks to be more efficient and write more readable code. 
+
+    public class GetOldGamesRoute implements Route {
+        public GetOldGamesRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
+  
+        public Object handle(Request request, Response response) {
+            Session currentSession = request.session();
+            String playerName = currentSession.attribute(Constants.PLAYER_NAME);
+            Player player = playerLobby.getPlayerByUsername(playerName);
+    
+            Map<String, Object> vm = new HashMap<>();
+            int namesLen = player.getOldGames().size();
+            String[] names = new String[namesLen];
+    
+            for (int i = 0; i < namesLen; i++) {
+                Game game = player.getOldGames().get(i);
+                game.copyReplayIntoQueue();
+                game.resetBoard();
+                String player1Name = game.getPlayer1().getPlayerName();
+                String player2Name = game.getPlayer2().getPlayerName();
+                names[i] = playerName.equals(player1Name) ?  player2Name : player1Name;
+            }
+    
+            vm.put("oldOpponentGames", names);
+            vm.put("playerName", playerName);
+    
+            return templateEngine.render(new ModelAndView(vm, "oldGames.ftl"));
+        }
+    }
+
+#### Polymorphism
+
+In order to handle related but varyian elements based on element type,
+polymorphism guides us in deciding which object is responsible for 
+handling those varying elements. In the case of web checkers, a piece 
+can only be of two entities, a regular piece or a king piece. The way
+the team has implemented such distinctions is through a boolean value 'isKing'.
+The Piece class holds the boolean value along with functions that will
+set and check the value. To fully adhere to polymorphism, the team 
+can divide the possible entities into sub classes using inheritance. The parent
+class would be 'Piece' and the child class would be 'King'. The King object
+will inherit common behavior to a piece, but override movement functions
+to perform like a 'King'. 
+
+
+    public class Piece implements Serializable {
+    
+        public Piece(int row, int col, String color) {
+            this.row = row;
+            this.col = col;
+            this.color = color;
+            this.isKing = false;
+        }
+    ...
+        /**
+         * Sets the Piece as a King
+         */
+        public void setKing() {
+            isKing = true;
+        }
+    
+        /**
+         * Returns whether the piece is a king or not
+         * @return boolean
+         */
+        public boolean isKing() {
+            return isKing;
+        }
+    ...
+
+    }
+
