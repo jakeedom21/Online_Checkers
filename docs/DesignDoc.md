@@ -155,6 +155,7 @@ string info to wherever it is needed.
 
 #### Dynamic models
 ![Model Tier Board Sequence Diagram](Model_tier_Board_sequence_diagram.png)
+
 ![Model Tier Game Sequence Diagram](Model_tier_Game_sequence_diagram.png)
 
 
@@ -174,7 +175,8 @@ highlights the pieces that can move and highlighting the places that those piece
 ### Code Metrics 
 
 ![Complexity Metrics on Methods](complexity_method.png)
-![Complexity Metrics on Methods](complexity_classes.png)
+
+![Complexity Metrics on Classes](complexity_classes.png)
 
 The more cyclomatic-complex methods are located in MoveValidation class, Move class, and GetGameRoute class.
 
